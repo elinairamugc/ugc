@@ -134,6 +134,11 @@ section{position:relative;overflow:hidden}
 .sub-sobre .marca-texto{padding:0 .2em}
 .sobre-texto p.par{font-size:15px;color:var(--cinza);margin-bottom:14px;max-width:54ch}
 .sobre-texto .gap{min-height:96px;margin-bottom:14px}
+.foto-texto{margin:6px 0 18px;max-width:54ch;position:relative}
+.quadro-texto{aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:var(--creme2);box-shadow:0 14px 30px rgba(24,44,8,.16)}
+.quadro-texto img{width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.quadro-texto .gap{border-radius:18px}
+.foto-texto figcaption{position:absolute;right:14px;bottom:-14px;background:var(--lima);color:var(--verde);font-family:var(--f-mao);font-size:20px;line-height:1;padding:8px 14px;border-radius:999px;transform:rotate(-3deg)}
 .assina-linha{display:flex;align-items:center;gap:28px;margin-top:18px;flex-wrap:wrap}
 .assinatura{font-family:var(--f-script);font-weight:700;font-size:44px;line-height:1;color:var(--verde2);transform:rotate(-4deg)}
 .selo-aluno{width:170px;height:170px;flex:0 0 auto;border-radius:50%;background:var(--lima);color:var(--verde);display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;transform:rotate(-12deg);font-size:12px;font-weight:700;line-height:1.3;text-transform:uppercase;letter-spacing:.04em;box-shadow:0 0 0 4px var(--creme),0 0 0 6px var(--verde)}
@@ -587,7 +592,10 @@ function montar(){
   // 2. Sobre mim
   document.getElementById('sobre-foto').innerHTML = foto(D.fotoSobre,'Você no dia a dia, gravando ou editando · midia/sobre.jpg',D.nome+' trabalhando');
   document.getElementById('sobre-texto').innerHTML = D.sobreTexto.map(function(p){
-    return p ? '<p class="par">'+esc(p)+'</p>' : gap('texto','Conte aqui a sua rotina: como é um dia seu gravando e onde você grava');
+    if(p && typeof p==='object'){ // foto no meio do texto
+      return '<figure class="foto-texto"><div class="quadro-texto">'+foto(p.foto,'Foto do seu espaço de gravação · '+(p.foto||'midia/estudio.jpg'),p.legenda||'')+'</div>'+(p.legenda?'<figcaption>'+esc(p.legenda)+'</figcaption>':'')+'</figure>';
+    }
+    return p ? '<p class="par">'+esc(p)+'</p>' : gap('texto','Escreva aqui mais um parágrafo sobre você');
   }).join('');
   document.getElementById('assinatura').textContent = D.nome.split(' ')[0];
   document.getElementById('difs').innerHTML = D.diferenciais.map(function(d,i){
@@ -792,12 +800,14 @@ var DADOS = {
   // Suas fotos (coloque os arquivos na pasta midia)
   fotoCapa: "midia/capa.jpg",
   fotoSobre: "midia/sobre.jpg",
-  // Texto do Sobre mim, um parágrafo por linha. Linha "" = espaço listrado pra você escrever
+  // Texto do Sobre mim, um parágrafo por linha.
+  // Pra colocar uma foto no meio do texto: { foto: "midia/arquivo.jpg", legenda: "texto curto" }
   sobreTexto: [
-    "Sou Elinairam Sandoval, UGC creator e estrategista multicultural baseada em São Paulo. Trabalho com marcas em português e em espanhol, criando conteúdo que conversa de verdade com o público brasileiro e com o público hispano.",
+    "Sou Elinairam, UGC creator bilíngue baseada em São Paulo. Crio conteúdo em português e em espanhol para marcas que querem falar com o público de cada idioma com naturalidade e estratégia.",
     "Já gravei mais de 100 vídeos para mais de 50 marcas, que somam mais de 5 milhões de visualizações.",
-    "Também mantenho uma comunidade educacional de creators. Isso me deixa sempre por dentro das novidades do mercado, e eu transformo esse conhecimento em comunicação estratégica para a sua marca.",
-    "Minhas entregas se destacam pela qualidade e pela rapidez: vídeo pronto pra usar, dentro do prazo combinado."
+    { foto: "midia/estudio.jpg", legenda: "Meu espaço de gravação ✦" },
+    "Mantenho uma comunidade educacional de creators, o que me deixa sempre por dentro das novidades do mercado. Eu traduzo esse conhecimento em comunicação estratégica para a sua marca.",
+    "Minhas entregas se destacam pela qualidade e pela rapidez."
   ],
   // Seus 3 diferenciais (faixa preta "O que eu faço pela sua marca")
   diferenciais: [

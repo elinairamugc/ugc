@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1280">
+<meta name="color-scheme" content="only light">
 <title>Elinairam Sandoval · portfólio UGC</title>
 <meta name="description" content="Elinairam Sandoval, UGC creator bilíngue em São Paulo: vídeos em português e espanhol para beleza, cabelo, casa, comida, tech e carros.">
 
@@ -28,10 +29,10 @@
   --f-script:"Caveat", "Comic Sans MS", cursive;
   --f-texto:"Poppins", system-ui, -apple-system, Segoe UI, sans-serif;
   --wrap:1180px; --gutter:32px;
-  color-scheme:light;
+  color-scheme:only light;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-padding-top:84px}
+html{scroll-padding-top:84px;-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{margin:0;min-width:1200px;background:var(--creme);color:var(--verde2);font-family:var(--f-texto);font-size:15px;line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
 img,video,svg{display:block;max-width:100%}
@@ -76,6 +77,10 @@ section{position:relative;overflow:hidden}
 .nav a:not(.btn):hover{color:var(--musgo);text-decoration:underline;text-decoration-color:var(--lima);text-decoration-thickness:3px;text-underline-offset:6px}
 .nav .btn{padding:12px 22px;font-size:15px;font-weight:600;text-transform:none;letter-spacing:0;margin-left:6px}
 .nav .btn-preto{color:#fff}
+.idiomas{display:flex;gap:2px;background:var(--creme2);border:1px solid #DCE3CF;border-radius:999px;padding:3px;margin-left:-8px}
+.idiomas button{border:0;background:transparent;border-radius:999px;padding:6px 9px;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--verde2);cursor:pointer;line-height:1}
+.idiomas button:hover{background:var(--salvia)}
+.idiomas button[aria-pressed="true"]{background:var(--lima);color:var(--verde)}
 .menu-btn{display:none;background:var(--verde);color:#fff;border:0;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:600}
 
 /* CAPA: fundo verde 20% com quadriculado, nome à esquerda e foto à direita */
@@ -155,7 +160,8 @@ section{position:relative;overflow:hidden}
 .numeros b{font-family:var(--f-nome);font-weight:400;font-size:54px;line-height:1;color:var(--lima);text-transform:uppercase}
 .numeros span{font-size:14px;color:#DCE3CF}
 /* O QUE PODEMOS CRIAR JUNTOS */
-.criar{margin-top:72px;padding:44px 0;background-color:#3E5128;background-image:url("midia/listras.jpg"),repeating-linear-gradient(90deg,#3E5128 0 64px,#F6F0E4 64px 118px);background-size:auto 100%,auto;background-repeat:repeat-x,repeat}
+.criar{margin-top:72px;padding:44px 0;position:relative;isolation:isolate;background:var(--creme)}
+.criar::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.2;background-color:#3E5128;background-image:url("midia/listras.jpg"),repeating-linear-gradient(90deg,#3E5128 0 64px,#F6F0E4 64px 118px);background-size:auto 100%,auto;background-repeat:repeat-x,repeat}
 .criar-grid{display:grid;grid-template-columns:260px 1fr;gap:26px;align-items:center}
 .criar-intro{position:relative;background:var(--creme);border-radius:22px;padding:24px 22px;box-shadow:0 16px 36px rgba(15,16,21,.22)}
 .criar-titulo{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:36px;line-height:1.12;color:var(--verde2)}
@@ -233,11 +239,10 @@ section{position:relative;overflow:hidden}
 .aba:hover{background:var(--salvia)}
 .aba[aria-selected="true"]{background:var(--lima);border-color:var(--lima);color:var(--verde)}
 .aviso{display:inline-block;font-size:13px;font-weight:600;color:var(--cinza);background:var(--creme);border:1px dashed var(--musgo);border-radius:8px;padding:6px 12px;margin-bottom:20px}
-.nicho-area{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:end}
+.nicho-area{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:end}
 .nicho-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .nicho-foto{position:relative;align-self:end}
-.nicho-foto::before{content:"";position:absolute;left:8%;right:4%;bottom:6%;height:70%;border-radius:200px 200px 24px 24px;background:var(--lima);opacity:.55;z-index:0}
-.nicho-foto img{position:relative;z-index:1;width:100%;height:auto;-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 96%);mask-image:linear-gradient(to bottom,#000 70%,transparent 96%)}
+.nicho-foto img{position:relative;z-index:1;width:118%;max-width:none;margin-left:-6%;height:auto;-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 96%);mask-image:linear-gradient(to bottom,#000 70%,transparent 96%)}
 .nicho-cards .leg{font-family:var(--f-texto);font-size:14px;font-weight:600;text-transform:none;letter-spacing:0;text-align:center}
 .nicho-cards .meta{text-align:center}
 
@@ -396,6 +401,11 @@ section{position:relative;overflow:hidden}
       <a href="#marcas">Feedback</a>
       <a href="#contato">Contato</a>
       <a href="#contato" class="btn btn-preto">Contratar →</a>
+      <div class="idiomas" role="group" aria-label="Idioma">
+        <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+        <button type="button" data-lang="es" aria-pressed="false">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
     </nav>
   </div>
 </header>
@@ -653,13 +663,19 @@ function foto(src,dica,alt){
 
 // Link do botão "Clique aqui" de cada card: abre o WhatsApp já falando do serviço
 function linkServico(servico){
-  var msg = 'Oi, '+DADOS.nome.split(' ')[0]+'! Vi seu portfólio e quero saber mais sobre '+servico+' pra minha marca.';
+  var nome = DADOS.nome.split(' ')[0];
+  var msg = IDIOMA==='es' ? '¡Hola, '+nome+'! Vi tu portafolio y quiero saber más sobre '+servico+' para mi marca.'
+          : IDIOMA==='en' ? 'Hi, '+nome+'! I saw your portfolio and I would like to know more about '+servico+' for my brand.'
+          : 'Oi, '+nome+'! Vi seu portfólio e quero saber mais sobre '+servico+' pra minha marca.';
   var zap = String(DADOS.whatsapp||'').replace(/D/g,'');
   if(zap){ if(zap.length<=11) zap='55'+zap; return 'https://wa.me/'+zap+'?text='+encodeURIComponent(msg); }
   return 'mailto:'+DADOS.email+'?subject='+encodeURIComponent(servico)+'&body='+encodeURIComponent(msg);
 }
 function linkContato(){
-  var msg = 'Oi, '+DADOS.nome.split(' ')[0]+'! Vi seu portfólio e quero conversar sobre vídeos pra minha marca.';
+  var nome = DADOS.nome.split(' ')[0];
+  var msg = IDIOMA==='es' ? '¡Hola, '+nome+'! Vi tu portafolio y quiero hablar sobre videos para mi marca.'
+          : IDIOMA==='en' ? 'Hi, '+nome+'! I saw your portfolio and I would like to talk about videos for my brand.'
+          : 'Oi, '+nome+'! Vi seu portfólio e quero conversar sobre vídeos pra minha marca.';
   var zap = String(DADOS.whatsapp||'').replace(/\D/g,'');
   if(zap){
     if(zap.length<=11) zap='55'+zap; // coloca o código do Brasil se faltar
@@ -716,7 +732,7 @@ function montar(){
   }).join('');
   var trilho = document.getElementById('servicos');
   trilho.innerHTML = (D.servicos||[]).map(function(s){
-    return '<div class="servico">'+(s.novo?'<span class="destaque-novo">'+esc(s.novo)+'</span>':'')+(SERV_ICONES[s.icone]||SERV_ICONES.ugc)+'<h4>'+esc(s.titulo)+'</h4><p>'+esc(s.texto)+'</p>'+'<a href="'+esc(s.link||linkServico(s.titulo))+'"'+(s.link?'':' target="_blank" rel="noopener"')+'>'+esc(s.linkTexto||'Clique aqui')+'</a>'+'</div>';
+    return '<div class="servico">'+(s.novo?'<span class="destaque-novo">'+esc(s.novo)+'</span>':'')+(SERV_ICONES[s.icone]||SERV_ICONES.ugc)+'<h4>'+esc(s.titulo)+'</h4><p>'+esc(s.texto)+'</p>'+'<a data-servico="'+esc(s.titulo)+'" href="'+esc(s.link||linkServico(s.titulo))+'"'+(s.link?'':' target="_blank" rel="noopener"')+'>'+esc(s.linkTexto||'Clique aqui')+'</a>'+'</div>';
   }).join('');
   function passo(dir){ var c = trilho.querySelector('.servico'); trilho.scrollBy({left:dir*((c?c.offsetWidth:230)+18), behavior: reduzMov?'auto':'smooth'}); }
   document.getElementById('criar-ant').addEventListener('click',function(){passo(-1);});
@@ -1002,7 +1018,72 @@ function medirVideo(titulo){
   }catch(e){}
 }
 
-document.addEventListener('DOMContentLoaded',montar);
+/* =========================================================
+   TRADUÇÃO DO SITE (PT / ES / EN)
+   Troca os textos da página usando a lista TRADUCOES, no fim do arquivo.
+   ========================================================= */
+var IDIOMA = 'pt';
+var REVERSO = {};
+function normal(s){ return s.replace(/\s+/g,' ').trim(); }
+function prepararTraducoes(){
+  ['es','en'].forEach(function(l){ REVERSO[l] = {}; Object.keys(TRADUCOES[l]).forEach(function(pt){ REVERSO[l][normal(TRADUCOES[l][pt])] = pt; }); });
+}
+function traduzir(txt){
+  var limpo = normal(txt); if(!limpo) return txt;
+  var pt = limpo;
+  ['es','en'].forEach(function(l){ if(REVERSO[l][limpo] !== undefined) pt = REVERSO[l][limpo]; });
+  var novo = IDIOMA==='pt' ? pt : (TRADUCOES[IDIOMA][pt] !== undefined ? TRADUCOES[IDIOMA][pt] : null);
+  if(novo === null){ // sem tradução: se o texto estava em outro idioma, volta pro PT
+    novo = (pt !== limpo) ? pt : limpo;
+  }
+  if(novo === limpo) return txt;
+  var ini = txt.match(/^\s*/)[0], fim = txt.match(/\s*$/)[0];
+  return ini + novo + fim;
+}
+var traduzindo = false;
+function traduzirEm(raiz){
+  traduzindo = true;
+  var w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, { acceptNode: function(n){ var p = n.parentElement; return (!p || p.closest('script,style,.idiomas')) ? 2 : 1; } });
+  var n; while((n = w.nextNode())){ var v = traduzir(n.nodeValue); if(v !== n.nodeValue) n.nodeValue = v; }
+  if(raiz.querySelectorAll){
+    [].slice.call(raiz.querySelectorAll('[placeholder],[aria-label],[alt],[data-final]')).concat(raiz.nodeType===1?[raiz]:[]).forEach(function(e){
+      ['placeholder','aria-label','alt','data-final'].forEach(function(a){ var v = e.getAttribute && e.getAttribute(a); if(v){ var nv = traduzir(v); if(nv !== v) e.setAttribute(a, nv); } });
+    });
+  }
+  traduzindo = false;
+}
+function atualizarLinks(){
+  var contato = linkContato();
+  document.querySelectorAll('a[href^="https://wa.me/"], a[href^="mailto:"]').forEach(function(a){
+    var s = a.getAttribute('data-servico');
+    a.href = s ? linkServico(TRADUCOES[IDIOMA] && TRADUCOES[IDIOMA][s] || s) : contato.href;
+  });
+}
+function mudarIdioma(l){
+  IDIOMA = (l==='es'||l==='en') ? l : 'pt';
+  try{ localStorage.setItem('idioma', IDIOMA); }catch(e){}
+  document.documentElement.lang = IDIOMA==='pt' ? 'pt-BR' : IDIOMA;
+  document.querySelectorAll('.idiomas button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-lang')===IDIOMA); });
+  traduzirEm(document.body);
+  document.title = traduzir('Elinairam Sandoval · portfólio UGC');
+  atualizarLinks();
+}
+function ligarIdiomas(){
+  prepararTraducoes();
+  document.querySelectorAll('.idiomas button').forEach(function(b){ b.addEventListener('click', function(){ mudarIdioma(b.getAttribute('data-lang')); }); });
+  // textos que aparecem depois (aba de nicho, formulário enviado...) já entram traduzidos
+  new MutationObserver(function(ms){
+    if(traduzindo || IDIOMA==='pt') return;
+    ms.forEach(function(m){ m.addedNodes.forEach(function(n){ if(n.nodeType===1) traduzirEm(n); else if(n.nodeType===3){ var v = traduzir(n.nodeValue); if(v!==n.nodeValue){ traduzindo=true; n.nodeValue=v; traduzindo=false; } } }); });
+  }).observe(document.body, {childList:true, subtree:true});
+  var pedido = new URLSearchParams(location.search).get('lang'), salvo = null;
+  try{ salvo = localStorage.getItem('idioma'); }catch(e){}
+  var nav = (navigator.language||'').slice(0,2).toLowerCase();
+  var inicial = pedido || salvo || (nav==='es' ? 'es' : nav==='en' ? 'en' : 'pt');
+  if(inicial !== 'pt') mudarIdioma(inicial);
+}
+
+document.addEventListener('DOMContentLoaded',function(){ montar(); ligarIdiomas(); });
 
 /* =========================================================
    DADOS — edite só aqui pra trocar tudo no portfólio
@@ -1154,6 +1235,413 @@ var DADOS = {
     { titulo: "Produção", texto: "Realizo a captação e desenvolvimento do conteúdo seguindo a estratégia definida, mantendo qualidade e naturalidade." },
     { titulo: "Entrega", texto: "Finalizo e envio os materiais prontos para uso, já estruturados para performar bem." }
   ]
+};
+
+/* =========================================================
+   TRADUÇÕES (ES e EN). À esquerda o texto em português, exatamente como está no site;
+   à direita a tradução. Se mudar um texto em português no DADOS, mude a chave aqui também.
+   ========================================================= */
+var TRADUCOES = {
+  es: {
+    "Sobre mim": "Sobre mí",
+    "Destaques": "Destacados",
+    "Nichos": "Nichos",
+    "Feedback": "Opiniones",
+    "Contato": "Contacto",
+    "Contratar →": "Contratar →",
+    "MENU": "MENÚ",
+    "FECHAR": "CERRAR",
+    "Menu principal": "Menú principal",
+    "Idioma": "Idioma",
+    "UGC creator de beleza, cabelo, casa e decoração, comida, tech e carros": "UGC creator de belleza, cabello, hogar y decoración, comida, tech y autos",
+    "Sou criadora bilíngue e multicultural: crio conteúdo em português e espanhol, com alcance e vendas.": "Soy creadora bilingüe y multicultural: creo contenido en portugués y español, con alcance y ventas.",
+    "vídeos gravados": "videos grabados",
+    "marcas atendidas": "marcas atendidas",
+    "7 dias": "7 días",
+    "prazo de entrega": "plazo de entrega",
+    "Ver meus melhores vídeos →": "Ver mis mejores videos →",
+    "Falar comigo →": "Hablar conmigo →",
+    "Conteúdo bilíngue": "Contenido bilingüe",
+    "PT · ES": "PT · ES",
+    "Foto de Elinairam Sandoval": "Foto de Elinairam Sandoval",
+    "Creator multicultural": "Creadora multicultural",
+    "CREATOR ✦ MULTICULTURAL ✦": "CREADORA ✦ MULTICULTURAL ✦",
+    "UGCs": "UGCs",
+    "UGC mensal": "UGC mensual",
+    "Publi post": "Publi post",
+    "Clips": "Clips",
+    "B-rolls": "B-rolls",
+    "Parcerias": "Alianzas",
+    "Gestão de campanha": "Gestión de campaña",
+    "Pra redes sociais da marca": "Para las redes sociales de la marca",
+    "Alto volume de conteúdo em contas criadas do zero pra falar só do seu produto ou serviço": "Alto volumen de contenido en cuentas creadas desde cero para hablar solo de tu producto o servicio",
+    "Postado nas minhas redes": "Publicado en mis redes",
+    "Para marketplaces": "Para marketplaces",
+    "Vídeos e cenas sem edição": "Videos y escenas sin edición",
+    "De longo prazo": "De largo plazo",
+    "Planejamento e acompanhamento da sua campanha": "Planificación y seguimiento de tu campaña",
+    "Clique aqui": "Haz clic aquí",
+    "UGC canvas": "UGC canvas",
+    "O que": "Lo que",
+    "podemos": "podemos",
+    "criar": "crear",
+    "juntos": "juntos",
+    "O que podemos criar juntos": "Lo que podemos crear juntos",
+    "Conteúdos estratégicos para diferentes objetivos": "Contenidos estratégicos para diferentes objetivos",
+    "Serviços": "Servicios",
+    "Serviço anterior": "Servicio anterior",
+    "Próximo serviço": "Siguiente servicio",
+    "eu, criando ✦": "yo, creando ✦",
+    "Espanhol e Português": "Español y Portugués",
+    "SOBRE MIM": "SOBRE MÍ",
+    "Oie, eu sou a Eli": "¡Hola, soy Eli!",
+    "Sou UGC creator bilíngue em São Paulo e gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "Soy UGC creator bilingüe en São Paulo y grabo en portugués y español: más de 100 videos para más de 50 marcas, con más de 5 millones de views. Tengo una comunidad educativa de creators, así que siempre estoy al día con las novedades del mercado y lo llevo a la comunicación de tu marca, con entregas rápidas y de calidad.",
+    "Estudo a dor do seu cliente": "Estudio el dolor de tu cliente",
+    "Entendo o público e o que trava a compra.": "Entiendo al público y lo que frena la compra.",
+    "Roteiro meu, aprovado por você": "Guion mío, aprobado por ti",
+    "Enviado antes da gravação.": "Enviado antes de grabar.",
+    "Edição pronta pra anúncio": "Edición lista para anuncio",
+    "Gancho forte e som tratado.": "Gancho fuerte y audio tratado.",
+    "Formada no Método Profissão do Futuro": "Formada en el Método Profissão do Futuro",
+    "Elinairam Sandoval trabalhando": "Elinairam Sandoval trabajando",
+    "DESTAQUES": "DESTACADOS",
+    "Meus melhores": "Mis mejores",
+    "vídeos": "videos",
+    "Conteúdos estratégicos pra diferentes objetivos": "Contenidos estratégicos para diferentes objetivos",
+    "Passe o mouse pra ver e clique pra assistir com som.": "Pasa el mouse para ver y haz clic para verlo con sonido.",
+    "Toque no vídeo pra assistir com som.": "Toca el video para verlo con sonido.",
+    "Ver por nicho →": "Ver por nicho →",
+    "título curto do vídeo": "título corto del video",
+    "nicho": "nicho",
+    "formato": "formato",
+    "CONTEÚDO POR NICHOS": "CONTENIDO POR NICHOS",
+    "Ache o vídeo do": "Encuentra el video de",
+    "seu nicho": "tu nicho",
+    "Beleza": "Belleza",
+    "Cabelo": "Cabello",
+    "Casa e decoração": "Hogar y decoración",
+    "Comida": "Comida",
+    "Tech": "Tech",
+    "Carros": "Autos",
+    "Beleza ·": "Belleza ·",
+    "Cabelo ·": "Cabello ·",
+    "Casa e decoração ·": "Hogar y decoración ·",
+    "Comida ·": "Comida ·",
+    "Tech ·": "Tech ·",
+    "Carros ·": "Autos ·",
+    "mínimo 3 vídeos: com menos, tire o nicho": "mínimo 3 videos: con menos, quita el nicho",
+    "FEEDBACK ✦ REAL ✦ FEEDBACK ✦ REAL ✦": "FEEDBACK ✦ REAL ✦ FEEDBACK ✦ REAL ✦",
+    "DEPOIMENTOS": "TESTIMONIOS",
+    "O que as marcas": "Lo que las marcas",
+    "falam": "dicen",
+    "ver maior ⤢": "ver más grande ⤢",
+    "Depoimentos": "Testimonios",
+    "Depoimento": "Testimonio",
+    "Depoimento anterior": "Testimonio anterior",
+    "Próximo depoimento": "Siguiente testimonio",
+    "Coordenadora de Conteúdo · Satisfação, comunicação e recomendação 10/10": "Coordinadora de Contenido · Satisfacción, comunicación y recomendación 10/10",
+    "Avaliação 5/5 na plataforma": "Calificación 5/5 en la plataforma",
+    "Fundador · Gostou da qualidade do trabalho": "Fundador · Le gustó la calidad del trabajo",
+    "Mensagem no WhatsApp depois da entrega": "Mensaje por WhatsApp después de la entrega",
+    "Marca de educação": "Marca de educación",
+    "Contratação de vídeo em espanhol, com legendas em português": "Contratación de video en español, con subtítulos en portugués",
+    "Aprovação do vídeo no WhatsApp": "Aprobación del video por WhatsApp",
+    "Depoimento de Viamiazi": "Testimonio de Viamiazi",
+    "Depoimento de Ezé Congelados": "Testimonio de Ezé Congelados",
+    "Depoimento de ArquivoZap": "Testimonio de ArquivoZap",
+    "Depoimento de Yellow Fox": "Testimonio de Yellow Fox",
+    "Depoimento de Marca de educação": "Testimonio de una marca de educación",
+    "Depoimento de Allora Foods": "Testimonio de Allora Foods",
+    "Marcas que já atendi": "Marcas que ya atendí",
+    "MÉTRICAS": "MÉTRICAS",
+    "Métricas que fazem a": "Métricas que marcan la",
+    "diferença": "diferencia",
+    "Instagram · últimos 30 dias (12/10 a 10/11/2026)": "Instagram · últimos 30 días (12/10 al 10/11/2026)",
+    "visualizações": "visualizaciones",
+    "+36% no mês": "+36% en el mes",
+    "contas alcançadas": "cuentas alcanzadas",
+    "+87,7% no mês": "+87,7% en el mes",
+    "visualizações de não seguidores": "visualizaciones de no seguidores",
+    "+105,5% no mês": "+105,5% en el mes",
+    "interações com o conteúdo": "interacciones con el contenido",
+    "12.407": "12.407",
+    "3.764": "3.764",
+    "4.792": "4.792",
+    "Visualizações por formato": "Visualizaciones por formato",
+    "5,7 mil": "5,7 mil",
+    "3,6 mil": "3,6 mil",
+    "1,9 mil": "1,9 mil",
+    "Quem me assiste": "Quién me ve",
+    "Mulheres": "Mujeres",
+    "Público de 25 a 44 anos": "Público de 25 a 44 años",
+    "Fala português": "Habla portugués",
+    "Fala espanhol": "Habla español",
+    "Onde está meu público": "Dónde está mi público",
+    "Brasil": "Brasil",
+    "Venezuela": "Venezuela",
+    "Peru": "Perú",
+    "Estados Unidos": "Estados Unidos",
+    "Colômbia": "Colombia",
+    "83,7%": "83,7%",
+    "74,1%": "74,1%",
+    "71,7%": "71,7%",
+    "25,5%": "25,5%",
+    "74,2%": "74,2%",
+    "9,4%": "9,4%",
+    "3,4%": "3,4%",
+    "2,4%": "2,4%",
+    "2,3%": "2,3%",
+    "CONTATO": "CONTACTO",
+    "Bora trabalhar": "¿Trabajamos",
+    "juntos?": "juntos?",
+    "Me conta do produto e do prazo. Eu respondo rápido com ideia de roteiro e orçamento.": "Cuéntame del producto y del plazo. Respondo rápido con una idea de guion y presupuesto.",
+    "Chamar no WhatsApp →": "Escribir por WhatsApp →",
+    "Mandar e-mail →": "Enviar e-mail →",
+    "Instagram @elinairamugc →": "Instagram @elinairamugc →",
+    "bora criar juntos? ✦": "¿creamos juntos? ✦",
+    "Pede um orçamento": "Pide un presupuesto",
+    "Leva 1 minuto. Eu te chamo no WhatsApp.": "Toma 1 minuto. Te escribo por WhatsApp.",
+    "Seu nome": "Tu nombre",
+    "Empresa": "Empresa",
+    "Produto": "Producto",
+    "Prazo": "Plazo",
+    "WhatsApp": "WhatsApp",
+    "Descreva sua proposta": "Describe tu propuesta",
+    "Não preencha": "No completar",
+    "o que vamos mostrar?": "¿qué vamos a mostrar?",
+    "ex.: até 20/12": "ej.: hasta el 20/12",
+    "(11) 90000-0000": "(11) 90000-0000",
+    "Conte o objetivo, quantos vídeos, onde vão usar...": "Cuenta el objetivo, cuántos videos y dónde los van a usar...",
+    "Enviar proposta →": "Enviar propuesta →",
+    "Enviando…": "Enviando…",
+    "Não consegui enviar agora. Me chama direto:": "No pude enviarlo ahora. Escríbeme directo:",
+    "Obrigada por confiar! ✦": "¡Gracias por confiar! ✦",
+    "Entro em contato nas próximas 48 horas com a sua proposta comercial.": "Me pondré en contacto en las próximas 48 horas con tu propuesta comercial.",
+    "COMO FUNCIONA": "CÓMO FUNCIONA",
+    "Como": "¿Cómo",
+    "funciona?": "funciona?",
+    "Análises & briefing": "Análisis & briefing",
+    "Começo estudando a marca e levanto pontos importantes com vocês sobre objetivos, orçamento e necessidades.": "Empiezo estudiando la marca y reviso con ustedes los puntos importantes sobre objetivos, presupuesto y necesidades.",
+    "Estratégia": "Estrategia",
+    "Com esse direcionamento, sugiro os melhores formatos: para orgânico, foco em conexão e tendências; para anúncios, conteúdos mais diretos, curtos e persuasivos.": "Con esa dirección, sugiero los mejores formatos: para orgánico, foco en conexión y tendencias; para anuncios, contenidos más directos, cortos y persuasivos.",
+    "Roteiro + alinhamento": "Guion + alineación",
+    "Desenvolvo o roteiro alinhado à identidade da marca e ao público, e fazemos os ajustes necessários até tudo ficar bem direcionado.": "Desarrollo el guion alineado a la identidad de la marca y al público, y hacemos los ajustes necesarios hasta que todo quede bien encaminado.",
+    "Produção": "Producción",
+    "Realizo a captação e desenvolvimento do conteúdo seguindo a estratégia definida, mantendo qualidade e naturalidade.": "Realizo la grabación y el desarrollo del contenido siguiendo la estrategia definida, con calidad y naturalidad.",
+    "Entrega": "Entrega",
+    "Finalizo e envio os materiais prontos para uso, já estruturados para performar bem.": "Finalizo y envío los materiales listos para usar, ya estructurados para rendir bien.",
+    "Bora fazer um vídeo que": "¿Hacemos un video que",
+    "vende?": "vende?",
+    "UGC creator · estrategista multicultural bilíngue": "UGC creator · estratega multicultural bilingüe",
+    "Curtindo o portfólio? ✦": "¿Te gusta el portafolio? ✦",
+    "Deixe aqui sua proposta": "Deja aquí tu propuesta",
+    "Leva 1 minuto. Eu te respondo em até 48 horas.": "Toma 1 minuto. Te respondo en hasta 48 horas.",
+    "Fechar": "Cerrar",
+    "Vídeo": "Video",
+    "Fechar vídeo": "Cerrar video",
+    "Falar comigo no WhatsApp": "Hablar conmigo por WhatsApp",
+    "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · portafolio UGC"
+  },
+  en: {
+    "Sobre mim": "About me",
+    "Destaques": "Highlights",
+    "Nichos": "Niches",
+    "Feedback": "Feedback",
+    "Contato": "Contact",
+    "Contratar →": "Hire me →",
+    "MENU": "MENU",
+    "FECHAR": "CLOSE",
+    "Menu principal": "Main menu",
+    "Idioma": "Language",
+    "UGC creator de beleza, cabelo, casa e decoração, comida, tech e carros": "UGC creator for beauty, hair, home & decor, food, tech and cars",
+    "Sou criadora bilíngue e multicultural: crio conteúdo em português e espanhol, com alcance e vendas.": "I'm a bilingual, multicultural creator: I make content in Portuguese and Spanish that drives reach and sales.",
+    "vídeos gravados": "videos recorded",
+    "marcas atendidas": "brands served",
+    "7 dias": "7 days",
+    "prazo de entrega": "delivery time",
+    "Ver meus melhores vídeos →": "See my best videos →",
+    "Falar comigo →": "Talk to me →",
+    "Conteúdo bilíngue": "Bilingual content",
+    "PT · ES": "PT · ES",
+    "Foto de Elinairam Sandoval": "Photo of Elinairam Sandoval",
+    "Creator multicultural": "Multicultural creator",
+    "CREATOR ✦ MULTICULTURAL ✦": "CREATOR ✦ MULTICULTURAL ✦",
+    "UGCs": "UGCs",
+    "UGC mensal": "Monthly UGC",
+    "Publi post": "Sponsored post",
+    "Clips": "Clips",
+    "B-rolls": "B-rolls",
+    "Parcerias": "Partnerships",
+    "Gestão de campanha": "Campaign management",
+    "Pra redes sociais da marca": "For the brand's social media",
+    "Alto volume de conteúdo em contas criadas do zero pra falar só do seu produto ou serviço": "High-volume content on accounts built from scratch to talk only about your product or service",
+    "Postado nas minhas redes": "Posted on my channels",
+    "Para marketplaces": "For marketplaces",
+    "Vídeos e cenas sem edição": "Raw videos and scenes",
+    "De longo prazo": "Long-term",
+    "Planejamento e acompanhamento da sua campanha": "Planning and follow-up of your campaign",
+    "Clique aqui": "Click here",
+    "UGC canvas": "UGC canvas",
+    "O que": "What",
+    "podemos": "we can",
+    "criar": "create",
+    "juntos": "together",
+    "O que podemos criar juntos": "What we can create together",
+    "Conteúdos estratégicos para diferentes objetivos": "Strategic content for different goals",
+    "Serviços": "Services",
+    "Serviço anterior": "Previous service",
+    "Próximo serviço": "Next service",
+    "eu, criando ✦": "me, creating ✦",
+    "Espanhol e Português": "Spanish and Portuguese",
+    "SOBRE MIM": "ABOUT ME",
+    "Oie, eu sou a Eli": "Hi, I'm Eli",
+    "Sou UGC creator bilíngue em São Paulo e gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "I'm a bilingual UGC creator based in São Paulo, recording in Portuguese and Spanish: 100+ videos for 50+ brands, with 5M+ views. I run an educational community of creators, so I'm always on top of what's new in the market and bring that into your brand's communication, with fast, high-quality delivery.",
+    "Estudo a dor do seu cliente": "I study your customer's pain",
+    "Entendo o público e o que trava a compra.": "I understand the audience and what blocks the purchase.",
+    "Roteiro meu, aprovado por você": "My script, approved by you",
+    "Enviado antes da gravação.": "Sent before recording.",
+    "Edição pronta pra anúncio": "Ad-ready editing",
+    "Gancho forte e som tratado.": "Strong hook and clean audio.",
+    "Formada no Método Profissão do Futuro": "Trained in the Profissão do Futuro Method",
+    "Elinairam Sandoval trabalhando": "Elinairam Sandoval working",
+    "DESTAQUES": "HIGHLIGHTS",
+    "Meus melhores": "My best",
+    "vídeos": "videos",
+    "Conteúdos estratégicos pra diferentes objetivos": "Strategic content for different goals",
+    "Passe o mouse pra ver e clique pra assistir com som.": "Hover to preview and click to watch with sound.",
+    "Toque no vídeo pra assistir com som.": "Tap the video to watch with sound.",
+    "Ver por nicho →": "See by niche →",
+    "título curto do vídeo": "short video title",
+    "nicho": "niche",
+    "formato": "format",
+    "CONTEÚDO POR NICHOS": "CONTENT BY NICHE",
+    "Ache o vídeo do": "Find the video for",
+    "seu nicho": "your niche",
+    "Beleza": "Beauty",
+    "Cabelo": "Hair",
+    "Casa e decoração": "Home & decor",
+    "Comida": "Food",
+    "Tech": "Tech",
+    "Carros": "Cars",
+    "Beleza ·": "Beauty ·",
+    "Cabelo ·": "Hair ·",
+    "Casa e decoração ·": "Home & decor ·",
+    "Comida ·": "Food ·",
+    "Tech ·": "Tech ·",
+    "Carros ·": "Cars ·",
+    "mínimo 3 vídeos: com menos, tire o nicho": "at least 3 videos: with fewer, remove the niche",
+    "FEEDBACK ✦ REAL ✦ FEEDBACK ✦ REAL ✦": "REAL ✦ FEEDBACK ✦ REAL ✦ FEEDBACK ✦",
+    "DEPOIMENTOS": "TESTIMONIALS",
+    "O que as marcas": "What brands",
+    "falam": "say",
+    "ver maior ⤢": "view larger ⤢",
+    "Depoimentos": "Testimonials",
+    "Depoimento": "Testimonial",
+    "Depoimento anterior": "Previous testimonial",
+    "Próximo depoimento": "Next testimonial",
+    "Coordenadora de Conteúdo · Satisfação, comunicação e recomendação 10/10": "Content Coordinator · Satisfaction, communication and recommendation 10/10",
+    "Avaliação 5/5 na plataforma": "5/5 rating on the platform",
+    "Fundador · Gostou da qualidade do trabalho": "Founder · Loved the quality of the work",
+    "Mensagem no WhatsApp depois da entrega": "WhatsApp message after delivery",
+    "Marca de educação": "Education brand",
+    "Contratação de vídeo em espanhol, com legendas em português": "Hired for a video in Spanish, with Portuguese subtitles",
+    "Aprovação do vídeo no WhatsApp": "Video approval on WhatsApp",
+    "Depoimento de Viamiazi": "Testimonial from Viamiazi",
+    "Depoimento de Ezé Congelados": "Testimonial from Ezé Congelados",
+    "Depoimento de ArquivoZap": "Testimonial from ArquivoZap",
+    "Depoimento de Yellow Fox": "Testimonial from Yellow Fox",
+    "Depoimento de Marca de educação": "Testimonial from an education brand",
+    "Depoimento de Allora Foods": "Testimonial from Allora Foods",
+    "Marcas que já atendi": "Brands I've worked with",
+    "MÉTRICAS": "METRICS",
+    "Métricas que fazem a": "Metrics that make a",
+    "diferença": "difference",
+    "Instagram · últimos 30 dias (12/10 a 10/11/2026)": "Instagram · last 30 days (Oct 12 to Nov 10, 2026)",
+    "visualizações": "views",
+    "+36% no mês": "+36% this month",
+    "contas alcançadas": "accounts reached",
+    "+87,7% no mês": "+87.7% this month",
+    "visualizações de não seguidores": "views from non-followers",
+    "+105,5% no mês": "+105.5% this month",
+    "interações com o conteúdo": "content interactions",
+    "12.407": "12,407",
+    "3.764": "3,764",
+    "4.792": "4,792",
+    "Visualizações por formato": "Views by format",
+    "5,7 mil": "5.7K",
+    "3,6 mil": "3.6K",
+    "1,9 mil": "1.9K",
+    "Quem me assiste": "Who watches me",
+    "Mulheres": "Women",
+    "Público de 25 a 44 anos": "Audience aged 25 to 44",
+    "Fala português": "Speaks Portuguese",
+    "Fala espanhol": "Speaks Spanish",
+    "Onde está meu público": "Where my audience is",
+    "Brasil": "Brazil",
+    "Venezuela": "Venezuela",
+    "Peru": "Peru",
+    "Estados Unidos": "United States",
+    "Colômbia": "Colombia",
+    "83,7%": "83.7%",
+    "74,1%": "74.1%",
+    "71,7%": "71.7%",
+    "25,5%": "25.5%",
+    "74,2%": "74.2%",
+    "9,4%": "9.4%",
+    "3,4%": "3.4%",
+    "2,4%": "2.4%",
+    "2,3%": "2.3%",
+    "CONTATO": "CONTACT",
+    "Bora trabalhar": "Shall we work",
+    "juntos?": "together?",
+    "Me conta do produto e do prazo. Eu respondo rápido com ideia de roteiro e orçamento.": "Tell me about the product and the deadline. I'll reply quickly with a script idea and a quote.",
+    "Chamar no WhatsApp →": "Message me on WhatsApp →",
+    "Mandar e-mail →": "Send an email →",
+    "Instagram @elinairamugc →": "Instagram @elinairamugc →",
+    "bora criar juntos? ✦": "let's create together? ✦",
+    "Pede um orçamento": "Request a quote",
+    "Leva 1 minuto. Eu te chamo no WhatsApp.": "Takes 1 minute. I'll message you on WhatsApp.",
+    "Seu nome": "Your name",
+    "Empresa": "Company",
+    "Produto": "Product",
+    "Prazo": "Deadline",
+    "WhatsApp": "WhatsApp",
+    "Descreva sua proposta": "Describe your proposal",
+    "Não preencha": "Do not fill",
+    "o que vamos mostrar?": "what are we showing?",
+    "ex.: até 20/12": "e.g.: by Dec 20",
+    "(11) 90000-0000": "+55 11 90000-0000",
+    "Conte o objetivo, quantos vídeos, onde vão usar...": "Tell me the goal, how many videos and where you'll use them...",
+    "Enviar proposta →": "Send proposal →",
+    "Enviando…": "Sending…",
+    "Não consegui enviar agora. Me chama direto:": "I couldn't send it right now. Message me directly:",
+    "Obrigada por confiar! ✦": "Thank you for your trust! ✦",
+    "Entro em contato nas próximas 48 horas com a sua proposta comercial.": "I'll get back to you within 48 hours with your commercial proposal.",
+    "COMO FUNCIONA": "HOW IT WORKS",
+    "Como": "How it",
+    "funciona?": "works",
+    "Análises & briefing": "Analysis & briefing",
+    "Começo estudando a marca e levanto pontos importantes com vocês sobre objetivos, orçamento e necessidades.": "I start by studying the brand and go over key points with you about goals, budget and needs.",
+    "Estratégia": "Strategy",
+    "Com esse direcionamento, sugiro os melhores formatos: para orgânico, foco em conexão e tendências; para anúncios, conteúdos mais diretos, curtos e persuasivos.": "With that direction, I suggest the best formats: for organic, a focus on connection and trends; for ads, more direct, short and persuasive content.",
+    "Roteiro + alinhamento": "Script + alignment",
+    "Desenvolvo o roteiro alinhado à identidade da marca e ao público, e fazemos os ajustes necessários até tudo ficar bem direcionado.": "I write the script aligned with the brand identity and audience, and we make the needed adjustments until everything is on target.",
+    "Produção": "Production",
+    "Realizo a captação e desenvolvimento do conteúdo seguindo a estratégia definida, mantendo qualidade e naturalidade.": "I shoot and develop the content following the defined strategy, keeping it high-quality and natural.",
+    "Entrega": "Delivery",
+    "Finalizo e envio os materiais prontos para uso, já estruturados para performar bem.": "I finish and send the materials ready to use, already structured to perform well.",
+    "Bora fazer um vídeo que": "Shall we make a video that",
+    "vende?": "sells?",
+    "UGC creator · estrategista multicultural bilíngue": "UGC creator · bilingual multicultural strategist",
+    "Curtindo o portfólio? ✦": "Enjoying the portfolio? ✦",
+    "Deixe aqui sua proposta": "Leave your proposal here",
+    "Leva 1 minuto. Eu te respondo em até 48 horas.": "Takes 1 minute. I'll reply within 48 hours.",
+    "Fechar": "Close",
+    "Vídeo": "Video",
+    "Fechar vídeo": "Close video",
+    "Falar comigo no WhatsApp": "Talk to me on WhatsApp",
+    "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · UGC portfolio"
+  }
 };
 </script>
 </body>

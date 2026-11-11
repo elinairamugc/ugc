@@ -249,8 +249,20 @@ section{position:relative;overflow:hidden}
 .marcas-falam .h2{max-width:20ch}
 .marcas-falam .h2 .aspas{font-family:var(--f-mao);color:var(--musgo);font-size:1.6em;line-height:0;vertical-align:-.3em;margin-right:6px}
 .selo-branco{position:absolute;top:64px;right:max(32px,calc((100vw - var(--wrap))/2 + 32px));width:120px;height:120px}
-.elogios{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
-.elogio{padding:26px;border-radius:22px;background:var(--verde2);color:var(--creme);display:flex;flex-direction:column;gap:14px}
+.elogios{display:flex;gap:20px;margin-top:36px;overflow-x:auto;scroll-snap-type:x mandatory;padding:22px 14px 26px;margin-left:-14px;margin-right:-14px;scrollbar-width:none}
+.elogios::-webkit-scrollbar{display:none}
+.elogio{flex:0 0 340px;scroll-snap-align:start;padding:24px;border-radius:22px;background:var(--verde2);color:var(--creme);display:flex;flex-direction:column;gap:14px;border:3px solid transparent;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;cursor:pointer;outline:none}
+.elogio:hover,.elogio:focus-visible,.elogio.ativo{transform:scale(1.05);border-color:var(--lima);box-shadow:0 18px 36px rgba(24,44,8,.28);position:relative;z-index:2}
+.elogio-topo{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:24px}
+.aspas-card{font-family:var(--f-mao);font-size:54px;line-height:.6;color:var(--lima);height:24px}
+.estrelas{color:#F2B416;font-size:18px;letter-spacing:2px}
+.estrelas b{color:var(--creme);font-size:14px;letter-spacing:0;margin-left:4px}
+.elogio .data{font-size:12px;color:#B9C4AD}
+.elogio .tags{display:flex;flex-wrap:wrap;gap:6px}
+.elogio .tags span{font-size:12px;font-weight:600;border:1px solid rgba(201,211,190,.5);border-radius:8px;padding:3px 9px;color:var(--creme)}
+.elogio .tags span::before{content:"★ ";color:var(--lima)}
+.elogio-pe{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.elogios-setas{margin-top:6px}
 .elogio blockquote{margin:0;font-size:16px;font-weight:500;line-height:1.55}
 .elogio .marca{align-self:flex-start;background:var(--lima);color:var(--verde);border-radius:999px;padding:5px 14px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .elogio .detalhe{font-size:14px;color:#DCE3CF}
@@ -314,7 +326,6 @@ section{position:relative;overflow:hidden}
   .criar-grid{grid-template-columns:1fr;gap:28px}
   .capa-grid,.sobre-grid,.dest-grid,.contato-grid{grid-template-columns:1fr;gap:44px}
   .capa-foto{justify-self:start;max-width:400px;margin-left:30px}
-  .elogios{grid-template-columns:1fr}
   .duvidas{grid-template-columns:1fr 1fr}
   .nicho-cards{grid-template-columns:repeat(3,1fr)}
   .selo-branco{width:96px;height:96px;top:30px}
@@ -358,6 +369,7 @@ section{position:relative;overflow:hidden}
   .abas{flex-wrap:nowrap;overflow-x:auto;margin:0 calc(-1 * var(--gutter)) 26px;padding:0 var(--gutter) 6px}
   .aba{flex:0 0 auto}
   .selo-branco{display:none}
+  .elogio{flex-basis:82%}
   .atendidas li{font-size:26px}
   .campos{grid-template-columns:1fr}
   .form-caixa{padding:22px}
@@ -515,7 +527,11 @@ section{position:relative;overflow:hidden}
   <div class="wrap">
     <p class="kicker">DEPOIMENTOS</p>
     <h2 class="h2"><span class="aspas" aria-hidden="true">“</span>O que as marcas <span class="marca-texto">falam</span></h2>
-    <div class="elogios" id="elogios"></div>
+    <div class="elogios" id="elogios" aria-label="Depoimentos"></div>
+    <div class="criar-setas elogios-setas">
+      <button class="seta" id="elogios-ant" aria-label="Depoimento anterior">←</button>
+      <button class="seta" id="elogios-prox" aria-label="Próximo depoimento">→</button>
+    </div>
     <div class="atendidas">
       <p>Marcas que já atendi</p>
       <ul id="atendidas"></ul>
@@ -728,10 +744,14 @@ function montar(){
   if(pedido){setTimeout(function(){document.getElementById('nichos').scrollIntoView();},60);}
 
   // 5. O que as marcas falam
-  document.getElementById('elogios').innerHTML = D.elogios.slice(0,3).map(function(e){
+  var elogiosEl = document.getElementById('elogios');
+  elogiosEl.innerHTML = D.elogios.map(function(e){
     var corpo = e.texto ? '<blockquote>“'+esc(e.texto)+'”</blockquote>' : (e.print ? '<img src="'+esc(e.print)+'" alt="Print do depoimento de '+esc(e.marca)+'">' : gap('aspas','cole aqui a frase ou o print real da marca'));
-    return '<div class="elogio">'+corpo+'<span class="marca">'+gi(e.marca,'nome da marca')+'</span><p class="detalhe">'+gi(e.detalhe,'contexto: qual vídeo e qual resultado')+'</p></div>';
+    var topo = (e.estrelas ? '<span class="estrelas" aria-label="Nota '+e.estrelas+' de 5">'+'★★★★★'.slice(0,e.estrelas)+' <b>'+e.estrelas+'/5</b></span>' : '<span class="aspas-card" aria-hidden="true">“</span>')+(e.data?'<span class="data">'+esc(e.data)+'</span>':'');
+    var tags = (e.tags||[]).length ? '<div class="tags">'+e.tags.map(function(x){return '<span>'+esc(x)+'</span>';}).join('')+'</div>' : '';
+    return '<div class="elogio" tabindex="0"><div class="elogio-topo">'+topo+'</div>'+corpo+tags+'<div class="elogio-pe"><span class="marca">'+gi(e.marca,'nome da marca')+'</span><p class="detalhe">'+gi(e.detalhe,'contexto: qual vídeo e qual resultado')+'</p></div></div>';
   }).join('');
+  ligarCarrosselElogios(elogiosEl);
   document.getElementById('atendidas').innerHTML = D.marcas.map(function(m){return '<li>'+esc(m.nome)+'</li>';}).join('');
 
   // 6. Contato
@@ -750,6 +770,30 @@ function montar(){
   ligarVideos(document.getElementById('destaques'));
   ligarPlayer();
   ligarUmami();
+}
+
+/* Carrossel dos depoimentos: anda sozinho e para quando a marca passa o mouse ou toca */
+function ligarCarrosselElogios(trilho){
+  var pausado = false;
+  function passo(dir){
+    var c = trilho.querySelector('.elogio'); if(!c) return;
+    var dist = c.offsetWidth + 20, fim = trilho.scrollWidth - trilho.clientWidth - 4;
+    if(dir>0 && trilho.scrollLeft >= fim) trilho.scrollTo({left:0, behavior: reduzMov?'auto':'smooth'});
+    else if(dir<0 && trilho.scrollLeft <= 4) trilho.scrollTo({left:fim+4, behavior: reduzMov?'auto':'smooth'});
+    else trilho.scrollBy({left:dir*dist, behavior: reduzMov?'auto':'smooth'});
+  }
+  document.getElementById('elogios-ant').addEventListener('click',function(){passo(-1);});
+  document.getElementById('elogios-prox').addEventListener('click',function(){passo(1);});
+  ['mouseenter','focusin','touchstart'].forEach(function(ev){ trilho.addEventListener(ev,function(){pausado=true;},{passive:true}); });
+  ['mouseleave','focusout'].forEach(function(ev){ trilho.addEventListener(ev,function(){pausado=false;}); });
+  trilho.addEventListener('touchend',function(){ setTimeout(function(){pausado=false;},5000); },{passive:true});
+  // tocar num card (celular) deixa ele em destaque
+  trilho.addEventListener('click',function(e){
+    var card = e.target.closest('.elogio'); if(!card) return;
+    trilho.querySelectorAll('.elogio.ativo').forEach(function(x){ if(x!==card) x.classList.remove('ativo'); });
+    card.classList.toggle('ativo');
+  });
+  if(!reduzMov){ setInterval(function(){ if(!pausado && !document.hidden) passo(1); }, 4500); }
 }
 
 /* Explosão vermelha desenhada (faixa amarela) */
@@ -948,10 +992,15 @@ var DADOS = {
   ],
   // Depoimentos REAIS das marcas. Nunca invente: deixe "" até ter a frase ou o print.
   // texto: a frase · marca: nome da marca · detalhe: contexto (qual vídeo, qual resultado) · print: imagem opcional (ex.: midia/print-dove.jpg)
+  // tags: etiquetas curtas (ex.: "Satisfação 10/10") · estrelas: nota de 1 a 5 (opcional) · data: opcional
+  // Nunca coloque e-mail, telefone ou nome de pessoa: só o nome da marca e o cargo.
   elogios: [
-    { texto: "", marca: "", detalhe: "", print: "" },
-    { texto: "", marca: "", detalhe: "", print: "" },
-    { texto: "", marca: "", detalhe: "", print: "" }
+    { texto: "Foi incrível, entregas extremamente pontuais e além de seguir o briefing sugeriu novas ideias.", marca: "Viamiazi", detalhe: "Coordenadora de Conteúdo · Criação de conteúdo", tags: ["Satisfação 10/10", "Comunicação 10/10", "Recomenda 10/10"], data: "11/10/2026" },
+    { texto: "Ficamos encantados em trabalhar com a Elinairam! Além de entregar um conteúdo com excelente qualidade e no capricho, entregou super rápido! Muito obrigada, Elinairam!", marca: "Avaliação de marca", detalhe: "Avaliação na plataforma", estrelas: 5, data: "01/04/2026" },
+    { texto: "Ótima, tudo dentro do prazo e muito bem feito.", marca: "ArquivoZap", detalhe: "Fundador · Criação de conteúdo · Gostou: qualidade do trabalho", tags: ["Satisfação 10/10", "Comunicação 10/10", "Recomenda 10/10"], data: "06/10/2026" },
+    { texto: "Já olhei aqui e tá MARAVILHOSO!!! ARRASOU DEMAIS. E obrigada pela rapidez!", marca: "Cliente", detalhe: "Mensagem no WhatsApp depois da entrega" },
+    { texto: "Nos gustó mucho tu portafolio y también nos llamó mucho la atención el hecho de que seas hispanohablante, ya que tenemos un público grande de profesores en América Latina.", marca: "Marca de educação", detalhe: "Contratação de vídeo em espanhol, com legendas em português" },
+    { texto: "Perfeito, muito obrigado! A princípio achei muito legal. Super alinhado com a proposta.", marca: "Cliente", detalhe: "Aprovação do vídeo no WhatsApp" }
   ],
   // Marcas que você já atendeu. logo: opcional (ex.: "midia/logos/dove.png"); vazio = aparece o nome
   marcas: [

@@ -176,12 +176,17 @@ section{position:relative;overflow:hidden}
 .criar-trilho{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px;scrollbar-width:none;-ms-overflow-style:none}
 .criar-trilho::-webkit-scrollbar{display:none}
 .criar-trilho:focus-visible{outline:3px solid var(--lima);outline-offset:4px}
-.servico{position:relative;flex:0 0 230px;scroll-snap-align:start;min-height:250px;background:var(--salvia);border-radius:20px;padding:30px 18px 22px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:0;color:var(--verde2);box-shadow:0 14px 30px rgba(15,16,21,.2)}
-.servico svg{width:52px;height:52px;flex:0 0 auto;margin-bottom:14px}
+.servico{position:relative;flex:0 0 230px;scroll-snap-align:start;min-height:250px;background:var(--salvia);border-radius:20px;padding:30px 18px 22px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:0;color:var(--verde2);box-shadow:0 14px 30px rgba(15,16,21,.2);transition:background .2s ease,color .2s ease,transform .2s ease}
+.servico:hover,.servico:focus-within{background:var(--verde2);color:var(--creme);transform:translateY(-6px)}
+.servico:hover svg,.servico:focus-within svg{color:var(--lima)}
+.servico:hover p,.servico:focus-within p{color:var(--verde2)}
+.servico:hover .destaque-novo,.servico:focus-within .destaque-novo{background:var(--lima);color:var(--verde)}
+.servico svg{width:52px;height:52px;flex:0 0 auto;margin-bottom:14px;transition:color .2s ease}
 .servico h4{font-family:var(--f-texto);font-weight:700;font-size:20px;line-height:1.2;margin-bottom:12px}
 .servico p{font-size:13px;line-height:1.45;background:var(--creme);border-radius:12px;padding:10px 12px;width:100%;margin-top:auto}
 .servico .destaque-novo{position:absolute;top:12px;right:12px;background:var(--verde2);color:var(--lima);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.servico a{margin-top:10px;background:var(--lima);color:var(--verde);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:700;text-decoration:underline}
+.servico a{margin-top:12px;background:var(--lima);color:var(--verde);border-radius:999px;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:underline}
+.servico a:hover{background:var(--creme)}
 
 /* FAIXA DE MARCAS */
 .faixa{background:var(--lima);padding:16px 0;overflow:hidden}
@@ -595,6 +600,13 @@ function foto(src,dica,alt){
   return '<img src="'+esc(src)+'" alt="'+esc(alt)+'" data-dica="'+esc(dica)+'" onerror="semMidia(this)">';
 }
 
+// Link do botão "Clique aqui" de cada card: abre o WhatsApp já falando do serviço
+function linkServico(servico){
+  var msg = 'Oi, '+DADOS.nome.split(' ')[0]+'! Vi seu portfólio e quero saber mais sobre '+servico+' pra minha marca.';
+  var zap = String(DADOS.whatsapp||'').replace(/D/g,'');
+  if(zap){ if(zap.length<=11) zap='55'+zap; return 'https://wa.me/'+zap+'?text='+encodeURIComponent(msg); }
+  return 'mailto:'+DADOS.email+'?subject='+encodeURIComponent(servico)+'&body='+encodeURIComponent(msg);
+}
 function linkContato(){
   var msg = 'Oi, '+DADOS.nome.split(' ')[0]+'! Vi seu portfólio e quero conversar sobre vídeos pra minha marca.';
   var zap = String(DADOS.whatsapp||'').replace(/\D/g,'');
@@ -653,7 +665,7 @@ function montar(){
   }).join('');
   var trilho = document.getElementById('servicos');
   trilho.innerHTML = (D.servicos||[]).map(function(s){
-    return '<div class="servico">'+(s.novo?'<span class="destaque-novo">'+esc(s.novo)+'</span>':'')+(SERV_ICONES[s.icone]||SERV_ICONES.ugc)+'<h4>'+esc(s.titulo)+'</h4><p>'+esc(s.texto)+'</p>'+(s.link?'<a href="'+esc(s.link)+'">'+esc(s.linkTexto||'Clique aqui')+'</a>':'')+'</div>';
+    return '<div class="servico">'+(s.novo?'<span class="destaque-novo">'+esc(s.novo)+'</span>':'')+(SERV_ICONES[s.icone]||SERV_ICONES.ugc)+'<h4>'+esc(s.titulo)+'</h4><p>'+esc(s.texto)+'</p>'+'<a href="'+esc(s.link||linkServico(s.titulo))+'"'+(s.link?'':' target="_blank" rel="noopener"')+'>'+esc(s.linkTexto||'Clique aqui')+'</a>'+'</div>';
   }).join('');
   function passo(dir){ var c = trilho.querySelector('.servico'); trilho.scrollBy({left:dir*((c?c.offsetWidth:230)+18), behavior: reduzMov?'auto':'smooth'}); }
   document.getElementById('criar-ant').addEventListener('click',function(){passo(-1);});
@@ -871,7 +883,8 @@ var DADOS = {
     { titulo: "Edição pronta pra anúncio", texto: "Gancho forte e som tratado." }
   ],
   // "O que podemos criar juntos": cards do carrossel. icone: ugc, publi, clips, broll, parceria, gestao ou mensal
-  // novo: etiqueta opcional em cima do card · link: opcional (ex.: "#contato")
+  // novo: etiqueta opcional em cima do card · o botão "Clique aqui" abre o WhatsApp falando do serviço
+  // (pra mandar pra outro lugar, use link: "#contato")
   servicos: [
     { icone: "ugc",      titulo: "UGCs",              texto: "Pra redes sociais da marca" },
     { icone: "mensal",   titulo: "UGC mensal",        texto: "Alto volume de conteúdo em contas criadas do zero pra falar só do seu produto ou serviço", novo: "UGC canvas" },
@@ -879,7 +892,7 @@ var DADOS = {
     { icone: "clips",    titulo: "Clips",             texto: "Para marketplaces" },
     { icone: "broll",    titulo: "B-rolls",           texto: "Vídeos e cenas sem edição" },
     { icone: "parceria", titulo: "Parcerias",         texto: "De longo prazo" },
-    { icone: "gestao",   titulo: "Gestão de campanha", texto: "Planejamento e acompanhamento da sua campanha", link: "#contato", linkTexto: "Clique aqui" }
+    { icone: "gestao",   titulo: "Gestão de campanha", texto: "Planejamento e acompanhamento da sua campanha" }
   ],
   // Seus 3 MELHORES vídeos (não os mais recentes). O 1º é o mais forte e toca sozinho.
   // titulo: nome curto · nicho · formato: ADS, review, unboxing, tutorial ou nativo

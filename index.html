@@ -162,24 +162,26 @@ section{position:relative;overflow:hidden}
 .numeros b{font-family:var(--f-nome);font-weight:400;font-size:54px;line-height:1;color:var(--lima);text-transform:uppercase}
 .numeros span{font-size:14px;color:#DCE3CF}
 /* O QUE PODEMOS CRIAR JUNTOS */
-.criar{background:var(--creme2);margin-top:88px;padding:72px 0;border-top:1px solid #E2E8D6;border-bottom:1px solid #E2E8D6}
-.criar-grid{display:grid;grid-template-columns:.8fr 2fr;gap:40px;align-items:center}
-.criar-intro{position:relative}
-.criar-titulo{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(40px,4.4vw,56px);line-height:1.12;color:var(--verde2)}
+.criar{margin-top:88px;padding:72px 0;background-color:#3E5128;background-image:url("midia/listras.jpg"),repeating-linear-gradient(90deg,#3E5128 0 64px,#F6F0E4 64px 118px);background-size:auto 100%,auto;background-repeat:repeat-x,repeat}
+.criar-grid{display:grid;grid-template-columns:.8fr 2fr;gap:32px;align-items:center}
+.criar-intro{position:relative;background:var(--creme);border-radius:26px;padding:32px 28px;box-shadow:0 16px 36px rgba(15,16,21,.22)}
+.criar-titulo{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(38px,4vw,52px);line-height:1.12;color:var(--verde2)}
 .criar-titulo .marca-texto{border-radius:14px;padding:0 .14em}
-.criar-brilho{position:absolute;width:64px;right:4px;top:-6px}
-.criar-mao{font-family:var(--f-mao);font-size:22px;line-height:1.25;color:var(--verde2);transform:rotate(-4deg);margin:22px 0 22px;max-width:16ch}
-.criar-setas{display:flex;gap:10px}
-.seta{width:48px;height:48px;border-radius:50%;border:2px solid var(--verde2);background:transparent;color:var(--verde2);font-size:20px;font-weight:700}
-.seta:hover{background:var(--lima);border-color:var(--lima)}
-.criar-trilho{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px 16px;scrollbar-width:thin}
-.criar-trilho:focus-visible{outline:3px solid var(--musgo);outline-offset:4px}
-.servico{flex:0 0 230px;scroll-snap-align:start;min-height:220px;background:var(--salvia);border-radius:18px;padding:26px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;color:var(--verde2)}
-.servico svg{width:52px;height:52px;margin-bottom:12px}
-.servico h4{font-family:var(--f-texto);font-weight:700;font-size:20px;line-height:1.2}
-.servico p{font-size:13px;line-height:1.45;max-width:24ch}
-.servico .destaque-novo{align-self:center;background:var(--verde2);color:var(--lima);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
-.servico a{margin-top:8px;background:var(--lima);color:var(--verde);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:700;text-decoration:underline}
+.criar-brilho{position:absolute;width:58px;right:18px;top:18px}
+.criar-mao{font-family:var(--f-mao);font-size:22px;line-height:1.25;color:var(--verde2);transform:rotate(-4deg);margin:20px 0 0;max-width:16ch}
+.criar-carrossel{min-width:0;display:flex;flex-direction:column;gap:18px}
+.criar-setas{display:flex;justify-content:center;gap:12px}
+.seta{width:50px;height:50px;border-radius:50%;border:2px solid var(--verde);background:var(--creme);color:var(--verde2);font-size:20px;font-weight:700;box-shadow:0 6px 14px rgba(15,16,21,.2)}
+.seta:hover{background:var(--lima)}
+.criar-trilho{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px;scrollbar-width:none;-ms-overflow-style:none}
+.criar-trilho::-webkit-scrollbar{display:none}
+.criar-trilho:focus-visible{outline:3px solid var(--lima);outline-offset:4px}
+.servico{position:relative;flex:0 0 230px;scroll-snap-align:start;min-height:250px;background:var(--salvia);border-radius:20px;padding:30px 18px 22px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:0;color:var(--verde2);box-shadow:0 14px 30px rgba(15,16,21,.2)}
+.servico svg{width:52px;height:52px;flex:0 0 auto;margin-bottom:14px}
+.servico h4{font-family:var(--f-texto);font-weight:700;font-size:20px;line-height:1.2;margin-bottom:12px}
+.servico p{font-size:13px;line-height:1.45;background:var(--creme);border-radius:12px;padding:10px 12px;width:100%;margin-top:auto}
+.servico .destaque-novo{position:absolute;top:12px;right:12px;background:var(--verde2);color:var(--lima);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.servico a{margin-top:10px;background:var(--lima);color:var(--verde);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:700;text-decoration:underline}
 
 /* FAIXA DE MARCAS */
 .faixa{background:var(--lima);padding:16px 0;overflow:hidden}
@@ -321,7 +323,8 @@ section{position:relative;overflow:hidden}
   .botoes .btn{width:100%}
   .sobre{padding:64px 0 0}
   .criar{margin-top:64px;padding:52px 0}
-  .criar-trilho{margin:0 calc(-1 * var(--gutter));padding:6px var(--gutter) 16px}
+  .criar-trilho{margin:0 calc(-1 * var(--gutter));padding:6px var(--gutter)}
+  .criar-intro{padding:26px 22px}
   .servico{flex-basis:72%}
   .criar-brilho{width:48px}
   .difs{grid-template-columns:1fr}
@@ -441,12 +444,14 @@ section{position:relative;overflow:hidden}
         <h3 class="criar-titulo">O que<br>podemos<br>criar <span class="marca-texto">juntos</span></h3>
         <svg class="criar-brilho" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 4 C43 28 52 37 76 40 C52 43 43 52 40 76 C37 52 28 43 4 40 C28 37 37 28 40 4Z" fill="#CBFC00" stroke="#182C08" stroke-width="2"/></svg>
         <p class="criar-mao">Conteúdos estratégicos para diferentes objetivos</p>
+      </div>
+      <div class="criar-carrossel">
+        <div class="criar-trilho" id="servicos" tabindex="0" aria-label="Serviços"></div>
         <div class="criar-setas">
           <button class="seta" id="criar-ant" aria-label="Serviço anterior">←</button>
           <button class="seta" id="criar-prox" aria-label="Próximo serviço">→</button>
         </div>
       </div>
-      <div class="criar-trilho" id="servicos" tabindex="0" aria-label="Serviços"></div>
     </div>
   </div>
 </section>
@@ -874,7 +879,7 @@ var DADOS = {
     { icone: "clips",    titulo: "Clips",             texto: "Para marketplaces" },
     { icone: "broll",    titulo: "B-rolls",           texto: "Vídeos e cenas sem edição" },
     { icone: "parceria", titulo: "Parcerias",         texto: "De longo prazo" },
-    { icone: "gestao",   titulo: "Gestão",            texto: "de campanha", link: "#contato", linkTexto: "Clique aqui" }
+    { icone: "gestao",   titulo: "Gestão de campanha", texto: "Planejamento e acompanhamento da sua campanha", link: "#contato", linkTexto: "Clique aqui" }
   ],
   // Seus 3 MELHORES vídeos (não os mais recentes). O 1º é o mais forte e toca sozinho.
   // titulo: nome curto · nicho · formato: ADS, review, unboxing, tutorial ou nativo

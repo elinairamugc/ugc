@@ -196,6 +196,12 @@ section{position:relative;overflow:hidden}
 .faixa-grupo img{height:32px;width:auto}
 .faixa-grupo i{font-style:normal;color:var(--verde);font-size:20px}
 @keyframes rolar{to{transform:translateX(-50%)}}
+.faixa-fina{background:var(--verde);padding:9px 0}
+.faixa-fina .faixa-grupo{gap:22px;padding-right:22px}
+.faixa-fina .faixa-grupo span{font-family:var(--f-texto);font-weight:600;font-size:14px;letter-spacing:.12em;color:var(--creme)}
+.faixa-fina .faixa-grupo i{color:var(--lima);font-size:13px}
+.trilho-direita{animation:rolar-direita 38s linear infinite}
+@keyframes rolar-direita{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 
 /* DESTAQUES */
 .destaques{padding:96px 0;background:var(--verde);color:var(--creme)}
@@ -424,6 +430,11 @@ section{position:relative;overflow:hidden}
     </div>
   </div>
 </section>
+
+<!-- Faixa fina com os serviços (rola da esquerda pra direita) -->
+<div class="faixa faixa-fina" aria-label="O que podemos criar juntos">
+  <div class="faixa-trilho trilho-direita" id="faixa-servicos"></div>
+</div>
 
 <!-- 2. SOBRE MIM -->
 <section class="sobre" id="sobre">
@@ -673,6 +684,11 @@ function montar(){
   document.getElementById('difs').innerHTML = D.diferenciais.map(function(d,i){
     return '<div class="dif">'+DIF_ICONES[i%3]+'<h4>'+esc(d.titulo)+'</h4><p>'+esc(d.texto)+'</p></div>';
   }).join('');
+
+  // Faixa fina de serviços (mesmos nomes do carrossel "O que podemos criar juntos")
+  var servs = (D.servicos||[]).map(function(s){return '<span>'+esc(s.titulo)+'</span><i aria-hidden="true">✦</i>';}).join('');
+  servs = servs+servs; // repete pra encher a linha em telas largas
+  document.getElementById('faixa-servicos').innerHTML = '<div class="faixa-grupo">'+servs+'</div><div class="faixa-grupo" aria-hidden="true">'+servs+'</div>';
 
   // Faixa de marcas (duas cópias pra rolar sem emenda)
   var itens = D.marcas.map(function(m){

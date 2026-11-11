@@ -117,22 +117,23 @@ section{position:relative;overflow:hidden}
 .brilhos-capa{width:84px;right:46%;top:26px}
 
 /* SOBRE */
-.sobre{padding:88px 0 0;background:var(--creme)}
+.sobre{padding:88px 0;background:var(--creme)}
 .sobre-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px;align-items:center}
 .sobre-foto{position:relative;max-width:420px;justify-self:center;width:100%}
-.polaroid{background:#fff;padding:14px 14px 56px;border-radius:6px;box-shadow:0 18px 40px rgba(24,44,8,.18);transform:rotate(-4deg);position:relative}
+.polaroid{background:#fff;padding:14px 14px 10px;border-radius:6px;box-shadow:0 18px 40px rgba(24,44,8,.18);transform:rotate(-4deg);position:relative}
 .polaroid::before{content:"";position:absolute;top:-16px;left:50%;width:110px;height:32px;margin-left:-55px;background:rgba(201,211,190,.85);transform:rotate(3deg);border-radius:2px}
 .sobre-foto .quadro{aspect-ratio:4/5;overflow:hidden;background:var(--creme2);border-radius:3px}
 .sobre-foto img{width:100%;height:100%;object-fit:cover}
 .sobre-foto .gap{border:0}
-.nota{position:absolute;right:-26px;bottom:24px;z-index:2;background:var(--nota);color:var(--verde2);font-family:var(--f-mao);font-size:22px;line-height:1.1;padding:14px 16px;transform:rotate(-8deg);box-shadow:0 8px 18px rgba(24,44,8,.18);max-width:150px;text-align:center}
+.legenda-polaroid{font-family:var(--f-mao);font-size:24px;color:var(--verde2);text-align:center;padding:10px 0 4px}
+.nota{position:absolute;right:-26px;bottom:90px;z-index:2;background:var(--nota);color:var(--verde2);font-family:var(--f-mao);font-size:22px;line-height:1.1;padding:14px 16px;transform:rotate(-8deg);box-shadow:0 8px 18px rgba(24,44,8,.18);max-width:150px;text-align:center}
 .coroa{position:absolute;width:76px;top:-46px;left:-18px;transform:rotate(-14deg);z-index:2}
 .sobre-texto{position:relative}
 .cacto{position:absolute;right:0;top:-6px;width:52px}
-.titulo-mao{font-family:var(--f-mao);font-weight:400;font-size:clamp(38px,4.4vw,44px);line-height:1.05;color:var(--verde2);transform:rotate(-4deg);transform-origin:left;margin:14px 0 14px;display:inline-block}
+.titulo-mao{font-family:var(--f-mao);font-weight:400;font-size:clamp(40px,4.6vw,48px);line-height:1.05;color:var(--verde2);transform:rotate(-4deg);transform-origin:left;margin:14px 0 14px;display:inline-block}
 .sub-sobre{font-family:var(--f-titulo);text-transform:uppercase;font-size:22px;line-height:1.2;margin-bottom:18px;letter-spacing:.02em}
 .sub-sobre .marca-texto{padding:0 .2em}
-.sobre-texto p.par{font-size:15px;color:var(--cinza);margin-bottom:14px;max-width:54ch}
+.sobre-texto p.par{font-size:16px;color:var(--cinza);margin-bottom:24px;max-width:56ch}
 .sobre-texto .gap{min-height:96px;margin-bottom:14px}
 .foto-texto{margin:6px 0 18px;max-width:54ch;position:relative}
 .quadro-texto{aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:var(--creme2);box-shadow:0 14px 30px rgba(24,44,8,.16)}
@@ -146,11 +147,16 @@ section{position:relative;overflow:hidden}
 .faz{background:var(--verde);color:var(--creme);margin-top:88px;padding:64px 0}
 .faz h3{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(28px,3.4vw,40px);line-height:1.1;margin-bottom:36px}
 .faz h3 .mao{color:var(--lima)}
-.difs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.dif{padding:24px;border-radius:20px;background:var(--verde2)}
-.dif svg{width:42px;height:42px;color:var(--verde);background:var(--lima);border-radius:12px;padding:8px;margin-bottom:16px}
-.dif h4{font-family:var(--f-texto);font-weight:700;font-size:18px;line-height:1.3;margin-bottom:8px}
-.dif p{font-size:15px;color:#DCE3CF}
+.difs{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--verde2);border-radius:18px;overflow:hidden;max-width:560px}
+.dif{padding:18px 16px;background:#fff}
+.dif+.dif{border-left:1.5px solid var(--verde2)}
+.dif:first-child{background:var(--verde2);color:var(--creme)}
+.dif svg{width:34px;height:34px;color:var(--verde);background:var(--lima);border-radius:10px;padding:7px;margin-bottom:12px}
+.dif h4{font-family:var(--f-texto);font-weight:700;font-size:15px;line-height:1.3;margin-bottom:6px}
+.dif p{font-size:13px;color:var(--cinza);line-height:1.45}
+.dif:first-child p{color:#DCE3CF}
+.selo-metodo{display:inline-flex;align-items:center;gap:12px;margin-top:22px;background:var(--salvia);color:var(--verde);border-radius:999px;padding:8px 22px 8px 8px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.selo-metodo i{width:34px;height:34px;border-radius:50%;background:var(--verde2);color:var(--lima);font-style:normal;display:flex;align-items:center;justify-content:center;font-size:15px}
 .numeros{display:grid;grid-template-columns:repeat(3,1fr);margin-top:40px;padding-top:28px;border-top:1px solid rgba(254,255,242,.2)}
 .numeros div{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .numeros b{font-family:var(--f-nome);font-weight:400;font-size:54px;line-height:1;color:var(--lima);text-transform:uppercase}
@@ -275,7 +281,6 @@ section{position:relative;overflow:hidden}
 @media (max-width:980px){
   .capa-grid,.sobre-grid,.dest-grid,.contato-grid{grid-template-columns:1fr;gap:44px}
   .capa-foto{justify-self:start;max-width:400px;margin-left:30px}
-  .difs{grid-template-columns:1fr}
   .elogios{grid-template-columns:1fr}
   .duvidas{grid-template-columns:1fr 1fr}
   .nicho-cards{grid-template-columns:repeat(3,1fr)}
@@ -294,7 +299,13 @@ section{position:relative;overflow:hidden}
   .provas{gap:12px 22px}
   .provas b{font-size:32px}
   .botoes .btn{width:100%}
-  .sobre{padding-top:64px}
+  .sobre{padding:64px 0}
+  .difs{grid-template-columns:1fr}
+  .dif+.dif{border-left:0;border-top:1.5px solid var(--verde2)}
+  .dif{display:grid;grid-template-columns:34px 1fr;column-gap:12px;align-items:center;padding:14px 16px}
+  .dif svg{margin:0;grid-row:span 2}
+  .dif h4{margin:0}
+  .selo-metodo{font-size:12px;letter-spacing:.04em}
   .nota{right:-4px}
   .coroa{left:-2px}
   .cacto{width:40px}
@@ -387,26 +398,16 @@ section{position:relative;overflow:hidden}
   <div class="wrap sobre-grid">
     <div class="sobre-foto">
       <svg class="coroa" viewBox="0 0 110 64" aria-hidden="true"><path d="M10 56 L16 16 L36 40 L54 8 L72 40 L94 16 L100 56 Z" fill="#CBFC00" stroke="#182C08" stroke-width="4" stroke-linejoin="round"/></svg>
-      <div class="polaroid"><div class="quadro" id="sobre-foto"></div></div>
+      <div class="polaroid"><div class="quadro" id="sobre-foto"></div><p class="legenda-polaroid">eu, criando ✦</p></div>
       <p class="nota">Espanhol e Português</p>
     </div>
     <div class="sobre-texto">
       <svg class="cacto" viewBox="0 0 50 90" aria-hidden="true"><path d="M20 88 V22 a5 5 0 0 1 10 0 V88 Z M20 54 H12 a4 4 0 0 1 -4 -4 V34 a4 4 0 0 1 8 0 V46 H20 Z M30 44 H34 V30 a4 4 0 0 1 8 0 V48 a4 4 0 0 1 -4 4 H30 Z" fill="#263C18"/></svg>
       <p class="kicker">SOBRE MIM</p>
       <h2 class="titulo-mao">Oie, eu sou a Eli</h2>
-      <p class="sub-sobre">Conteúdo com estratégia. Vídeo com <span class="marca-texto">alma.</span></p>
       <div id="sobre-texto"></div>
-      <div class="assina-linha">
-        <p class="assinatura" id="assinatura"></p>
-        <div class="selo-aluno"><span><b>aluna da Rafa Chagas</b>Formada no Método Profissão do Futuro ✦</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="faz">
-    <div class="wrap">
-      <h3>O que eu faço pela <span class="mao">sua marca</span></h3>
       <div class="difs" id="difs"></div>
-      <div class="numeros" id="numeros"></div>
+      <p class="selo-metodo"><i>✦</i>Formada no Método Profissão do Futuro</p>
     </div>
   </div>
 </section>
@@ -597,11 +598,9 @@ function montar(){
     }
     return p ? '<p class="par">'+esc(p)+'</p>' : gap('texto','Escreva aqui mais um parágrafo sobre você');
   }).join('');
-  document.getElementById('assinatura').textContent = D.nome.split(' ')[0];
   document.getElementById('difs').innerHTML = D.diferenciais.map(function(d,i){
     return '<div class="dif">'+DIF_ICONES[i%3]+'<h4>'+esc(d.titulo)+'</h4><p>'+esc(d.texto)+'</p></div>';
   }).join('');
-  document.getElementById('numeros').innerHTML = D.provas.map(function(p){return '<div><b>'+esc(p.numero)+'</b><span>'+esc(p.texto)+'</span></div>';}).join('');
 
   // Faixa de marcas (duas cópias pra rolar sem emenda)
   var itens = D.marcas.map(function(m){
@@ -803,17 +802,13 @@ var DADOS = {
   // Texto do Sobre mim, um parágrafo por linha.
   // Pra colocar uma foto no meio do texto: { foto: "midia/arquivo.jpg", legenda: "texto curto" }
   sobreTexto: [
-    "Sou Elinairam, UGC creator bilíngue baseada em São Paulo. Crio conteúdo em português e em espanhol para marcas que querem falar com o público de cada idioma com naturalidade e estratégia.",
-    "Já gravei mais de 100 vídeos para mais de 50 marcas, que somam mais de 5 milhões de visualizações.",
-    { foto: "midia/estudio.jpg", legenda: "Meu espaço de gravação ✦" },
-    "Mantenho uma comunidade educacional de creators, o que me deixa sempre por dentro das novidades do mercado. Eu traduzo esse conhecimento em comunicação estratégica para a sua marca.",
-    "Minhas entregas se destacam pela qualidade e pela rapidez."
+    "Sou UGC creator bilíngue em São Paulo e gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade."
   ],
-  // Seus 3 diferenciais (faixa preta "O que eu faço pela sua marca")
+  // Seus 3 diferenciais (as 3 caixinhas do Sobre mim). Textos curtos!
   diferenciais: [
-    { titulo: "Estudo a dor do cliente da marca", texto: "Antes de gravar, entendo quem compra, o que trava a compra e qual fala convence." },
-    { titulo: "Roteiro meu, aprovado antes de gravar", texto: "Eu escrevo o roteiro e a marca aprova antes de eu ligar a câmera. Sem surpresa no final." },
-    { titulo: "Edição pronta pra anúncio", texto: "Gancho forte nos primeiros segundos, legenda e som tratado. É só subir no gerenciador." }
+    { titulo: "Estudo a dor do seu cliente", texto: "Entendo o público e o que trava a compra." },
+    { titulo: "Roteiro meu, aprovado por você", texto: "Enviado antes da gravação." },
+    { titulo: "Edição pronta pra anúncio", texto: "Gancho forte e som tratado." }
   ],
   // Seus 3 MELHORES vídeos (não os mais recentes). O 1º é o mais forte e toca sozinho.
   // titulo: nome curto · nicho · formato: ADS, review, unboxing, tutorial ou nativo

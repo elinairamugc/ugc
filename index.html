@@ -268,6 +268,26 @@ section{position:relative;overflow:hidden}
 .atendidas ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 26px}
 .atendidas li{font-family:var(--f-nome);font-size:32px;text-transform:uppercase;color:var(--verde2);line-height:1.2}
 
+/* MÉTRICAS */
+.metricas{background:var(--verde);color:var(--creme);padding:96px 0}
+.metricas .kicker{color:var(--salvia)}
+.metricas .h2{color:var(--creme);max-width:18ch}
+.metricas-mao{font-family:var(--f-mao);font-size:24px;color:var(--lima);transform:rotate(-3deg);display:inline-block;margin:10px 0 36px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kpi{background:var(--verde2);border-radius:20px;padding:22px 22px 20px;border:1px solid rgba(203,252,0,.18)}
+.kpi b{display:block;font-family:var(--f-nome);font-weight:400;font-size:clamp(40px,4vw,52px);line-height:1;color:var(--lima);font-variant-numeric:tabular-nums}
+.kpi span{display:block;font-size:14px;font-weight:600;margin-top:8px}
+.kpi small{display:inline-block;margin-top:10px;font-size:12px;font-weight:700;color:var(--verde);background:var(--lima);border-radius:999px;padding:3px 10px}
+.paineis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.painel{background:var(--verde2);border-radius:20px;padding:22px;border:1px solid rgba(203,252,0,.18)}
+.painel h3{font-family:var(--f-texto);font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.painel h3::before{content:"✦";color:var(--lima)}
+.barra{margin-bottom:12px}
+.barra-topo{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:5px}
+.barra-topo b{font-variant-numeric:tabular-nums;color:var(--lima)}
+.barra-trilho{height:8px;border-radius:999px;background:rgba(254,255,242,.12);overflow:hidden}
+.barra-cheia{height:100%;width:0;border-radius:999px;background:var(--lima);transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+
 /* CONTATO */
 .contato{padding:96px 0 0;background:var(--creme2)}
 .contato-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
@@ -322,6 +342,8 @@ section{position:relative;overflow:hidden}
   .duvidas{grid-template-columns:1fr 1fr}
   .nicho-cards{grid-template-columns:repeat(3,1fr)}
   .selo-branco{width:96px;height:96px;top:30px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .paineis{grid-template-columns:1fr}
   .brilhos-capa{display:none}
 }
 @media (max-width:520px){
@@ -354,7 +376,9 @@ section{position:relative;overflow:hidden}
   .faz{margin-top:64px;padding:52px 0}
   .numeros{grid-template-columns:1fr;gap:14px}
   .numeros b{font-size:46px}
-  .destaques,.nichos,.marcas-falam,.contato{padding-top:64px}
+  .destaques,.nichos,.marcas-falam,.contato,.metricas{padding-top:64px}
+  .metricas{padding-bottom:64px}
+  .kpi{padding:18px 16px}
   .destaques,.nichos,.marcas-falam{padding-bottom:64px}
   /* carrossel que desliza pro lado */
   .dest-cards,.nicho-cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 calc(-1 * var(--gutter));padding:0 var(--gutter) 10px;align-items:flex-end;scrollbar-width:thin}
@@ -529,6 +553,17 @@ section{position:relative;overflow:hidden}
       <p>Marcas que já atendi</p>
       <ul id="atendidas"></ul>
     </div>
+  </div>
+</section>
+
+<!-- MÉTRICAS DO INSTAGRAM (números contam quando a seção aparece) -->
+<section class="metricas" id="metricas">
+  <div class="wrap">
+    <p class="kicker">MÉTRICAS</p>
+    <h2 class="h2">Métricas que fazem a <span class="marca-texto">diferença</span></h2>
+    <p class="metricas-mao" id="metricas-periodo"></p>
+    <div class="kpis" id="kpis"></div>
+    <div class="paineis" id="paineis"></div>
   </div>
 </section>
 
@@ -745,6 +780,9 @@ function montar(){
   ligarCarrosselElogios(elogiosEl);
   document.getElementById('atendidas').innerHTML = D.marcas.map(function(m){return '<li>'+esc(m.nome)+'</li>';}).join('');
 
+  // Métricas
+  montarMetricas(D.metricas);
+
   // 6. Contato
   var ig = String(D.instagram||'').replace(/^@/,'');
   document.getElementById('contato-botoes').innerHTML =
@@ -761,6 +799,47 @@ function montar(){
   ligarVideos(document.getElementById('destaques'));
   ligarPlayer();
   ligarUmami();
+}
+
+/* Métricas: os números contam do zero quando a seção aparece na tela */
+function formatar(n, casas){ return n.toLocaleString('pt-BR',{minimumFractionDigits:casas||0, maximumFractionDigits:casas||0}); }
+function montarMetricas(M){
+  var sec = document.getElementById('metricas');
+  if(!M){ sec.remove(); return; }
+  document.getElementById('metricas-periodo').textContent = M.periodo || '';
+  document.getElementById('kpis').innerHTML = (M.numeros||[]).map(function(k){
+    return '<div class="kpi"><b data-valor="'+k.valor+'" data-casas="'+(k.casas||0)+'" data-antes="'+esc(k.antes||'')+'" data-depois="'+esc(k.depois||'')+'">'+esc(k.antes||'')+formatar(k.valor,k.casas)+esc(k.depois||'')+'</b><span>'+esc(k.rotulo)+'</span>'+(k.cresceu?'<small>'+esc(k.cresceu)+'</small>':'')+'</div>';
+  }).join('');
+  document.getElementById('paineis').innerHTML = (M.paineis||[]).map(function(p){
+    var max = Math.max.apply(null,p.itens.map(function(i){return i.valor;}));
+    return '<div class="painel"><h3>'+esc(p.titulo)+'</h3>'+p.itens.map(function(i){
+      var largura = p.escala==='max' ? (i.valor/max*100) : i.valor;
+      return '<div class="barra"><div class="barra-topo"><span>'+esc(i.nome)+'</span><b data-valor="'+i.valor+'" data-casas="'+(i.casas||0)+'" data-antes="" data-depois="'+esc(i.depois||'')+'">'+formatar(i.valor,i.casas)+esc(i.depois||'')+'</b></div><div class="barra-trilho"><div class="barra-cheia" data-largura="'+Math.min(100,largura).toFixed(1)+'"></div></div></div>';
+    }).join('')+'</div>';
+  }).join('');
+  var nums = sec.querySelectorAll('[data-valor]'), barras = sec.querySelectorAll('.barra-cheia');
+  function mostrarFinal(){ barras.forEach(function(b){ b.style.width = b.getAttribute('data-largura')+'%'; }); }
+  if(reduzMov || !('IntersectionObserver' in window)){ mostrarFinal(); return; }
+  nums.forEach(function(n){ n.textContent = n.getAttribute('data-antes')+formatar(0,+n.getAttribute('data-casas'))+n.getAttribute('data-depois'); });
+  var feito = false;
+  new IntersectionObserver(function(es,obs){
+    if(feito || !es.some(function(e){return e.isIntersecting;})) return;
+    feito = true; obs.disconnect();
+    mostrarFinal();
+    var ini = null, dur = 1600;
+    function quadro(ts){
+      if(!ini) ini = ts;
+      var p = Math.min(1,(ts-ini)/dur), e = 1-Math.pow(1-p,3);
+      nums.forEach(function(n){
+        var v = +n.getAttribute('data-valor'), c = +n.getAttribute('data-casas');
+        n.textContent = n.getAttribute('data-antes')+formatar(v*e,c)+n.getAttribute('data-depois');
+      });
+      if(p<1) requestAnimationFrame(quadro);
+    }
+    requestAnimationFrame(quadro);
+    // garante o número final mesmo se o navegador pausar a animação
+    setTimeout(function(){ nums.forEach(function(n){ n.textContent = n.getAttribute("data-antes")+formatar(+n.getAttribute("data-valor"),+n.getAttribute("data-casas"))+n.getAttribute("data-depois"); }); }, dur+300);
+  },{threshold:.25}).observe(sec);
 }
 
 /* Carrossel dos depoimentos: anda sozinho e para quando a marca passa o mouse ou toca */
@@ -992,6 +1071,35 @@ var DADOS = {
     { texto: "Nos gustó mucho tu portafolio y también nos llamó mucho la atención el hecho de que seas hispanohablante, ya que tenemos un público grande de profesores en América Latina.", marca: "Marca de educação", detalhe: "Contratação de vídeo em espanhol, com legendas em português" },
     { texto: "Perfeito, muito obrigado! A princípio achei muito legal. Super alinhado com a proposta.", marca: "Allora Foods", detalhe: "Aprovação do vídeo no WhatsApp" }
   ],
+  // Métricas do Instagram (só as positivas). Troque os números quando atualizar o print do painel.
+  // numeros: os cards grandes · antes/depois: texto antes/depois do número (ex.: "+", "%") · casas: casas decimais
+  // paineis: listas com barrinhas · escala "max" = a maior barra fica cheia; sem escala = o valor já é a % da barra
+  metricas: {
+    periodo: "Instagram · últimos 30 dias (12/10 a 10/11/2026)",
+    numeros: [
+      { valor: 12407, rotulo: "visualizações", cresceu: "+36% no mês" },
+      { valor: 3764,  rotulo: "contas alcançadas", cresceu: "+87,7% no mês" },
+      { valor: 4792,  rotulo: "visualizações de não seguidores", cresceu: "+105,5% no mês" },
+      { valor: 416,   rotulo: "interações com o conteúdo" }
+    ],
+    paineis: [
+      { titulo: "Visualizações por formato", escala: "max", itens: [
+        { nome: "Reels",   valor: 5.7, casas: 1, depois: " mil" },
+        { nome: "Stories", valor: 3.6, casas: 1, depois: " mil" },
+        { nome: "Posts",   valor: 1.9, casas: 1, depois: " mil" } ] },
+      { titulo: "Quem me assiste", itens: [
+        { nome: "Mulheres",          valor: 83.7, casas: 1, depois: "%" },
+        { nome: "Público de 25 a 44 anos", valor: 74.1, casas: 1, depois: "%" },
+        { nome: "Fala português",    valor: 71.7, casas: 1, depois: "%" },
+        { nome: "Fala espanhol",     valor: 25.5, casas: 1, depois: "%" } ] },
+      { titulo: "Onde está meu público", escala: "max", itens: [
+        { nome: "Brasil",        valor: 74.2, casas: 1, depois: "%" },
+        { nome: "Venezuela",     valor: 9.4,  casas: 1, depois: "%" },
+        { nome: "Peru",          valor: 3.4,  casas: 1, depois: "%" },
+        { nome: "Estados Unidos",valor: 2.4,  casas: 1, depois: "%" },
+        { nome: "Colômbia",      valor: 2.3,  casas: 1, depois: "%" } ] }
+    ]
+  },
   // Marcas que você já atendeu. logo: opcional (ex.: "midia/logos/dove.png"); vazio = aparece o nome
   marcas: [
     { nome: "Mercado Livre", logo: "" },

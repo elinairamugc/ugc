@@ -117,7 +117,7 @@ section{position:relative;overflow:hidden}
 .brilhos-capa{width:84px;right:46%;top:26px}
 
 /* SOBRE */
-.sobre{padding:88px 0;background:var(--creme)}
+.sobre{padding:88px 0 0;background:var(--creme)}
 .sobre-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px;align-items:center}
 .sobre-foto{position:relative;max-width:420px;justify-self:center;width:100%}
 .polaroid{background:#fff;padding:14px 14px 10px;border-radius:6px;box-shadow:0 18px 40px rgba(24,44,8,.18);transform:rotate(-4deg);position:relative}
@@ -161,6 +161,25 @@ section{position:relative;overflow:hidden}
 .numeros div{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .numeros b{font-family:var(--f-nome);font-weight:400;font-size:54px;line-height:1;color:var(--lima);text-transform:uppercase}
 .numeros span{font-size:14px;color:#DCE3CF}
+/* O QUE PODEMOS CRIAR JUNTOS */
+.criar{background:var(--creme2);margin-top:88px;padding:72px 0;border-top:1px solid #E2E8D6;border-bottom:1px solid #E2E8D6}
+.criar-grid{display:grid;grid-template-columns:.8fr 2fr;gap:40px;align-items:center}
+.criar-intro{position:relative}
+.criar-titulo{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(40px,4.4vw,56px);line-height:1.12;color:var(--verde2)}
+.criar-titulo .marca-texto{border-radius:14px;padding:0 .14em}
+.criar-brilho{position:absolute;width:64px;right:4px;top:-6px}
+.criar-mao{font-family:var(--f-mao);font-size:22px;line-height:1.25;color:var(--verde2);transform:rotate(-4deg);margin:22px 0 22px;max-width:16ch}
+.criar-setas{display:flex;gap:10px}
+.seta{width:48px;height:48px;border-radius:50%;border:2px solid var(--verde2);background:transparent;color:var(--verde2);font-size:20px;font-weight:700}
+.seta:hover{background:var(--lima);border-color:var(--lima)}
+.criar-trilho{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px 16px;scrollbar-width:thin}
+.criar-trilho:focus-visible{outline:3px solid var(--musgo);outline-offset:4px}
+.servico{flex:0 0 230px;scroll-snap-align:start;min-height:220px;background:var(--salvia);border-radius:18px;padding:26px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;color:var(--verde2)}
+.servico svg{width:52px;height:52px;margin-bottom:12px}
+.servico h4{font-family:var(--f-texto);font-weight:700;font-size:20px;line-height:1.2}
+.servico p{font-size:13px;line-height:1.45;max-width:24ch}
+.servico .destaque-novo{align-self:center;background:var(--verde2);color:var(--lima);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.servico a{margin-top:8px;background:var(--lima);color:var(--verde);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:700;text-decoration:underline}
 
 /* FAIXA DE MARCAS */
 .faixa{background:var(--lima);padding:16px 0;overflow:hidden}
@@ -279,6 +298,7 @@ section{position:relative;overflow:hidden}
 
 /* Responsivo */
 @media (max-width:980px){
+  .criar-grid{grid-template-columns:1fr;gap:28px}
   .capa-grid,.sobre-grid,.dest-grid,.contato-grid{grid-template-columns:1fr;gap:44px}
   .capa-foto{justify-self:start;max-width:400px;margin-left:30px}
   .elogios{grid-template-columns:1fr}
@@ -299,7 +319,11 @@ section{position:relative;overflow:hidden}
   .provas{gap:12px 22px}
   .provas b{font-size:32px}
   .botoes .btn{width:100%}
-  .sobre{padding:64px 0}
+  .sobre{padding:64px 0 0}
+  .criar{margin-top:64px;padding:52px 0}
+  .criar-trilho{margin:0 calc(-1 * var(--gutter));padding:6px var(--gutter) 16px}
+  .servico{flex-basis:72%}
+  .criar-brilho{width:48px}
   .difs{grid-template-columns:1fr}
   .dif+.dif{border-left:0;border-top:1.5px solid var(--verde2)}
   .dif{display:grid;grid-template-columns:34px 1fr;column-gap:12px;align-items:center;padding:14px 16px}
@@ -410,6 +434,21 @@ section{position:relative;overflow:hidden}
       <p class="selo-metodo"><i>✦</i>Formada no Método Profissão do Futuro</p>
     </div>
   </div>
+  <!-- O que podemos criar juntos (carrossel de serviços) -->
+  <div class="criar">
+    <div class="wrap criar-grid">
+      <div class="criar-intro">
+        <h3 class="criar-titulo">O que<br>podemos<br>criar <span class="marca-texto">juntos</span></h3>
+        <svg class="criar-brilho" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 4 C43 28 52 37 76 40 C52 43 43 52 40 76 C37 52 28 43 4 40 C28 37 37 28 40 4Z" fill="#CBFC00" stroke="#182C08" stroke-width="2"/></svg>
+        <p class="criar-mao">Conteúdos estratégicos para diferentes objetivos</p>
+        <div class="criar-setas">
+          <button class="seta" id="criar-ant" aria-label="Serviço anterior">←</button>
+          <button class="seta" id="criar-prox" aria-label="Próximo serviço">→</button>
+        </div>
+      </div>
+      <div class="criar-trilho" id="servicos" tabindex="0" aria-label="Serviços"></div>
+    </div>
+  </div>
 </section>
 
 <!-- Faixa das marcas que já atendi (rola devagar) -->
@@ -516,6 +555,15 @@ var ICONES = {
   texto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 11h16M4 16h10"/></svg>',
   play:'<svg viewBox="0 0 24 24" fill="#151515"><path d="M6 4l15 8-15 8z"/></svg>'
 };
+var SERV_ICONES = {
+  ugc:'<svg viewBox="0 0 48 48" fill="currentColor"><rect x="6" y="12" width="36" height="30" rx="6"/><path d="M8 12l6-6h8l-6 6zm12 0l6-6h8l-6 6z"/><path d="M20 21v13l11-6.5z" fill="#C9D3BE"/></svg>',
+  publi:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3"><rect x="12" y="6" width="24" height="36" rx="2" fill="currentColor"/><path d="M17 14h14M17 20h14M17 26h14M17 32h9" stroke="#C9D3BE"/></svg>',
+  clips:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"><path d="M6 16h8l3-5h14l3 5h8v24H6z"/><circle cx="24" cy="27" r="8"/><circle cx="24" cy="27" r="3" fill="currentColor"/></svg>',
+  broll:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"><rect x="6" y="8" width="36" height="32" rx="3"/><rect x="10" y="12" width="28" height="24"/><path d="M12 34l9-11 6 7 4-4 6 8z" fill="currentColor"/><circle cx="31" cy="18" r="2.5" fill="currentColor"/></svg>',
+  parceria:'<svg viewBox="0 0 48 48" fill="currentColor"><path d="M2 14h7l2 16H4zM46 14h-7l-2 16h7z"/><path d="M11 16l9-3 6 3 8-3 5 3 -2 13-8 7c-1.5 1.2-3.5 1-4.6-.4l-.6-.8-1.5 1.2c-1.4 1.1-3.4.9-4.5-.5l-.4-.5-1 .7c-1.3.9-3.1.6-4-.7L11 29z"/></svg>',
+  gestao:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="18" r="5"/><circle cx="36" cy="18" r="5"/><circle cx="24" cy="22" r="6"/><path d="M3 36c0-5 4-9 9-9 2 0 4 .6 5 1.6M45 36c0-5-4-9-9-9-2 0-4 .6-5 1.6M13 42c0-6 5-11 11-11s11 5 11 11z"/></svg>',
+  mensal:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><rect x="6" y="10" width="36" height="32" rx="4"/><path d="M6 19h36M15 5v9M33 5v9"/><path d="M14 26h4M22 26h4M30 26h4M14 33h4M22 33h4M30 33h4" stroke-linecap="round"/></svg>'
+};
 var DIF_ICONES = [
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/><path d="M8 11h6M11 8v6"/></svg>',
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6L9 21H3v-6z"/><path d="M12 6l6 6"/></svg>',
@@ -598,6 +646,13 @@ function montar(){
     }
     return p ? '<p class="par">'+esc(p)+'</p>' : gap('texto','Escreva aqui mais um parágrafo sobre você');
   }).join('');
+  var trilho = document.getElementById('servicos');
+  trilho.innerHTML = (D.servicos||[]).map(function(s){
+    return '<div class="servico">'+(s.novo?'<span class="destaque-novo">'+esc(s.novo)+'</span>':'')+(SERV_ICONES[s.icone]||SERV_ICONES.ugc)+'<h4>'+esc(s.titulo)+'</h4><p>'+esc(s.texto)+'</p>'+(s.link?'<a href="'+esc(s.link)+'">'+esc(s.linkTexto||'Clique aqui')+'</a>':'')+'</div>';
+  }).join('');
+  function passo(dir){ var c = trilho.querySelector('.servico'); trilho.scrollBy({left:dir*((c?c.offsetWidth:230)+18), behavior: reduzMov?'auto':'smooth'}); }
+  document.getElementById('criar-ant').addEventListener('click',function(){passo(-1);});
+  document.getElementById('criar-prox').addEventListener('click',function(){passo(1);});
   document.getElementById('difs').innerHTML = D.diferenciais.map(function(d,i){
     return '<div class="dif">'+DIF_ICONES[i%3]+'<h4>'+esc(d.titulo)+'</h4><p>'+esc(d.texto)+'</p></div>';
   }).join('');
@@ -809,6 +864,17 @@ var DADOS = {
     { titulo: "Estudo a dor do seu cliente", texto: "Entendo o público e o que trava a compra." },
     { titulo: "Roteiro meu, aprovado por você", texto: "Enviado antes da gravação." },
     { titulo: "Edição pronta pra anúncio", texto: "Gancho forte e som tratado." }
+  ],
+  // "O que podemos criar juntos": cards do carrossel. icone: ugc, publi, clips, broll, parceria, gestao ou mensal
+  // novo: etiqueta opcional em cima do card · link: opcional (ex.: "#contato")
+  servicos: [
+    { icone: "ugc",      titulo: "UGCs",              texto: "Pra redes sociais da marca" },
+    { icone: "mensal",   titulo: "UGC mensal",        texto: "Alto volume de conteúdo em contas criadas do zero pra falar só do seu produto ou serviço", novo: "UGC canvas" },
+    { icone: "publi",    titulo: "Publi post",        texto: "Postado nas minhas redes" },
+    { icone: "clips",    titulo: "Clips",             texto: "Para marketplaces" },
+    { icone: "broll",    titulo: "B-rolls",           texto: "Vídeos e cenas sem edição" },
+    { icone: "parceria", titulo: "Parcerias",         texto: "De longo prazo" },
+    { icone: "gestao",   titulo: "Gestão",            texto: "de campanha", link: "#contato", linkTexto: "Clique aqui" }
   ],
   // Seus 3 MELHORES vídeos (não os mais recentes). O 1º é o mais forte e toca sozinho.
   // titulo: nome curto · nicho · formato: ADS, review, unboxing, tutorial ou nativo

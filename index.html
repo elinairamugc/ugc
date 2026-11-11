@@ -155,28 +155,28 @@ section{position:relative;overflow:hidden}
 .numeros b{font-family:var(--f-nome);font-weight:400;font-size:54px;line-height:1;color:var(--lima);text-transform:uppercase}
 .numeros span{font-size:14px;color:#DCE3CF}
 /* O QUE PODEMOS CRIAR JUNTOS */
-.criar{margin-top:88px;padding:72px 0;background-color:#3E5128;background-image:url("midia/listras.jpg"),repeating-linear-gradient(90deg,#3E5128 0 64px,#F6F0E4 64px 118px);background-size:auto 100%,auto;background-repeat:repeat-x,repeat}
-.criar-grid{display:grid;grid-template-columns:.8fr 2fr;gap:32px;align-items:center}
-.criar-intro{position:relative;background:var(--creme);border-radius:26px;padding:32px 28px;box-shadow:0 16px 36px rgba(15,16,21,.22)}
-.criar-titulo{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(38px,4vw,52px);line-height:1.12;color:var(--verde2)}
+.criar{margin-top:72px;padding:44px 0;background-color:#3E5128;background-image:url("midia/listras.jpg"),repeating-linear-gradient(90deg,#3E5128 0 64px,#F6F0E4 64px 118px);background-size:auto 100%,auto;background-repeat:repeat-x,repeat}
+.criar-grid{display:grid;grid-template-columns:260px 1fr;gap:26px;align-items:center}
+.criar-intro{position:relative;background:var(--creme);border-radius:22px;padding:24px 22px;box-shadow:0 16px 36px rgba(15,16,21,.22)}
+.criar-titulo{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:36px;line-height:1.12;color:var(--verde2)}
 .criar-titulo .marca-texto{border-radius:14px;padding:0 .14em}
-.criar-brilho{position:absolute;width:58px;right:18px;top:18px}
-.criar-mao{font-family:var(--f-mao);font-size:22px;line-height:1.25;color:var(--verde2);transform:rotate(-4deg);margin:20px 0 0;max-width:16ch}
+.criar-brilho{position:absolute;width:42px;right:16px;top:16px}
+.criar-mao{font-family:var(--f-mao);font-size:18px;line-height:1.25;color:var(--verde2);transform:rotate(-4deg);margin:20px 0 0;max-width:16ch}
 .criar-carrossel{min-width:0;display:flex;flex-direction:column;gap:18px}
 .criar-setas{display:flex;justify-content:center;gap:12px}
-.seta{width:50px;height:50px;border-radius:50%;border:2px solid var(--verde);background:var(--creme);color:var(--verde2);font-size:20px;font-weight:700;box-shadow:0 6px 14px rgba(15,16,21,.2)}
+.seta{width:42px;height:42px;border-radius:50%;border:2px solid var(--verde);background:var(--creme);color:var(--verde2);font-size:20px;font-weight:700;box-shadow:0 6px 14px rgba(15,16,21,.2)}
 .seta:hover{background:var(--lima)}
 .criar-trilho{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px;scrollbar-width:none;-ms-overflow-style:none}
 .criar-trilho::-webkit-scrollbar{display:none}
 .criar-trilho:focus-visible{outline:3px solid var(--lima);outline-offset:4px}
-.servico{position:relative;flex:0 0 230px;scroll-snap-align:start;min-height:250px;background:var(--salvia);border-radius:20px;padding:30px 18px 22px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:0;color:var(--verde2);box-shadow:0 14px 30px rgba(15,16,21,.2);transition:background .2s ease,color .2s ease,transform .2s ease}
+.servico{position:relative;flex:0 0 190px;scroll-snap-align:start;min-height:210px;background:var(--salvia);border-radius:18px;padding:22px 14px 16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:0;color:var(--verde2);box-shadow:0 14px 30px rgba(15,16,21,.2);transition:background .2s ease,color .2s ease,transform .2s ease}
 .servico:hover,.servico:focus-within{background:var(--verde2);color:var(--creme);transform:translateY(-6px)}
 .servico:hover svg,.servico:focus-within svg{color:var(--lima)}
 .servico:hover p,.servico:focus-within p{color:var(--verde2)}
 .servico:hover .destaque-novo,.servico:focus-within .destaque-novo{background:var(--lima);color:var(--verde)}
-.servico svg{width:52px;height:52px;flex:0 0 auto;margin-bottom:14px;transition:color .2s ease}
-.servico h4{font-family:var(--f-texto);font-weight:700;font-size:20px;line-height:1.2;margin-bottom:12px}
-.servico p{font-size:13px;line-height:1.45;background:var(--creme);border-radius:12px;padding:10px 12px;width:100%;margin-top:auto}
+.servico svg{width:40px;height:40px;flex:0 0 auto;margin-bottom:10px;transition:color .2s ease}
+.servico h4{font-family:var(--f-texto);font-weight:700;font-size:16px;line-height:1.2;margin-bottom:10px}
+.servico p{font-size:12px;line-height:1.4;background:var(--creme);border-radius:12px;padding:10px 12px;width:100%;margin-top:auto}
 .servico .destaque-novo{position:absolute;top:12px;right:12px;background:var(--verde2);color:var(--lima);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .servico a{margin-top:12px;background:var(--lima);color:var(--verde);border-radius:999px;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:underline}
 .servico a:hover{background:var(--creme)}
@@ -233,7 +233,11 @@ section{position:relative;overflow:hidden}
 .aba:hover{background:var(--salvia)}
 .aba[aria-selected="true"]{background:var(--lima);border-color:var(--lima);color:var(--verde)}
 .aviso{display:inline-block;font-size:13px;font-weight:600;color:var(--cinza);background:var(--creme);border:1px dashed var(--musgo);border-radius:8px;padding:6px 12px;margin-bottom:20px}
-.nicho-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.nicho-area{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:end}
+.nicho-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.nicho-foto{position:relative;align-self:end}
+.nicho-foto::before{content:"";position:absolute;left:8%;right:4%;bottom:6%;height:70%;border-radius:200px 200px 24px 24px;background:var(--lima);opacity:.55;z-index:0}
+.nicho-foto img{position:relative;z-index:1;width:100%;height:auto;-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 96%);mask-image:linear-gradient(to bottom,#000 70%,transparent 96%)}
 .nicho-cards .leg{font-family:var(--f-texto);font-size:14px;font-weight:600;text-transform:none;letter-spacing:0;text-align:center}
 .nicho-cards .meta{text-align:center}
 
@@ -252,6 +256,10 @@ section{position:relative;overflow:hidden}
 .elogios-setas{margin-top:6px}
 .elogio blockquote{margin:0;font-size:13px;font-weight:500;line-height:1.5}
 .elogio .marca{font-size:12px;padding:4px 12px}
+.print{position:relative;background:#fff;border-radius:12px;overflow:hidden;height:190px;display:flex;align-items:center;justify-content:center}
+.print img{width:100%;height:100%;object-fit:contain;display:block}
+.print .ampliar{position:absolute;right:8px;bottom:8px;background:var(--verde2);color:var(--lima);font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;opacity:0;transition:opacity .2s ease}
+.elogio:hover .ampliar,.elogio:focus-visible .ampliar{opacity:1}
 .elogio .detalhe{font-size:12px}
 .elogios{margin-top:28px}
 .elogio .marca{align-self:flex-start;background:var(--lima);color:var(--verde);border-radius:999px;padding:5px 14px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
@@ -266,7 +274,8 @@ section{position:relative;overflow:hidden}
 .atendidas li{font-family:var(--f-nome);font-size:32px;text-transform:uppercase;color:var(--verde2);line-height:1.2}
 
 /* MÉTRICAS */
-.metricas{background:var(--verde);color:var(--creme);padding:60px 0}
+.metricas{background:var(--verde);color:var(--creme);padding:60px 0;position:relative;isolation:isolate}
+.metricas::before{content:"";position:absolute;inset:0;z-index:-1;background:url("midia/metricas-fundo.jpg") center 35%/cover no-repeat;opacity:.2}
 .metricas .h2{font-size:32px;margin-top:8px}
 .metricas .kicker{color:var(--salvia)}
 .metricas .h2{color:var(--creme);max-width:18ch}
@@ -352,6 +361,12 @@ section{position:relative;overflow:hidden}
 .popup .campos{gap:10px}
 .popup .campos input{padding:9px 12px;font-size:15px}
 .popup .campos textarea{min-height:72px}
+
+/* Visor dos prints dos depoimentos */
+.visor{position:fixed;inset:0;z-index:95;background:rgba(15,16,21,.85);display:flex;align-items:center;justify-content:center;padding:40px}
+.visor[hidden]{display:none}
+.visor img{max-width:min(900px,92vw);max-height:86vh;border-radius:16px;border:4px solid var(--lima);background:#fff}
+.visor-x{position:absolute;top:16px;right:16px;width:46px;height:46px;border-radius:50%;border:0;background:var(--lima);color:var(--verde);font-size:24px;font-weight:700;line-height:1}
 
 /* Player grande */
 .player{position:fixed;inset:0;z-index:100;background:rgba(15,16,21,.9);display:none;align-items:center;justify-content:center;padding:24px}
@@ -491,7 +506,10 @@ section{position:relative;overflow:hidden}
     <p class="kicker">CONTEÚDO POR NICHOS</p>
     <h2 class="h2">Ache o vídeo do <span class="mao">seu nicho<svg class="risco" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C20 2 35 11 52 6 C68 2 80 10 98 4" stroke="#CBFC00" stroke-width="5" fill="none" stroke-linecap="round"/></svg></span></h2>
     <div class="abas" role="tablist" id="abas"></div>
-    <div id="nicho-painel" role="tabpanel"></div>
+    <div class="nicho-area">
+      <div id="nicho-painel" role="tabpanel"></div>
+      <div class="nicho-foto"><img src="midia/caixas.png" alt="" loading="lazy" onerror="this.parentNode.remove()"></div>
+    </div>
   </div>
 </section>
 
@@ -559,7 +577,7 @@ section{position:relative;overflow:hidden}
 <footer class="rodape">
   <div class="wrap">
     <p class="logo" id="logo-rodape"></p>
-    <p>UGC creator · aluna da Rafa Chagas</p>
+    <p>UGC creator · estrategista multicultural bilíngue</p>
   </div>
 </footer>
 
@@ -573,6 +591,11 @@ section{position:relative;overflow:hidden}
     <p class="popup-mao" id="popup-titulo">Curtindo o portfólio? ✦</p>
     <div id="popup-form"></div>
   </div>
+</div>
+
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Depoimento" hidden>
+  <button class="visor-x" aria-label="Fechar">×</button>
+  <img alt="">
 </div>
 
 <div class="player" id="player" role="dialog" aria-modal="true" aria-label="Vídeo">
@@ -747,7 +770,7 @@ function montar(){
   // 5. O que as marcas falam
   var elogiosEl = document.getElementById('elogios');
   elogiosEl.innerHTML = D.elogios.map(function(e){
-    var corpo = e.texto ? '<div class="citacao">'+ICONES.aspas+'<blockquote>'+esc(e.texto)+'</blockquote></div>' : (e.print ? '<img src="'+esc(e.print)+'" alt="Print do depoimento de '+esc(e.marca)+'">' : gap('aspas','cole aqui a frase ou o print real da marca'));
+    var corpo = e.texto ? '<div class="citacao">'+ICONES.aspas+'<blockquote>'+esc(e.texto)+'</blockquote></div>' : (e.print ? '<div class="print"><img src="'+esc(e.print)+'" alt="Depoimento de '+esc(e.marca)+'" loading="lazy"><span class="ampliar">ver maior ⤢</span></div>' : gap('aspas','cole aqui a frase ou o print real da marca'));
     return '<div class="elogio" tabindex="0">'+corpo+'<span class="marca">'+gi(e.marca,'nome da marca')+'</span><p class="detalhe">'+gi(e.detalhe,'contexto: qual vídeo e qual resultado')+'</p></div>';
   }).join('');
   ligarCarrosselElogios(elogiosEl);
@@ -835,9 +858,15 @@ function ligarCarrosselElogios(trilho){
   trilho.addEventListener('click',function(e){
     var card = e.target.closest('.elogio'); if(!card) return;
     trilho.querySelectorAll('.elogio.ativo').forEach(function(x){ if(x!==card) x.classList.remove('ativo'); });
-    card.classList.toggle('ativo');
+    card.classList.add('ativo');
+    var img = card.querySelector('.print img');
+    if(img){ var v = document.getElementById('visor'); v.querySelector('img').src = img.src; v.querySelector('img').alt = img.alt; v.hidden = false; pausado = true; v.querySelector('.visor-x').focus(); }
   });
-  if(!reduzMov){ setInterval(function(){ if(!pausado && !document.hidden) passo(1); }, 4500); }
+  var visor = document.getElementById('visor');
+  function fecharVisor(){ visor.hidden = true; pausado = false; }
+  visor.addEventListener('click', function(e){ if(e.target === visor || e.target.closest('.visor-x')) fecharVisor(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !visor.hidden) fecharVisor(); });
+  if(!reduzMov){ setInterval(function(){ if(!pausado && visor.hidden && !document.hidden) passo(1); }, 4500); }
 }
 
 /* Explosão vermelha desenhada (faixa amarela) */
@@ -890,7 +919,7 @@ function montarForm(contato){
   montarPopup(contato);
 }
 
-/* Pop-up "Curtindo o portfólio?": aparece uma vez por visita, depois de 25 s ou de rolar metade da página */
+/* Pop-up "Curtindo o portfólio?": aparece uma vez por visita, depois que a pessoa passa pelos melhores vídeos */
 function montarPopup(contato){
   var pop = document.getElementById('popup'), ja = false;
   criarForm(document.getElementById('popup-form'), 'Deixe aqui sua proposta', 'Leva 1 minuto. Eu te respondo em até 48 horas.', contato, 'pop-up');
@@ -904,10 +933,10 @@ function montarPopup(contato){
   pop.querySelector('.popup-x').addEventListener('click', fechar);
   pop.addEventListener('click', function(e){ if(e.target === pop) fechar(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !pop.hidden) fechar(); });
-  setTimeout(abrir, 25000);
+  // abre quando a pessoa termina de passar pela seção dos melhores vídeos
+  var dest = document.getElementById('destaques');
   window.addEventListener('scroll', function(){
-    var p = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-    if(p > 0.55) abrir();
+    if(dest.getBoundingClientRect().bottom < window.innerHeight * 0.35) abrir();
   }, {passive:true});
 }
 
@@ -1069,14 +1098,14 @@ var DADOS = {
   ],
   // Depoimentos REAIS das marcas. Nunca invente: deixe "" até ter a frase ou o print.
   // texto: a frase · marca: nome da marca · detalhe: contexto (qual vídeo, qual resultado) · print: imagem opcional (ex.: midia/print-dove.jpg)
-  // Nunca coloque e-mail, telefone ou nome de pessoa: só o nome da marca e o cargo.
+  // print: imagem do depoimento (na pasta midia/depoimentos). Antes de colocar, apague e-mail, telefone e nome de pessoas do print.
   elogios: [
-    { texto: "Foi incrível, entregas extremamente pontuais e além de seguir o briefing sugeriu novas ideias.", marca: "Viamiazi", detalhe: "Coordenadora de Conteúdo · Satisfação, comunicação e recomendação 10/10" },
-    { texto: "Ficamos encantados em trabalhar com a Elinairam! Além de entregar um conteúdo com excelente qualidade e no capricho, entregou super rápido! Muito obrigada, Elinairam!", marca: "Ezé Congelados", detalhe: "Avaliação 5/5 na plataforma" },
-    { texto: "Ótima, tudo dentro do prazo e muito bem feito.", marca: "ArquivoZap", detalhe: "Fundador · Gostou da qualidade do trabalho" },
-    { texto: "Já olhei aqui e tá MARAVILHOSO!!! ARRASOU DEMAIS. E obrigada pela rapidez!", marca: "Yellow Fox", detalhe: "Mensagem no WhatsApp depois da entrega" },
-    { texto: "Nos gustó mucho tu portafolio y también nos llamó mucho la atención el hecho de que seas hispanohablante, ya que tenemos un público grande de profesores en América Latina.", marca: "Marca de educação", detalhe: "Contratação de vídeo em espanhol, com legendas em português" },
-    { texto: "Perfeito, muito obrigado! A princípio achei muito legal. Super alinhado com a proposta.", marca: "Allora Foods", detalhe: "Aprovação do vídeo no WhatsApp" }
+    { print: "midia/depoimentos/viamiazi.jpg", texto: "", marca: "Viamiazi", detalhe: "Coordenadora de Conteúdo · Satisfação, comunicação e recomendação 10/10" },
+    { print: "midia/depoimentos/eze-congelados.jpg", texto: "", marca: "Ezé Congelados", detalhe: "Avaliação 5/5 na plataforma" },
+    { print: "midia/depoimentos/arquivozap.jpg", texto: "", marca: "ArquivoZap", detalhe: "Fundador · Gostou da qualidade do trabalho" },
+    { print: "midia/depoimentos/yellow-fox.jpg", texto: "", marca: "Yellow Fox", detalhe: "Mensagem no WhatsApp depois da entrega" },
+    { print: "midia/depoimentos/marca-educacao.jpg", texto: "", marca: "Marca de educação", detalhe: "Contratação de vídeo em espanhol, com legendas em português" },
+    { print: "midia/depoimentos/allora-foods.jpg", texto: "", marca: "Allora Foods", detalhe: "Aprovação do vídeo no WhatsApp" }
   ],
   // Métricas do Instagram (só as positivas). Troque os números quando atualizar o print do painel.
   // numeros: os cards grandes · antes/depois: texto antes/depois do número (ex.: "+", "%") · casas: casas decimais

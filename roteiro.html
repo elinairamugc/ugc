@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="only light">
+<title>Roteiro · Elinairam Sandoval</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bosque:#2B3D1C; --profundo:#142408; --salvia:#A9BCA0; --off:#F7F7F5; --lima:#D7FF00; --manteiga:#FFF3A7; --linha:#DDE3D6; --cinza:#5B6552;
+  --f-titulo:"Anton",Impact,sans-serif; --f-texto:"DM Sans",system-ui,sans-serif; --f-mao:"Caveat",cursive;
+  color-scheme:only light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--off);background-image:linear-gradient(rgba(43,61,28,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(43,61,28,.05) 1px,transparent 1px);background-size:24px 24px;color:var(--profundo);font-family:var(--f-texto);font-size:16px;line-height:1.55}
+button,input,textarea{font:inherit;color:inherit}
+.wrap{max-width:820px;margin:0 auto;padding:0 18px}
+.topo{background:var(--bosque);color:var(--off);padding:26px 0 30px;position:relative;overflow:hidden}
+.topo .wrap{display:flex;align-items:center;gap:16px}
+.logo{width:72px;height:72px;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;font-family:var(--f-titulo);font-size:28px;color:var(--bosque)}
+.logo img{width:100%;height:100%;object-fit:contain}
+.topo .kicker{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--salvia);margin:0 0 4px}
+.topo h1{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(28px,6vw,40px);line-height:1.05;margin:0}
+.topo .produto{margin:6px 0 0;color:#DCE3CF}
+.topo .por{font-family:var(--f-mao);font-size:20px;color:var(--lima);margin:6px 0 0}
+.coroa{position:absolute;right:18px;top:16px;width:58px;opacity:.9}
+main{padding:24px 0 60px}
+.instrucoes{background:var(--manteiga);border-radius:18px;padding:14px 16px;margin-bottom:18px;font-size:15px}
+.instrucoes b{font-family:var(--f-mao);font-size:21px;font-weight:700;display:block;line-height:1.1;margin-bottom:4px}
+.seu-nome{display:flex;gap:10px;align-items:center;background:#fff;border:1.5px solid var(--linha);border-radius:16px;padding:10px 14px;margin-bottom:22px}
+.seu-nome label{font-size:13px;font-weight:700;white-space:nowrap}
+.seu-nome input{flex:1;border:0;outline:none;background:transparent;min-width:0}
+h2{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:26px;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+h2 .marcador{background:var(--lima);padding:0 8px;border-radius:8px}
+.parte{background:#fff;border:1.5px solid var(--linha);border-radius:20px;padding:18px;margin-bottom:14px}
+.parte.gancho{border-width:2px}
+.parte.escolhido{border-color:var(--bosque);box-shadow:0 0 0 4px var(--lima)}
+.parte-topo{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.parte-topo h3{margin:0;font-size:18px}
+.selo{background:var(--lima);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.bloco{margin:0 0 10px}
+.bloco .rot{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cinza);margin-bottom:2px}
+.bloco p{margin:0;white-space:pre-wrap}
+.ref-img{display:block;max-width:100%;max-height:360px;border-radius:14px;border:1px solid var(--linha);margin-top:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:2px solid var(--bosque);background:transparent;color:var(--bosque);border-radius:999px;padding:9px 16px;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--salvia)}
+.btn-lima{background:var(--lima);border-color:var(--lima);color:var(--profundo)}
+.btn-escuro{background:var(--bosque);color:#fff}
+.btn[disabled]{opacity:.55;cursor:default}
+.linha-btn{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.comentar{margin-top:10px;display:none}
+.comentar.on{display:block}
+.comentar textarea{width:100%;min-height:80px;border:2px solid var(--linha);border-radius:14px;padding:10px 12px;outline:none;resize:vertical;background:var(--off)}
+.comentar textarea:focus{border-color:var(--bosque);background:#fff}
+.comentarios{margin-top:10px}
+.com{background:var(--off);border-radius:12px;padding:8px 12px;margin-top:6px;font-size:14px}
+.com small{color:var(--cinza)}
+.aprovar{background:var(--bosque);color:var(--off);border-radius:22px;padding:22px;margin-top:28px}
+.aprovar h2{color:var(--off);margin-top:0}
+.aprovar p{margin:0 0 12px;color:#DCE3CF}
+.aprovar input{width:100%;border:0;border-radius:12px;padding:11px 14px;margin-bottom:12px;color:var(--profundo)}
+.aprovado{background:var(--lima);color:var(--profundo);border-radius:16px;padding:14px 16px;font-weight:700}
+.rodape{text-align:center;font-size:13px;color:var(--cinza);padding:20px 0 40px}
+.rodape b{font-family:var(--f-titulo);font-weight:400;font-size:18px;color:var(--bosque);letter-spacing:.02em}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--profundo);color:#fff;padding:12px 18px;border-radius:999px;font-weight:700;z-index:50;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+.carregando{text-align:center;padding:60px 0;font-family:var(--f-mao);font-size:26px;color:var(--cinza)}
+@media (max-width:520px){ .topo .wrap{align-items:flex-start} .logo{width:58px;height:58px} .coroa{display:none} }
+</style>
+</head>
+<body>
+<div id="app"><p class="carregando">carregando o roteiro…</p></div>
+<div class="toast" id="toast"></div>
+<script>
+/* Endereço do painel (parte pública). Preenchido na instalação. */
+var API = 'https://script.google.com/macros/s/AKfycbzR_NER5y93lbFVpzffYVJJw0GdfYZBABK0PtN8-CYDG4sYSHKk7nOi41J1ExqptPN_XA/exec';
+
+var TXT = {
+  pt:{kicker:'Roteiro UGC',por:'por Elinairam Sandoval ✦',instrTit:'Como aprovar ✦',instr:'1. Escolha um dos dois ganchos. 2. Se quiser, comente qualquer parte. 3. No final, aprove o roteiro com o seu nome.',nome:'Seu nome',nomePh:'quem está revisando',ganchos:'Ganchos',ganchosNota:'escolha um',cenas:'Cenas',audio:'Áudio · o que eu falo',imagem:'Imagem · o que aparece',ref:'Referência',verRef:'Ver referência ↗',escolher:'Escolher este gancho',escolhido:'Gancho escolhido',comentar:'Comentar',enviar:'Enviar comentário',comPh:'Escreva seu comentário…',aprovarTit:'Aprovar roteiro',aprovarTxt:'Está tudo certo? Escreva o nome de quem aprovou e clique em aprovar.',aprovarBtn:'Aprovar roteiro ✓',aprovadoPor:'Roteiro aprovado por',em:'em',okGancho:'Gancho escolhido ✦',okCom:'Comentário enviado ✦',okAprov:'Roteiro aprovado! Obrigada ✦',faltaNome:'Escreva o nome de quem aprovou',faltaCom:'Escreva o comentário',erro:'Não consegui enviar agora. Tente de novo.',naoAchei:'Não encontrei esse roteiro. Confira o link.',enviando:'Enviando…'},
+  es:{kicker:'Guion UGC',por:'por Elinairam Sandoval ✦',instrTit:'Cómo aprobar ✦',instr:'1. Elige uno de los dos ganchos. 2. Si quieres, comenta cualquier parte. 3. Al final, aprueba el guion con tu nombre.',nome:'Tu nombre',nomePh:'quién está revisando',ganchos:'Ganchos',ganchosNota:'elige uno',cenas:'Escenas',audio:'Audio · lo que digo',imagem:'Imagen · lo que aparece',ref:'Referencia',verRef:'Ver referencia ↗',escolher:'Elegir este gancho',escolhido:'Gancho elegido',comentar:'Comentar',enviar:'Enviar comentario',comPh:'Escribe tu comentario…',aprovarTit:'Aprobar guion',aprovarTxt:'¿Todo bien? Escribe el nombre de quien aprueba y haz clic en aprobar.',aprovarBtn:'Aprobar guion ✓',aprovadoPor:'Guion aprobado por',em:'el',okGancho:'Gancho elegido ✦',okCom:'Comentario enviado ✦',okAprov:'¡Guion aprobado! Gracias ✦',faltaNome:'Escribe el nombre de quien aprueba',faltaCom:'Escribe el comentario',erro:'No pude enviarlo ahora. Inténtalo de nuevo.',naoAchei:'No encontré este guion. Revisa el enlace.',enviando:'Enviando…'},
+  en:{kicker:'UGC script',por:'by Elinairam Sandoval ✦',instrTit:'How to approve ✦',instr:'1. Pick one of the two hooks. 2. Comment on any part if you like. 3. At the end, approve the script with your name.',nome:'Your name',nomePh:'who is reviewing',ganchos:'Hooks',ganchosNota:'pick one',cenas:'Scenes',audio:'Audio · what I say',imagem:'Visual · what appears',ref:'Reference',verRef:'See reference ↗',escolher:'Pick this hook',escolhido:'Chosen hook',comentar:'Comment',enviar:'Send comment',comPh:'Write your comment…',aprovarTit:'Approve script',aprovarTxt:'All good? Write the name of who is approving and click approve.',aprovarBtn:'Approve script ✓',aprovadoPor:'Script approved by',em:'on',okGancho:'Hook chosen ✦',okCom:'Comment sent ✦',okAprov:'Script approved! Thank you ✦',faltaNome:'Write the name of who is approving',faltaCom:'Write your comment',erro:"I couldn't send it right now. Please try again.",naoAchei:"I couldn't find this script. Please check the link.",enviando:'Sending…'}
+};
+var token = new URLSearchParams(location.search).get('r') || '';
+var R = null, T = TXT.pt;
+var app = document.getElementById('app');
+
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function aviso(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(aviso.t); aviso.t=setTimeout(function(){el.classList.remove('on');},3000); }
+function ehImagem(u){ return /^https?:\/\/.+(\.(png|jpe?g|webp|gif)(\?.*)?$|lh3\.googleusercontent\.com\/d\/)/i.test(u||''); }
+function ehLink(u){ return /^https?:\/\//i.test(u||''); }
+function nomeSalvo(){ try{ return localStorage.getItem('roteiroNome')||''; }catch(e){ return ''; } }
+function guardarNome(n){ try{ localStorage.setItem('roteiroNome', n); }catch(e){} }
+function data(iso){ var d=new Date(iso); return isNaN(d)?'':d.toLocaleDateString(R && R.idioma==='en'?'en-US':(R && R.idioma==='es'?'es':'pt-BR')); }
+
+function carregar(){
+  if(!/^[a-f0-9]{20}$/.test(token)){ app.innerHTML = '<p class="carregando">'+T.naoAchei+'</p>'; return; }
+  fetch(API+'?api=roteiro&r='+encodeURIComponent(token)).then(function(r){ return r.json(); }).then(function(d){
+    if(!d.ok){ app.innerHTML = '<p class="carregando">'+esc(T.naoAchei)+'</p>'; return; }
+    R = d.roteiro; T = TXT[R.idioma] || TXT.pt;
+    document.documentElement.lang = R.idioma==='pt'?'pt-BR':R.idioma;
+    document.title = (R.marca?R.marca+' · ':'')+(R.titulo||'Roteiro');
+    desenhar();
+  }).catch(function(){ app.innerHTML = '<p class="carregando">'+esc(T.erro)+'</p>'; });
+}
+
+function htmlParte(p){
+  var gancho = p.tipo==='gancho', escolhido = gancho && R.gancho===p.id;
+  var coms = (R.comentarios||[]).filter(function(c){ return c.parte===p.id; });
+  var ref = '';
+  if(p.referencia){
+    ref = ehImagem(p.referencia) ? '<div class="bloco"><span class="rot">'+T.ref+'</span><img class="ref-img" src="'+esc(p.referencia)+'" alt="'+esc(T.ref)+'" loading="lazy"></div>'
+        : ehLink(p.referencia) ? '<div class="bloco"><a class="btn" href="'+esc(p.referencia)+'" target="_blank" rel="noopener">'+T.verRef+'</a></div>'
+        : '<div class="bloco"><span class="rot">'+T.ref+'</span><p>'+esc(p.referencia)+'</p></div>';
+  }
+  return '<div class="parte'+(gancho?' gancho':'')+(escolhido?' escolhido':'')+'" data-id="'+esc(p.id)+'">'+
+    '<div class="parte-topo"><h3>'+esc(p.nome)+'</h3>'+(escolhido?'<span class="selo">✓ '+T.escolhido+'</span>':'')+'</div>'+
+    (p.audio?'<div class="bloco"><span class="rot">'+T.audio+'</span><p>'+esc(p.audio)+'</p></div>':'')+
+    (p.imagem?'<div class="bloco"><span class="rot">'+T.imagem+'</span><p>'+esc(p.imagem)+'</p></div>':'')+
+    ref+
+    '<div class="linha-btn">'+(gancho&&!escolhido?'<button class="btn btn-lima" data-escolher>'+T.escolher+'</button>':'')+'<button class="btn" data-abrir-com>'+T.comentar+'</button></div>'+
+    '<div class="comentar"><textarea placeholder="'+esc(T.comPh)+'"></textarea><div class="linha-btn"><button class="btn btn-escuro" data-enviar-com>'+T.enviar+'</button></div></div>'+
+    (coms.length?'<div class="comentarios">'+coms.map(function(c){ return '<div class="com">'+esc(c.texto)+(c.nome?' <small>— '+esc(c.nome)+'</small>':'')+'</div>'; }).join('')+'</div>':'')+
+  '</div>';
+}
+
+function desenhar(){
+  var ganchos = (R.partes||[]).filter(function(p){return p.tipo==='gancho';});
+  var cenas = (R.partes||[]).filter(function(p){return p.tipo!=='gancho';});
+  app.innerHTML =
+    '<header class="topo"><svg class="coroa" viewBox="0 0 110 64" aria-hidden="true"><path d="M10 56 L16 16 L36 40 L54 8 L72 40 L94 16 L100 56 Z" fill="none" stroke="#D7FF00" stroke-width="6" stroke-linejoin="round"/></svg>'+
+      '<div class="wrap"><div class="logo">'+(R.logo?'<img src="'+esc(R.logo)+'" alt="'+esc(R.marca)+'">':esc(String(R.marca||'?').slice(0,2).toUpperCase()))+'</div>'+
+      '<div><p class="kicker">'+T.kicker+(R.marca?' · '+esc(R.marca):'')+'</p><h1>'+esc(R.titulo)+'</h1>'+(R.produto?'<p class="produto">'+esc(R.produto)+'</p>':'')+'<p class="por">'+T.por+'</p></div></div></header>'+
+    '<main class="wrap">'+
+      '<div class="instrucoes"><b>'+T.instrTit+'</b>'+T.instr+'</div>'+
+      '<div class="seu-nome"><label for="nome">'+T.nome+'</label><input id="nome" placeholder="'+esc(T.nomePh)+'" value="'+esc(nomeSalvo())+'" maxlength="80"></div>'+
+      (ganchos.length?'<h2>'+T.ganchos+' <span class="marcador">'+T.ganchosNota+'</span></h2>'+ganchos.map(htmlParte).join(''):'')+
+      (cenas.length?'<h2>'+T.cenas+'</h2>'+cenas.map(htmlParte).join(''):'')+
+      '<div class="aprovar" id="aprovar">'+(R.aprovadoPor
+        ? '<div class="aprovado">✓ '+T.aprovadoPor+' '+esc(R.aprovadoPor)+' '+T.em+' '+data(R.aprovadoEm)+'</div>'
+        : '<h2>'+T.aprovarTit+'</h2><p>'+T.aprovarTxt+'</p><input id="nome-aprov" placeholder="'+esc(T.nome)+'" value="'+esc(nomeSalvo())+'" maxlength="80"><button class="btn btn-lima" id="btn-aprovar">'+T.aprovarBtn+'</button>')+
+      '</div>'+
+    '</main><p class="rodape"><b>ELINAIRAM SANDOVAL ✦</b><br>UGC creator · portfolio.elairum.com.br</p>';
+  ligar();
+}
+
+function enviar(dados){
+  return fetch(API,{method:'POST',body:JSON.stringify(dados)}).then(function(r){ return r.json(); }).then(function(d){ if(!d.ok) throw new Error(d.erro||T.erro); return d; });
+}
+
+function ligar(){
+  var nomeEl = document.getElementById('nome');
+  nomeEl.addEventListener('change',function(){ guardarNome(nomeEl.value.trim()); });
+  app.querySelectorAll('.parte').forEach(function(el){
+    var id = el.getAttribute('data-id');
+    var esc1 = el.querySelector('[data-escolher]');
+    if(esc1) esc1.onclick = function(){
+      esc1.disabled = true; esc1.textContent = T.enviando;
+      enviar({acao:'gancho', r:token, parte:id, nome:nomeEl.value.trim()}).then(function(d){ R.gancho = d.gancho; aviso(T.okGancho); desenhar(); })
+        .catch(function(e){ aviso(e.message||T.erro); esc1.disabled=false; esc1.textContent=T.escolher; });
+    };
+    var box = el.querySelector('.comentar');
+    el.querySelector('[data-abrir-com]').onclick = function(){ box.classList.toggle('on'); if(box.classList.contains('on')) box.querySelector('textarea').focus(); };
+    var bt = el.querySelector('[data-enviar-com]');
+    bt.onclick = function(){
+      var txt = box.querySelector('textarea').value.trim(); if(!txt){ aviso(T.faltaCom); return; }
+      bt.disabled = true; bt.textContent = T.enviando;
+      var nome = nomeEl.value.trim(); guardarNome(nome);
+      enviar({acao:'comentario', r:token, parte:id, texto:txt, nome:nome}).then(function(){
+        R.comentarios = (R.comentarios||[]).concat([{parte:id, texto:txt, nome:nome}]); aviso(T.okCom); desenhar();
+      }).catch(function(e){ aviso(e.message||T.erro); bt.disabled=false; bt.textContent=T.enviar; });
+    };
+  });
+  var ba = document.getElementById('btn-aprovar');
+  if(ba) ba.onclick = function(){
+    var n = document.getElementById('nome-aprov').value.trim(); if(!n){ aviso(T.faltaNome); return; }
+    guardarNome(n); ba.disabled = true; ba.textContent = T.enviando;
+    enviar({acao:'aprovar', r:token, nome:n}).then(function(d){ R.aprovadoPor = d.aprovadoPor; R.aprovadoEm = d.aprovadoEm; aviso(T.okAprov); desenhar(); document.getElementById('aprovar').scrollIntoView({behavior:'smooth',block:'center'}); })
+      .catch(function(e){ aviso(e.message||T.erro); ba.disabled=false; ba.textContent=T.aprovarBtn; });
+  };
+}
+
+carregar();
+</script>
+</body>
+</html>

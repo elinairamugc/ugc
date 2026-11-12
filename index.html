@@ -1055,6 +1055,31 @@ function medirVideo(titulo){
       window.umami.track(('video-'+slug(nome)).slice(0,50));
     }
   }catch(e){}
+  avisarPainel({acao:'video', titulo:String(titulo||'').slice(0,120)});
+}
+
+/* Métricas do seu painel: conta visitas e vídeos abertos (sem dados pessoais, nunca quebra a página) */
+var PAINEL_METRICAS = 'https://script.google.com/macros/s/AKfycbzR_NER5y93lbFVpzffYVJJw0GdfYZBABK0PtN8-CYDG4sYSHKk7nOi41J1ExqptPN_XA/exec';
+function idGuardado(chave, armazem){
+  try{ var v = armazem.getItem(chave); if(!v){ v = Math.random().toString(36).slice(2,12); armazem.setItem(chave, v); } return v; }catch(e){ return ''; }
+}
+function avisarPainel(dados){
+  try{
+    if(!PAINEL_METRICAS || navigator.webdriver || /^(file:|http:\/\/localhost)/.test(location.href)) return;
+    dados.visitante = idGuardado('painelVisitante', localStorage);
+    dados.sessao = idGuardado('painelSessao', sessionStorage);
+    dados.fuso = (Intl.DateTimeFormat().resolvedOptions().timeZone)||'';
+    dados.idioma = navigator.language||'';
+    dados.aparelho = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'celular' : 'computador';
+    dados.pagina = location.pathname;
+    var corpo = JSON.stringify(dados);
+    if(navigator.sendBeacon && navigator.sendBeacon(PAINEL_METRICAS, new Blob([corpo],{type:'text/plain'}))) return;
+    fetch(PAINEL_METRICAS,{method:'POST',body:corpo,mode:'no-cors',keepalive:true}).catch(function(){});
+  }catch(e){}
+}
+function contarVisita(){
+  var origem = ''; try{ if(document.referrer) origem = new URL(document.referrer).hostname; }catch(e){}
+  avisarPainel({acao:'visita', origem:origem});
 }
 
 /* =========================================================
@@ -1122,7 +1147,7 @@ function ligarIdiomas(){
   if(inicial !== 'pt') mudarIdioma(inicial);
 }
 
-document.addEventListener('DOMContentLoaded',function(){ montar(); ligarIdiomas(); });
+document.addEventListener('DOMContentLoaded',function(){ montar(); ligarIdiomas(); contarVisita(); });
 
 /* =========================================================
    DADOS — edite só aqui pra trocar tudo no portfólio

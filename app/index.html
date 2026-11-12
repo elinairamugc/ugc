@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel Elinairam</title>
+<meta name="theme-color" content="#2B3D1C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Painel">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bosque:#2B3D1C;--profundo:#142408;--off:#F7F7F5;--lima:#D7FF00}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bosque);background-image:linear-gradient(rgba(215,255,0,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(215,255,0,.06) 1px,transparent 1px);background-size:24px 24px;color:var(--off);font-family:"DM Sans",system-ui,sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+.cx{max-width:360px;width:100%}
+svg{width:110px;height:64px;display:block;margin:0 auto 18px}
+h1{font-family:"Anton",Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:38px;letter-spacing:.02em;margin:0;line-height:1}
+.frase{font-family:"Caveat",cursive;color:var(--lima);font-size:22px;margin:6px 0 28px}
+.btn{display:inline-block;background:var(--lima);color:var(--profundo);border-radius:999px;padding:14px 28px;font-weight:700;font-size:16px;text-decoration:none}
+.btn:active{transform:scale(.97)}
+.status{font-size:14px;opacity:.8;margin-top:18px;min-height:20px}
+.ponto{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--lima);margin:0 3px;animation:p 1s infinite alternate}
+.ponto:nth-child(2){animation-delay:.2s}.ponto:nth-child(3){animation-delay:.4s}
+@keyframes p{to{opacity:.2}}
+</style>
+</head>
+<body>
+<div class="cx">
+  <svg viewBox="0 0 110 64" aria-hidden="true"><path d="M10 56 L16 16 L36 40 L54 8 L72 40 L94 16 L100 56 Z" fill="none" stroke="#D7FF00" stroke-width="6" stroke-linejoin="round"/></svg>
+  <h1>Painel Elinairam</h1>
+  <p class="frase">entre marcas, bastidores e perrengues ✦</p>
+  <a class="btn" id="abrir" href="#">Abrir o painel</a>
+  <p class="status" id="status"><span class="ponto"></span><span class="ponto"></span><span class="ponto"></span></p>
+</div>
+<script>
+// link do painel (a parte privada: só abre com a sua conta do Google)
+var PAINEL = 'https://script.google.com/macros/s/AKfycbxDi2k_3XugWCu15zc3Jh7LpFEMLLyTUqkPPyq88qP7slAeQhdq6eYhjGx43Org80Ko/exec';
+document.getElementById('abrir').href = PAINEL;
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});
+if (navigator.onLine === false) {
+  document.getElementById('status').textContent = 'Sem internet agora. Conecte e toque em "Abrir o painel".';
+} else {
+  setTimeout(function(){ location.replace(PAINEL); }, 600);
+}
+</script>
+</body>
+</html>

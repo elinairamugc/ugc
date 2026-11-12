@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=1280">
 <meta name="color-scheme" content="only light">
 <title>Elinairam Sandoval · portfólio UGC</title>
-<meta name="description" content="Elinairam Sandoval, UGC creator bilíngue em São Paulo: vídeos em português e espanhol para beleza, cabelo, casa, comida, tech e carros.">
+<meta name="description" content="Elinairam Sandoval, UGC creator bilíngue em São Paulo: vídeos em português e espanhol para tech, beleza, haircare, casa, autocuidado e carros.">
 
 <!-- Prévia do link no WhatsApp. Depois de publicar, se mudar o endereço do site, troque o link abaixo -->
 <meta property="og:title" content="Elinairam Sandoval · portfólio UGC">
@@ -214,7 +214,7 @@ section{position:relative;overflow:hidden}
 .dest-cards{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px;align-items:end}
 .card{position:relative;background:none;border:0;padding:0;text-align:left;color:var(--verde2);display:flex;flex-direction:column;gap:8px;min-width:0}
 .card .tela{position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:4px solid var(--salvia);background:var(--verde2)}
-.card .tela video{width:100%;height:100%;object-fit:cover}
+.card .tela video,.card .tela img.miniatura{width:100%;height:100%;object-fit:cover;display:block}
 .card .tela .gap{border:0;border-radius:0}
 .dest-cards .card{background:var(--creme);border-radius:22px;padding:8px 8px 16px}
 .dest-cards .card .leg,.dest-cards .card .meta{padding:0 8px}
@@ -240,6 +240,7 @@ section{position:relative;overflow:hidden}
 .aba[aria-selected="true"]{background:var(--lima);border-color:var(--lima);color:var(--verde)}
 .aviso{display:inline-block;font-size:13px;font-weight:600;color:var(--cinza);background:var(--creme);border:1px dashed var(--musgo);border-radius:8px;padding:6px 12px;margin-bottom:20px}
 .nicho-area{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:end}
+.nicho-desc{font-family:var(--f-mao);font-size:22px;color:var(--verde2);margin:-10px 0 18px;transform:rotate(-1deg)}
 .nicho-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .nicho-foto{position:relative;align-self:end}
 .nicho-foto img{position:relative;z-index:1;width:118%;max-width:none;margin-left:-6%;height:auto;-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 96%);mask-image:linear-gradient(to bottom,#000 70%,transparent 96%)}
@@ -380,6 +381,8 @@ section{position:relative;overflow:hidden}
 .player{position:fixed;inset:0;z-index:100;background:rgba(15,16,21,.9);display:none;align-items:center;justify-content:center;padding:24px}
 .player.aberto{display:flex}
 .player video{max-height:88vh;max-width:100%;aspect-ratio:9/16;border-radius:18px;border:4px solid var(--lima);background:#000}
+.player iframe{height:88vh;max-height:88vh;aspect-ratio:9/16;max-width:100%;border:4px solid var(--lima);border-radius:18px;background:#000}
+.player [hidden]{display:none}
 .player-x{position:absolute;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:0;background:var(--lima);font-size:24px;font-weight:700;line-height:1;color:var(--verde)}
 
 /* Responsivo */
@@ -614,6 +617,7 @@ section{position:relative;overflow:hidden}
 <div class="player" id="player" role="dialog" aria-modal="true" aria-label="Vídeo">
   <button class="player-x" id="player-x" aria-label="Fechar vídeo">×</button>
   <video id="player-video" controls playsinline></video>
+  <iframe id="player-yt" title="Vídeo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen hidden></iframe>
 </div>
 
 <script>
@@ -692,17 +696,22 @@ function cardVideo(v,i,opcoes){
   opcoes = opcoes||{};
   var dica = opcoes.dica||'Vídeo vertical .mp4';
   var tela;
-  if(v.video){
+  if(v.youtube){ // vídeo do YouTube (Shorts): mostra a miniatura e abre o player do YouTube
+    var id = esc(v.youtube);
+    tela = '<img class="miniatura" src="https://i.ytimg.com/vi/'+id+'/oar2.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src=\'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg\'"><span class="play" aria-hidden="true">'+ICONES.play+'</span>';
+  } else if(v.video){
     var auto = opcoes.primeiro && !reduzMov;
     tela = '<video src="'+esc(v.video)+'#t=0.1" preload="metadata" muted playsinline loop'+(auto?' autoplay data-auto':'')+(v.capa?' poster="'+esc(v.capa)+'"':'')+' data-dica="'+esc(dica)+'" onerror="semMidia(this)"></video><span class="play" aria-hidden="true">'+ICONES.play+'</span>';
   } else {
     tela = gap('video',dica);
   }
-  var meta = gi(v.nicho||opcoes.nicho,'nicho')+' · '+gi(v.formato,'formato');
-  return '<div class="card '+(opcoes.moldura||'')+(v.video?' tem-video':'')+'"'+(v.video?' role="button" tabindex="0"':'')+' data-video="'+esc(v.video||'')+'" data-titulo="'+esc(v.titulo||v.video||'')+'">'+
-    (v.res?'<span class="res">✦ '+esc(v.res)+'</span>':'')+
+  var tem = v.youtube || v.video;
+  var nichoTxt = v.nicho||opcoes.nicho;
+  var meta = tem ? '<span>'+esc(nichoTxt)+'</span>'+(v.formato?' · <span>'+esc(v.formato)+'</span>':'') : gi(nichoTxt,'nicho')+' · '+gi(v.formato,'formato');
+  return '<div class="card '+(opcoes.moldura||'')+(tem?' tem-video':'')+'"'+(tem?' role="button" tabindex="0"':'')+' data-video="'+esc(v.video||'')+'" data-youtube="'+esc(v.youtube||'')+'" data-titulo="'+esc(v.titulo||v.youtube||v.video||'')+'">'+
+    (v.res?'<span class="res">✦ <span>'+esc(v.res)+'</span></span>':'')+
     '<div class="tela">'+tela+'</div>'+
-    '<p class="leg">'+gi(v.titulo,'título curto do vídeo')+' →</p>'+
+    '<p class="leg"><span>'+gi(v.titulo,'título curto do vídeo')+'</span> →</p>'+
     '<p class="meta">'+meta+'</p></div>';
 }
 
@@ -757,7 +766,7 @@ function montar(){
   document.getElementById('faixa').innerHTML = '<div class="faixa-grupo">'+itens+'</div><div class="faixa-grupo" aria-hidden="true">'+itens+'</div>';
 
   // 3. Destaques
-  if(temMouse) document.getElementById('dest-dica').textContent = 'Passe o mouse pra ver e clique pra assistir com som.';
+  if(temMouse) document.getElementById('dest-dica').textContent = 'Clique no vídeo pra assistir com som.';
   var molduras = ['moldura-0','moldura-1','moldura-2'];
   document.getElementById('dest-cards').innerHTML = D.destaques.slice(0,3).map(function(v,i){
     return cardVideo(v,i,{primeiro:i===0,moldura:molduras[i],dica:'Os melhores na frente, não os mais recentes · midia/destaques/'+(i+1)+'.mp4'});
@@ -772,8 +781,8 @@ function montar(){
     var n = D.nichos[i]; if(!n) return;
     abas.querySelectorAll('.aba').forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-i')==i);});
     painel.setAttribute('aria-labelledby','aba-'+slug(n.nome));
-    var aviso = (n.videos||[]).length<3 ? '<p class="aviso">mínimo 3 vídeos: com menos, tire o nicho</p>' : '';
-    painel.innerHTML = aviso+'<div class="nicho-cards">'+(n.videos||[]).map(function(v,j){
+    var aviso = (n.videos||[]).length<3 && /^(file:|http:\/\/localhost)/.test(location.href) ? '<p class="aviso">mínimo 3 vídeos: com menos, tire o nicho</p>' : '';
+    painel.innerHTML = aviso+(n.descricao?'<p class="nicho-desc">'+esc(n.descricao)+'</p>':'')+'<div class="nicho-cards">'+(n.videos||[]).map(function(v,j){
       return cardVideo(v,j,{nicho:n.nome,dica:'Vídeo vertical .mp4 · midia/nichos/'+slug(n.nome)+'/'+(j+1)+'.mp4'});
     }).join('')+'</div>';
     ligarVideos(painel);
@@ -977,20 +986,29 @@ function ligarVideos(raiz){
 
 /* Player grande com som */
 function ligarPlayer(){
-  var player = document.getElementById('player'), pv = document.getElementById('player-video'), ultimoFoco = null;
+  var player = document.getElementById('player'), pv = document.getElementById('player-video'), py = document.getElementById('player-yt'), ultimoFoco = null;
   function abrir(card){
     if(!card.classList.contains('tem-video')) return;
     ultimoFoco = card;
     document.querySelectorAll('.card video').forEach(function(x){ if(!x.hasAttribute('data-auto')) x.pause(); });
-    pv.src = card.getAttribute('data-video');
-    player.classList.add('aberto');
-    pv.muted = false; pv.play().catch(function(){});
+    var yt = card.getAttribute('data-youtube');
+    if(yt){
+      pv.hidden = true; py.hidden = false;
+      py.src = 'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(yt)+'?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+      player.classList.add('aberto');
+    } else {
+      py.hidden = true; pv.hidden = false;
+      pv.src = card.getAttribute('data-video');
+      player.classList.add('aberto');
+      pv.muted = false; pv.play().catch(function(){});
+    }
     document.getElementById('player-x').focus();
     medirVideo(card.getAttribute('data-titulo'));
   }
   function fechar(){
     if(!player.classList.contains('aberto')) return;
     pv.pause(); pv.removeAttribute('src'); pv.load();
+    py.removeAttribute('src');
     player.classList.remove('aberto');
     if(ultimoFoco) ultimoFoco.focus();
   }
@@ -1108,7 +1126,7 @@ var DADOS = {
   // ID do site no Umami (ex.: 1a2b3c4d-...). Vazio = sem métricas
   umami: "511ea65b-1d41-4184-917d-c9a3687a8486",
   // Seus nichos, em uma linha (aparece como "UGC creator de ...")
-  nichosResumo: "beleza, cabelo, casa e decoração, comida, tech e carros",
+  nichosResumo: "tech & app, beleza, haircare, casa, autocuidado, multicultural e carro & moto",
   // Frase curta do que você faz pela marca (capa e prévia do link)
   frase: "Sou criadora bilíngue e multicultural: crio conteúdo em português e espanhol, com alcance e vendas.",
   // Os 3 números da capa
@@ -1144,41 +1162,62 @@ var DADOS = {
     { icone: "parceria", titulo: "Parcerias",         texto: "De longo prazo" },
     { icone: "gestao",   titulo: "Gestão de campanha", texto: "Planejamento e acompanhamento da sua campanha" }
   ],
-  // Seus 3 MELHORES vídeos (não os mais recentes). O 1º é o mais forte e toca sozinho.
-  // titulo: nome curto · nicho · formato: ADS, review, unboxing, tutorial ou nativo
-  // video: arquivo .mp4 vertical · capa: imagem opcional antes de tocar · res: resultado real (ex.: "116 vendas"), vazio = sem selo
+  // Seus 3 MELHORES vídeos (não os mais recentes). O 1º é o mais forte.
+  // titulo: nome curto · nicho · formato · res: resultado real (vazio = sem selo)
+  // youtube: o código do Shorts (o que vem depois de /shorts/ no link) · ou video: "midia/arquivo.mp4"
   destaques: [
-    { titulo: "", nicho: "", formato: "", video: "midia/destaques/1.mp4", capa: "", res: "" },
-    { titulo: "", nicho: "", formato: "", video: "midia/destaques/2.mp4", capa: "", res: "" },
-    { titulo: "", nicho: "", formato: "", video: "midia/destaques/3.mp4", capa: "", res: "" }
+    { titulo: "TikTok Shop",   nicho: "Beleza", formato: "Lo-fi",           youtube: "1bICvacskAA", res: "+4 vendas em 1 dia" },
+    { titulo: "Mercado Livre", nicho: "Tech",   formato: "Black Friday",    youtube: "Wlee00SHT3M", res: "+2 mi views · +15k interações" },
+    { titulo: "Magalu",        nicho: "Tech",   formato: "Datas especiais", youtube: "78xJlFM2o_c", res: "+5 mi views" }
   ],
-  // Uma aba por nicho. Cada nicho precisa de pelo menos 3 vídeos (na pasta midia/nichos/nome-do-nicho)
-  // O link pra mandar nas plataformas fica assim: seu-site/?c=beleza (ou ?c=casa-e-decoracao, ?c=tech...)
+  // Uma aba por nicho. titulo · formato · youtube: código do Shorts. descricao: frase opcional embaixo das abas
+  // Link que abre direto num nicho: portfolio.elairum.com.br/?c=tech-app (ou ?c=beleza, ?c=haircare, ?c=casa, ?c=multicultural, ?c=autocuidado, ?c=carro-moto, ?c=clips, ?c=achadinhos)
   nichos: [
+    { nome: "Tech & App", videos: [
+      { titulo: "App de livros", formato: "Anúncios", youtube: "ftf7MB7lhVc" },
+      { titulo: "Tecnologia", formato: "App IA", youtube: "sctD-ANh8ZA" },
+      { titulo: "Dia dos namorados", formato: "Vendas", youtube: "9gtjm35lrgM" },
+      { titulo: "App", formato: "How to use", youtube: "VaRGzBS2opY" },
+      { titulo: "Site", formato: "Marketplaces", youtube: "KtmCU3PaA7E" } ] },
+    { nome: "Multicultural", videos: [
+      { titulo: "Educação", formato: "Bilíngue", youtube: "LKRuaxaVl8o" },
+      { titulo: "Educação", formato: "Identificação", youtube: "o77TNqp6SKY" },
+      { titulo: "Gastronomia", formato: "Evento", youtube: "GZYyacNDKv8" },
+      { titulo: "Copos", formato: "Demonstração", youtube: "srk9-n1Lw0I" },
+      { titulo: "App", formato: "Demonstração", youtube: "23uDuwZc_-0" } ] },
+    { nome: "Casa", videos: [
+      { titulo: "Toalha", formato: "Experiência", youtube: "6C-07AJhj7s" },
+      { titulo: "Cama", formato: "Unboxing", youtube: "OUbVade2AEg" },
+      { titulo: "Módulo Living-Pad", formato: "Como usar", youtube: "KtFlay1oLGY" },
+      { titulo: "Mesa de jantar", formato: "Unboxing", youtube: "Eg--TONQFnM" },
+      { titulo: "Linha perfumada", formato: "", youtube: "sRrQT9P-5tY" } ] },
     { nome: "Beleza", videos: [
-      { titulo: "", formato: "", video: "midia/nichos/beleza/1.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/beleza/2.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/beleza/3.mp4" } ] },
-    { nome: "Cabelo", videos: [
-      { titulo: "", formato: "", video: "midia/nichos/cabelo/1.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/cabelo/2.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/cabelo/3.mp4" } ] },
-    { nome: "Casa e decoração", videos: [
-      { titulo: "", formato: "", video: "midia/nichos/casa-e-decoracao/1.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/casa-e-decoracao/2.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/casa-e-decoracao/3.mp4" } ] },
-    { nome: "Comida", videos: [
-      { titulo: "", formato: "", video: "midia/nichos/comida/1.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/comida/2.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/comida/3.mp4" } ] },
-    { nome: "Tech", videos: [
-      { titulo: "", formato: "", video: "midia/nichos/tech/1.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/tech/2.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/tech/3.mp4" } ] },
-    { nome: "Carros", videos: [
-      { titulo: "", formato: "", video: "midia/nichos/carros/1.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/carros/2.mp4" },
-      { titulo: "", formato: "", video: "midia/nichos/carros/3.mp4" } ] }
+      { titulo: "Skincare", formato: "Review", youtube: "YRMErvBxqL4" },
+      { titulo: "Desodorantes", formato: "Experiência", youtube: "ahmwh_4tp1A" },
+      { titulo: "Perfume", formato: "Review sensorial", youtube: "zazyyjXLTj4" },
+      { titulo: "Base", formato: "Depoimento", youtube: "ph7kW40zp-A" },
+      { titulo: "Suplementos", formato: "Experiência", youtube: "NVlpAj7j3rw" } ] },
+    { nome: "Haircare", videos: [
+      { titulo: "Sérum", formato: "Depoimento", youtube: "xCfX2qKHkL8" },
+      { titulo: "Suplemento", formato: "Anúncio", youtube: "dX47ADHlugE" },
+      { titulo: "Tinta", formato: "How to use", youtube: "NokK2aFH8xs" },
+      { titulo: "Linha", formato: "Educativo", youtube: "wTHuS57l-ZA" },
+      { titulo: "Alisamento orgânico", formato: "How to use", youtube: "BAo6iBiRdTg" } ] },
+    { nome: "Autocuidado", videos: [
+      { titulo: "Escova de dentes", formato: "Depoimento", youtube: "CbE87D0EdFA" },
+      { titulo: "Spa dos pés", formato: "Depoimento criativo", youtube: "ArI8glQwxFQ" },
+      { titulo: "Antironco", formato: "Como usar", youtube: "IYwC0c08-Kw" },
+      { titulo: "Antironco", formato: "Problema vs solução", youtube: "PsvRtkvFFSs" },
+      { titulo: "Plano de saúde", formato: "Vendas", youtube: "Z4mIkuu9vlQ" } ] },
+    { nome: "Carro & moto", videos: [
+      { titulo: "Concessionária", formato: "Experiência", youtube: "-qvHmMBehHc" },
+      { titulo: "Motos elétricas", formato: "Experiência", youtube: "Opo1eaBIQzY" } ] },
+    { nome: "Clips", descricao: "Para marcas que querem vender mais nos marketplaces", videos: [
+      { titulo: "Clip 1", formato: "Marketplace", youtube: "tjYusSOeZNA" },
+      { titulo: "Clip 2", formato: "Marketplace", youtube: "MyGF47yrhRI" },
+      { titulo: "Clip 3", formato: "Marketplace", youtube: "hDhRcfTPzjs" } ] },
+    { nome: "Achadinhos", videos: [
+      { titulo: "Achadinho", formato: "", youtube: "jFfyMXvhK9w" } ] }
   ],
   // Depoimentos REAIS das marcas. Nunca invente: deixe "" até ter a frase ou o print.
   // texto: a frase · marca: nome da marca · detalhe: contexto (qual vídeo, qual resultado) · print: imagem opcional (ex.: midia/print-dove.jpg)
@@ -1246,6 +1285,63 @@ var DADOS = {
    ========================================================= */
 var TRADUCOES = {
   es: {
+    "UGC creator de tech & app, beleza, haircare, casa, autocuidado, multicultural e carro & moto": "UGC creator de tech & apps, belleza, haircare, hogar, autocuidado, multicultural y autos & motos",
+    "Clique no vídeo pra assistir com som.": "Haz clic en el video para verlo con sonido.",
+    "Lo-fi": "Lo-fi",
+    "Black Friday": "Black Friday",
+    "Datas especiais": "Fechas especiales",
+    "+4 vendas em 1 dia": "+4 ventas en 1 día",
+    "+2 mi views · +15k interações": "+2 M de views · +15k interacciones",
+    "+5 mi views": "+5 M de views",
+    "Tech & App": "Tech & Apps",
+    "Multicultural": "Multicultural",
+    "Casa": "Hogar",
+    "Haircare": "Haircare",
+    "Autocuidado": "Autocuidado",
+    "Carro & moto": "Autos & motos",
+    "Achadinhos": "Hallazgos",
+    "Para marcas que querem vender mais nos marketplaces": "Para marcas que quieren vender más en los marketplaces",
+    "App de livros": "App de libros",
+    "Tecnologia": "Tecnología",
+    "Dia dos namorados": "Día de los enamorados",
+    "Site": "Sitio web",
+    "Educação": "Educación",
+    "Gastronomia": "Gastronomía",
+    "Copos": "Vasos",
+    "Toalha": "Toalla",
+    "Cama": "Cama",
+    "Módulo Living-Pad": "Módulo Living-Pad",
+    "Mesa de jantar": "Mesa de comedor",
+    "Linha perfumada": "Línea perfumada",
+    "Desodorantes": "Desodorantes",
+    "Base": "Base de maquillaje",
+    "Suplementos": "Suplementos",
+    "Sérum": "Sérum",
+    "Suplemento": "Suplemento",
+    "Tinta": "Tinte",
+    "Linha": "Línea",
+    "Alisamento orgânico": "Alisado orgánico",
+    "Escova de dentes": "Cepillo de dientes",
+    "Spa dos pés": "Spa de pies",
+    "Antironco": "Antironquidos",
+    "Plano de saúde": "Plan de salud",
+    "Concessionária": "Concesionaria",
+    "Motos elétricas": "Motos eléctricas",
+    "Achadinho": "Hallazgo",
+    "Anúncios": "Anuncios",
+    "Anúncio": "Anuncio",
+    "App IA": "App de IA",
+    "Vendas": "Ventas",
+    "Bilíngue": "Bilingüe",
+    "Identificação": "Identificación",
+    "Evento": "Evento",
+    "Demonstração": "Demostración",
+    "Experiência": "Experiencia",
+    "Como usar": "Cómo usar",
+    "Review sensorial": "Review sensorial",
+    "Depoimento criativo": "Testimonio creativo",
+    "Educativo": "Educativo",
+    "Problema vs solução": "Problema vs solución",
     "Sobre mim": "Sobre mí",
     "Destaques": "Destacados",
     "Nichos": "Nichos",
@@ -1446,6 +1542,63 @@ var TRADUCOES = {
     "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · portafolio UGC"
   },
   en: {
+    "UGC creator de tech & app, beleza, haircare, casa, autocuidado, multicultural e carro & moto": "UGC creator for tech & apps, beauty, haircare, home, self-care, multicultural and cars & motorcycles",
+    "Clique no vídeo pra assistir com som.": "Click a video to watch it with sound.",
+    "Lo-fi": "Lo-fi",
+    "Black Friday": "Black Friday",
+    "Datas especiais": "Special dates",
+    "+4 vendas em 1 dia": "+4 sales in 1 day",
+    "+2 mi views · +15k interações": "2M+ views · 15k+ interactions",
+    "+5 mi views": "5M+ views",
+    "Tech & App": "Tech & Apps",
+    "Multicultural": "Multicultural",
+    "Casa": "Home",
+    "Haircare": "Haircare",
+    "Autocuidado": "Self-care",
+    "Carro & moto": "Cars & motorcycles",
+    "Achadinhos": "Great finds",
+    "Para marcas que querem vender mais nos marketplaces": "For brands that want to sell more on marketplaces",
+    "App de livros": "Book app",
+    "Tecnologia": "Technology",
+    "Dia dos namorados": "Valentine's Day",
+    "Site": "Website",
+    "Educação": "Education",
+    "Gastronomia": "Food & dining",
+    "Copos": "Cups",
+    "Toalha": "Towel",
+    "Cama": "Bed",
+    "Módulo Living-Pad": "Living-Pad module",
+    "Mesa de jantar": "Dining table",
+    "Linha perfumada": "Scented line",
+    "Desodorantes": "Deodorants",
+    "Base": "Foundation",
+    "Suplementos": "Supplements",
+    "Sérum": "Serum",
+    "Suplemento": "Supplement",
+    "Tinta": "Hair dye",
+    "Linha": "Product line",
+    "Alisamento orgânico": "Organic straightening",
+    "Escova de dentes": "Toothbrush",
+    "Spa dos pés": "Foot spa",
+    "Antironco": "Anti-snoring",
+    "Plano de saúde": "Health plan",
+    "Concessionária": "Car dealership",
+    "Motos elétricas": "Electric motorcycles",
+    "Achadinho": "Great find",
+    "Anúncios": "Ads",
+    "Anúncio": "Ad",
+    "App IA": "AI app",
+    "Vendas": "Sales",
+    "Bilíngue": "Bilingual",
+    "Identificação": "Relatable",
+    "Evento": "Event",
+    "Demonstração": "Demo",
+    "Experiência": "Experience",
+    "Como usar": "How to use",
+    "Review sensorial": "Sensory review",
+    "Depoimento criativo": "Creative testimonial",
+    "Educativo": "Educational",
+    "Problema vs solução": "Problem vs solution",
     "Sobre mim": "About me",
     "Destaques": "Highlights",
     "Nichos": "Niches",

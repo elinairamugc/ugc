@@ -245,7 +245,9 @@ section{position:relative;overflow:hidden}
 .nicho-cards.carrossel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
 .nicho-cards.carrossel::-webkit-scrollbar{display:none}
 .nicho-cards.carrossel .card{flex:0 0 calc((100% - 44px) / 3);scroll-snap-align:start}
-.nicho-setas{margin-top:18px}
+.nicho-carrossel{position:relative}
+.nicho-setas{position:absolute;left:-24px;right:-24px;top:0;bottom:62px;display:flex;align-items:center;justify-content:space-between;pointer-events:none;z-index:3}
+.nicho-setas .seta{pointer-events:auto}
 .nicho-foto{position:relative;align-self:end}
 .nicho-foto img{position:relative;z-index:1;width:118%;max-width:none;margin-left:-6%;height:auto;-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 96%);mask-image:linear-gradient(to bottom,#000 70%,transparent 96%)}
 .nicho-cards .leg{font-family:var(--f-texto);font-size:14px;font-weight:600;text-transform:none;letter-spacing:0;text-align:center}
@@ -788,10 +790,10 @@ function montar(){
     var aviso = (n.videos||[]).length<3 && /^(file:|http:\/\/localhost)/.test(location.href) ? '<p class="aviso">mínimo 3 vídeos: com menos, tire o nicho</p>' : '';
     // mais de 3 vídeos: vira carrossel, um ao lado do outro, com setas
     var carrossel = (n.videos||[]).length > 3;
-    painel.innerHTML = aviso+(n.descricao?'<p class="nicho-desc">'+esc(n.descricao)+'</p>':'')+'<div class="nicho-cards'+(carrossel?' carrossel':'')+'">'+(n.videos||[]).map(function(v,j){
+    painel.innerHTML = aviso+(n.descricao?'<p class="nicho-desc">'+esc(n.descricao)+'</p>':'')+'<div class="nicho-carrossel"><div class="nicho-cards'+(carrossel?' carrossel':'')+'">'+(n.videos||[]).map(function(v,j){
       return cardVideo(v,j,{nicho:n.nome,dica:'Vídeo vertical .mp4 · midia/nichos/'+slug(n.nome)+'/'+(j+1)+'.mp4'});
     }).join('')+'</div>'+
-    (carrossel?'<div class="criar-setas nicho-setas"><button class="seta" data-dir="-1" aria-label="Vídeo anterior">←</button><button class="seta" data-dir="1" aria-label="Próximo vídeo">→</button></div>':'');
+    (carrossel?'<div class="nicho-setas"><button class="seta" data-dir="-1" aria-label="Vídeo anterior">←</button><button class="seta" data-dir="1" aria-label="Próximo vídeo">→</button></div>':'')+'</div>';
     ligarVideos(painel);
   }
   painel.addEventListener('click',function(e){

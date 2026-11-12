@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="only light">
+<title>Proposta · Elinairam Sandoval</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bosque:#2B3D1C; --profundo:#142408; --salvia:#A9BCA0; --off:#F7F7F5; --lima:#D7FF00; --manteiga:#FFF3A7; --linha:#DDE3D6; --cinza:#5B6552;
+  --f-titulo:"Anton",Impact,sans-serif; --f-texto:"DM Sans",system-ui,sans-serif; --f-mao:"Caveat",cursive;
+  color-scheme:only light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--off);background-image:linear-gradient(rgba(43,61,28,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(43,61,28,.05) 1px,transparent 1px);background-size:24px 24px;color:var(--profundo);font-family:var(--f-texto);font-size:16px;line-height:1.55}
+button,input{font:inherit;color:inherit}
+.wrap{max-width:820px;margin:0 auto;padding:0 18px}
+.topo{background:var(--bosque);color:var(--off);padding:26px 0 30px;position:relative;overflow:hidden}
+.topo .wrap{display:flex;align-items:center;gap:16px}
+.logo{width:72px;height:72px;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;font-family:var(--f-titulo);font-size:28px;color:var(--bosque)}
+.logo img{width:100%;height:100%;object-fit:contain}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--lima);margin:0 0 4px}
+.topo h1{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(28px,6vw,40px);line-height:1.05;margin:0}
+.topo .para{margin:6px 0 0;color:#DCE3CF}
+.topo .por{font-family:var(--f-mao);font-size:20px;color:var(--lima);margin:6px 0 0}
+.coroa{position:absolute;right:18px;top:16px;width:58px}
+main{padding:24px 0 50px}
+.caixa{background:#fff;border:1.5px solid var(--linha);border-radius:20px;padding:18px;margin-bottom:14px}
+.caixa h2{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:22px;margin:0 0 10px}
+.caixa p{margin:0;white-space:pre-wrap}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--cinza);padding:8px;border-bottom:1.5px solid var(--linha)}
+td{padding:10px 8px;border-bottom:1px solid var(--linha);vertical-align:top}
+.num{text-align:right;white-space:nowrap}
+.total td{border:0;font-weight:700;font-size:18px;padding-top:14px}
+.total .valor{background:var(--lima);border-radius:10px;padding:6px 10px;display:inline-block}
+.validade{font-family:var(--f-mao);font-size:22px;color:var(--cinza);margin:6px 0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:2px solid var(--bosque);background:transparent;color:var(--bosque);border-radius:999px;padding:10px 18px;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--salvia)}
+.btn-lima{background:var(--lima);border-color:var(--lima);color:var(--profundo)}
+.btn[disabled]{opacity:.55;cursor:default}
+.linha-btn{display:flex;flex-wrap:wrap;gap:10px}
+.aceitar{background:var(--bosque);color:var(--off);border-radius:22px;padding:22px;margin-top:20px}
+.aceitar h2{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:26px;margin:0 0 6px;color:var(--off)}
+.aceitar p{margin:0 0 12px;color:#DCE3CF}
+.aceitar input{width:100%;border:0;border-radius:12px;padding:11px 14px;margin-bottom:12px;color:var(--profundo)}
+.aceitar .btn{border-color:var(--off);color:var(--off)}
+.aceitar .btn-lima{border-color:var(--lima);color:var(--profundo)}
+.aceita{background:var(--lima);color:var(--profundo);border-radius:16px;padding:14px 16px;font-weight:700}
+.assinatura{white-space:pre-wrap;font-size:14px;color:var(--cinza);border-top:2px solid var(--lima);padding-top:12px;margin-top:24px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--profundo);color:#fff;padding:12px 18px;border-radius:999px;font-weight:700;z-index:50;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+.carregando{text-align:center;padding:60px 0;font-family:var(--f-mao);font-size:26px;color:var(--cinza)}
+@media (max-width:520px){ .coroa{display:none} .logo{width:58px;height:58px} td,th{padding:8px 4px} }
+@media print{
+  body{background:#fff}
+  .nao-imprimir,.toast{display:none!important}
+  .topo{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .total .valor{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .caixa{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div id="app"><p class="carregando">carregando a proposta…</p></div>
+<div class="toast" id="toast"></div>
+<script>
+var API = 'https://script.google.com/macros/s/AKfycbzR_NER5y93lbFVpzffYVJJw0GdfYZBABK0PtN8-CYDG4sYSHKk7nOi41J1ExqptPN_XA/exec';
+var ZAP = '5511983403887';
+var TXT = {
+  pt:{kicker:'Proposta comercial',para:'Para',por:'por Elinairam Sandoval ✦',itens:'O que está incluso',item:'Item',qtd:'Qtd.',valor:'Valor',total:'Total',pag:'Pagamento',prazo:'Prazo de entrega',dir:'Direitos de uso',obs:'Observações',val:'Proposta válida até',aceitarTit:'Aceitar proposta',aceitarTxt:'Está tudo certo? Escreva o seu nome e clique em aceitar. Eu recebo na hora e sigo com os próximos passos.',nome:'Seu nome',aceitarBtn:'Aceitar proposta ✓',conversar:'Quero conversar',pdf:'Baixar PDF',imprimir:'Salvar em PDF',aceitaPor:'Proposta aceita por',em:'em',ok:'Proposta aceita! Obrigada ✦',faltaNome:'Escreva o seu nome',erro:'Não consegui enviar agora. Tente de novo.',naoAchei:'Não encontrei essa proposta. Confira o link.',enviando:'Enviando…',msgZap:'Oi, Elinairam! Vi a proposta e quero conversar.'},
+  es:{kicker:'Propuesta comercial',para:'Para',por:'por Elinairam Sandoval ✦',itens:'Qué incluye',item:'Ítem',qtd:'Cant.',valor:'Valor',total:'Total',pag:'Pago',prazo:'Plazo de entrega',dir:'Derechos de uso',obs:'Observaciones',val:'Propuesta válida hasta',aceitarTit:'Aceptar propuesta',aceitarTxt:'¿Todo bien? Escribe tu nombre y haz clic en aceptar. Lo recibo al instante y sigo con los próximos pasos.',nome:'Tu nombre',aceitarBtn:'Aceptar propuesta ✓',conversar:'Quiero conversar',pdf:'Descargar PDF',imprimir:'Guardar en PDF',aceitaPor:'Propuesta aceptada por',em:'el',ok:'¡Propuesta aceptada! Gracias ✦',faltaNome:'Escribe tu nombre',erro:'No pude enviarlo ahora. Inténtalo de nuevo.',naoAchei:'No encontré esta propuesta. Revisa el enlace.',enviando:'Enviando…',msgZap:'¡Hola, Elinairam! Vi la propuesta y quiero conversar.'},
+  en:{kicker:'Commercial proposal',para:'To',por:'by Elinairam Sandoval ✦',itens:"What's included",item:'Item',qtd:'Qty',valor:'Price',total:'Total',pag:'Payment',prazo:'Delivery time',dir:'Usage rights',obs:'Notes',val:'Proposal valid until',aceitarTit:'Accept proposal',aceitarTxt:'All good? Write your name and click accept. I get it right away and move on to the next steps.',nome:'Your name',aceitarBtn:'Accept proposal ✓',conversar:"Let's talk",pdf:'Download PDF',imprimir:'Save as PDF',aceitaPor:'Proposal accepted by',em:'on',ok:'Proposal accepted! Thank you ✦',faltaNome:'Write your name',erro:"I couldn't send it right now. Please try again.",naoAchei:"I couldn't find this proposal. Please check the link.",enviando:'Sending…',msgZap:"Hi, Elinairam! I saw the proposal and I'd like to talk."}
+};
+var qs = new URLSearchParams(location.search);
+var token = qs.get('p') || '', previa = qs.get('previa') === '1';
+var P = null, T = TXT.pt, app = document.getElementById('app');
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function aviso(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(aviso.t); aviso.t=setTimeout(function(){el.classList.remove('on');},3000); }
+function loc(){ return P && P.idioma==='en' ? 'en-US' : (P && P.idioma==='es' ? 'es' : 'pt-BR'); }
+function dinheiro(v){ try{ return Number(v||0).toLocaleString(loc(),{style:'currency',currency:P.moeda||'BRL'}); }catch(e){ return v; } }
+function data(s){ if(!s) return ''; var d=new Date(String(s).length===10?s+'T12:00:00':s); return isNaN(d)?'':d.toLocaleDateString(loc()); }
+
+function carregar(){
+  if(!/^[a-f0-9]{20}$/.test(token)){ app.innerHTML='<p class="carregando">'+T.naoAchei+'</p>'; return; }
+  fetch(API+'?api=proposta&p='+encodeURIComponent(token)+(previa?'&previa=1':'')).then(function(r){ return r.json(); }).then(function(d){
+    if(!d.ok){ app.innerHTML='<p class="carregando">'+esc(T.naoAchei)+'</p>'; return; }
+    P = d.proposta; T = TXT[P.idioma] || TXT.pt;
+    document.documentElement.lang = P.idioma==='pt'?'pt-BR':P.idioma;
+    document.title = (P.marca?P.marca+' · ':'')+(P.titulo||T.kicker);
+    desenhar();
+  }).catch(function(){ app.innerHTML='<p class="carregando">'+esc(T.erro)+'</p>'; });
+}
+function bloco(t,v){ return v ? '<div class="caixa"><h2>'+t+'</h2><p>'+esc(v)+'</p></div>' : ''; }
+function desenhar(){
+  var aceita = P.status==='aceita';
+  app.innerHTML =
+    '<header class="topo"><svg class="coroa" viewBox="0 0 110 64" aria-hidden="true"><path d="M10 56 L16 16 L36 40 L54 8 L72 40 L94 16 L100 56 Z" fill="none" stroke="#D7FF00" stroke-width="6" stroke-linejoin="round"/></svg>'+
+      '<div class="wrap"><div class="logo">'+(P.logo?'<img src="'+esc(P.logo)+'" alt="'+esc(P.marca)+'">':esc(String(P.marca||'?').slice(0,2).toUpperCase()))+'</div>'+
+      '<div><p class="kicker">'+T.kicker+'</p><h1>'+esc(P.titulo||T.kicker)+'</h1><p class="para">'+T.para+': <b>'+esc(P.marca)+'</b>'+(P.contato?' · '+esc(P.contato):'')+'</p><p class="por">'+T.por+'</p></div></div></header>'+
+    '<main class="wrap">'+
+      '<div class="caixa"><h2>'+T.itens+'</h2><table><tr><th>'+T.item+'</th><th class="num">'+T.qtd+'</th><th class="num">'+T.valor+'</th></tr>'+
+        (P.itens||[]).map(function(i){ return '<tr><td>'+esc(i.descricao)+'</td><td class="num">'+i.qtd+'</td><td class="num">'+dinheiro(i.qtd*i.valor)+'</td></tr>'; }).join('')+
+        '<tr class="total"><td colspan="2" class="num">'+T.total+'</td><td class="num"><span class="valor">'+dinheiro(P.total)+'</span></td></tr></table></div>'+
+      bloco(T.pag, P.pagamento)+bloco(T.prazo, P.prazo)+bloco(T.dir, P.direitos)+bloco(T.obs, P.observacoes)+
+      (P.validade?'<p class="validade">'+T.val+' '+data(P.validade)+' ✦</p>':'')+
+      '<div class="linha-btn nao-imprimir">'+
+        (P.pdf?'<a class="btn" href="'+esc(P.pdf)+'" target="_blank" rel="noopener">'+T.pdf+'</a>':'<button class="btn" id="imprimir">'+T.imprimir+'</button>')+
+        '<a class="btn" href="https://wa.me/'+ZAP+'?text='+encodeURIComponent(T.msgZap+(P.titulo?' ('+P.titulo+')':''))+'" target="_blank" rel="noopener">'+T.conversar+'</a>'+
+      '</div>'+
+      '<div class="aceitar nao-imprimir" id="aceitar">'+(aceita
+        ? '<div class="aceita">✓ '+T.aceitaPor+' '+esc(P.respostaNome)+' '+T.em+' '+data(P.respostaEm)+'</div>'
+        : '<h2>'+T.aceitarTit+'</h2><p>'+T.aceitarTxt+'</p><input id="nome" placeholder="'+esc(T.nome)+'" maxlength="80"><button class="btn btn-lima" id="btn-aceitar">'+T.aceitarBtn+'</button>')+
+      '</div>'+
+      (P.assinatura?'<div class="assinatura">'+esc(P.assinatura)+'</div>':'')+
+    '</main>';
+  var im = document.getElementById('imprimir'); if(im) im.onclick = function(){ window.print(); };
+  var ba = document.getElementById('btn-aceitar');
+  if(ba) ba.onclick = function(){
+    var n = document.getElementById('nome').value.trim(); if(!n){ aviso(T.faltaNome); return; }
+    if(previa){ aviso('Prévia: o aceite não é registrado'); return; }
+    ba.disabled = true; ba.textContent = T.enviando;
+    fetch(API,{method:'POST',body:JSON.stringify({acao:'aceitar-proposta',p:token,nome:n})}).then(function(r){ return r.json(); }).then(function(d){
+      if(!d.ok) throw new Error(d.erro||T.erro);
+      P.status='aceita'; P.respostaNome=d.respostaNome; P.respostaEm=d.respostaEm; aviso(T.ok); desenhar();
+    }).catch(function(e){ aviso(e.message||T.erro); ba.disabled=false; ba.textContent=T.aceitarBtn; });
+  };
+}
+carregar();
+</script>
+</body>
+</html>

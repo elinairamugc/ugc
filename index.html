@@ -242,6 +242,10 @@ section{position:relative;overflow:hidden}
 .nicho-area{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:end}
 .nicho-desc{font-family:var(--f-mao);font-size:22px;color:var(--verde2);margin:-10px 0 18px;transform:rotate(-1deg)}
 .nicho-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.nicho-cards.carrossel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.nicho-cards.carrossel::-webkit-scrollbar{display:none}
+.nicho-cards.carrossel .card{flex:0 0 calc((100% - 44px) / 3);scroll-snap-align:start}
+.nicho-setas{margin-top:18px}
 .nicho-foto{position:relative;align-self:end}
 .nicho-foto img{position:relative;z-index:1;width:118%;max-width:none;margin-left:-6%;height:auto;-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 96%);mask-image:linear-gradient(to bottom,#000 70%,transparent 96%)}
 .nicho-cards .leg{font-family:var(--f-texto);font-size:14px;font-weight:600;text-transform:none;letter-spacing:0;text-align:center}
@@ -782,11 +786,23 @@ function montar(){
     abas.querySelectorAll('.aba').forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-i')==i);});
     painel.setAttribute('aria-labelledby','aba-'+slug(n.nome));
     var aviso = (n.videos||[]).length<3 && /^(file:|http:\/\/localhost)/.test(location.href) ? '<p class="aviso">mínimo 3 vídeos: com menos, tire o nicho</p>' : '';
-    painel.innerHTML = aviso+(n.descricao?'<p class="nicho-desc">'+esc(n.descricao)+'</p>':'')+'<div class="nicho-cards">'+(n.videos||[]).map(function(v,j){
+    // mais de 3 vídeos: vira carrossel, um ao lado do outro, com setas
+    var carrossel = (n.videos||[]).length > 3;
+    painel.innerHTML = aviso+(n.descricao?'<p class="nicho-desc">'+esc(n.descricao)+'</p>':'')+'<div class="nicho-cards'+(carrossel?' carrossel':'')+'">'+(n.videos||[]).map(function(v,j){
       return cardVideo(v,j,{nicho:n.nome,dica:'Vídeo vertical .mp4 · midia/nichos/'+slug(n.nome)+'/'+(j+1)+'.mp4'});
-    }).join('')+'</div>';
+    }).join('')+'</div>'+
+    (carrossel?'<div class="criar-setas nicho-setas"><button class="seta" data-dir="-1" aria-label="Vídeo anterior">←</button><button class="seta" data-dir="1" aria-label="Próximo vídeo">→</button></div>':'');
     ligarVideos(painel);
   }
+  painel.addEventListener('click',function(e){
+    var s = e.target.closest('.seta[data-dir]'); if(!s) return;
+    var trilho = painel.querySelector('.nicho-cards'), c = trilho.querySelector('.card');
+    var dir = +s.getAttribute('data-dir'), dist = (c ? c.offsetWidth : 240) + 22, fim = trilho.scrollWidth - trilho.clientWidth - 4;
+    var comp = reduzMov ? 'auto' : 'smooth';
+    if(dir>0 && trilho.scrollLeft >= fim) trilho.scrollTo({left:0, behavior:comp});
+    else if(dir<0 && trilho.scrollLeft <= 4) trilho.scrollTo({left:fim+4, behavior:comp});
+    else trilho.scrollBy({left:dir*dist, behavior:comp});
+  });
   abas.addEventListener('click',function(e){var b=e.target.closest('.aba');if(b)abrirNicho(+b.getAttribute('data-i'));});
   // ?c=nome-do-nicho abre direto na aba e rola até a seção
   var pedido = new URLSearchParams(location.search).get('c');
@@ -1285,6 +1301,8 @@ var DADOS = {
    ========================================================= */
 var TRADUCOES = {
   es: {
+    "Vídeo anterior": "Video anterior",
+    "Próximo vídeo": "Siguiente video",
     "UGC creator de tech & app, beleza, haircare, casa, autocuidado, multicultural e carro & moto": "UGC creator de tech & apps, belleza, haircare, hogar, autocuidado, multicultural y autos & motos",
     "Clique no vídeo pra assistir com som.": "Haz clic en el video para verlo con sonido.",
     "Lo-fi": "Lo-fi",
@@ -1542,6 +1560,8 @@ var TRADUCOES = {
     "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · portafolio UGC"
   },
   en: {
+    "Vídeo anterior": "Previous video",
+    "Próximo vídeo": "Next video",
     "UGC creator de tech & app, beleza, haircare, casa, autocuidado, multicultural e carro & moto": "UGC creator for tech & apps, beauty, haircare, home, self-care, multicultural and cars & motorcycles",
     "Clique no vídeo pra assistir com som.": "Click a video to watch it with sound.",
     "Lo-fi": "Lo-fi",

@@ -19,37 +19,55 @@
 <style>
 :root{--bosque:#2B3D1C;--profundo:#142408;--off:#F7F7F5;--lima:#D7FF00}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{background:var(--bosque);background-image:linear-gradient(rgba(215,255,0,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(215,255,0,.06) 1px,transparent 1px);background-size:24px 24px;color:var(--off);font-family:"DM Sans",system-ui,sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+html,body{margin:0;height:100%;background:var(--bosque)}
+body{color:var(--off);font-family:"DM Sans",system-ui,sans-serif;overflow:hidden}
+/* o painel ocupa a tela toda, respeitando o notch e a barra do celular */
+#painel{position:fixed;top:env(safe-area-inset-top);left:env(safe-area-inset-left);right:env(safe-area-inset-right);bottom:env(safe-area-inset-bottom);
+  width:calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right));height:calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));border:0;background:#F7F7F5;opacity:0;transition:opacity .25s}
+#painel.pronto{opacity:1}
+.entrada{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:var(--bosque);background-image:linear-gradient(rgba(215,255,0,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(215,255,0,.06) 1px,transparent 1px);background-size:24px 24px;transition:opacity .3s}
+.entrada.some{opacity:0;pointer-events:none}
 .cx{max-width:360px;width:100%}
 svg{width:110px;height:64px;display:block;margin:0 auto 18px}
 h1{font-family:"Anton",Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:38px;letter-spacing:.02em;margin:0;line-height:1}
-.frase{font-family:"Caveat",cursive;color:var(--lima);font-size:22px;margin:6px 0 28px}
-.btn{display:inline-block;background:var(--lima);color:var(--profundo);border-radius:999px;padding:14px 28px;font-weight:700;font-size:16px;text-decoration:none}
-.btn:active{transform:scale(.97)}
-.status{font-size:14px;opacity:.8;margin-top:18px;min-height:20px}
+.frase{font-family:"Caveat",cursive;color:var(--lima);font-size:22px;margin:6px 0 24px}
+.btn{display:inline-block;background:var(--lima);color:var(--profundo);border-radius:999px;padding:13px 26px;font-weight:700;font-size:15px;text-decoration:none}
+.status{font-size:14px;opacity:.85;margin-top:16px;min-height:20px;line-height:1.5}
 .ponto{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--lima);margin:0 3px;animation:p 1s infinite alternate}
 .ponto:nth-child(2){animation-delay:.2s}.ponto:nth-child(3){animation-delay:.4s}
 @keyframes p{to{opacity:.2}}
+#ajuda{display:none}
 </style>
 </head>
 <body>
-<div class="cx">
-  <svg viewBox="0 0 110 64" aria-hidden="true"><path d="M10 56 L16 16 L36 40 L54 8 L72 40 L94 16 L100 56 Z" fill="none" stroke="#D7FF00" stroke-width="6" stroke-linejoin="round"/></svg>
-  <h1>Painel Elinairam</h1>
-  <p class="frase">entre marcas, bastidores e perrengues ✦</p>
-  <a class="btn" id="abrir" href="#">Abrir o painel</a>
-  <p class="status" id="status"><span class="ponto"></span><span class="ponto"></span><span class="ponto"></span></p>
+<iframe id="painel" title="Painel Elinairam" allow="clipboard-read; clipboard-write; microphone; camera; fullscreen"></iframe>
+<div class="entrada" id="entrada">
+  <div class="cx">
+    <svg viewBox="0 0 110 64" aria-hidden="true"><path d="M10 56 L16 16 L36 40 L54 8 L72 40 L94 16 L100 56 Z" fill="none" stroke="#D7FF00" stroke-width="6" stroke-linejoin="round"/></svg>
+    <h1>Painel Elinairam</h1>
+    <p class="frase">entre marcas, bastidores e perrengues ✦</p>
+    <p class="status" id="status"><span class="ponto"></span><span class="ponto"></span><span class="ponto"></span></p>
+    <div id="ajuda"><p class="status">Não consegui abrir o painel aqui dentro (o navegador pode estar bloqueando o login do Google).</p><a class="btn" id="abrir" href="#">Abrir o painel</a></div>
+  </div>
 </div>
 <script>
 // link do painel (a parte privada: só abre com a sua conta do Google)
 var PAINEL = 'https://script.google.com/macros/s/AKfycbxDi2k_3XugWCu15zc3Jh7LpFEMLLyTUqkPPyq88qP7slAeQhdq6eYhjGx43Org80Ko/exec';
+var fr = document.getElementById('painel'), entrada = document.getElementById('entrada'), pronto = false;
 document.getElementById('abrir').href = PAINEL;
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});
 if (navigator.onLine === false) {
-  document.getElementById('status').textContent = 'Sem internet agora. Conecte e toque em "Abrir o painel".';
+  document.getElementById('status').textContent = 'Sem internet agora. Conecte e abra de novo.';
 } else {
-  setTimeout(function(){ location.replace(PAINEL); }, 600);
+  // o painel avisa quando abriu aqui dentro
+  window.addEventListener('message', function(ev){
+    if (!/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(ev.origin)) return;
+    if (ev.data && ev.data.painel === 'ok' && !pronto) { pronto = true; fr.classList.add('pronto'); entrada.classList.add('some'); }
+  });
+  fr.src = PAINEL;
+  // se não abrir em 15 segundos, oferece abrir direto (com o aviso do Google, mas funciona sempre)
+  setTimeout(function(){ if (!pronto) { document.getElementById('status').style.display = 'none'; document.getElementById('ajuda').style.display = 'block'; } }, 15000);
 }
 </script>
 </body>

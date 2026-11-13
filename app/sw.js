@@ -1,5 +1,5 @@
 /* Painel Elinairam · deixa o app instalável e abre a tela de entrada mesmo sem internet */
-const CACHE = 'painel-v1';
+const CACHE = 'painel-v2';
 const ARQUIVOS = ['./', 'index.html', 'manifest.webmanifest', 'icone-192.png', 'icone-512.png', 'apple-touch-icon.png', 'favicon.png'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(ARQUIVOS); }).then(function () { return self.skipWaiting(); }));

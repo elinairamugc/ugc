@@ -71,6 +71,42 @@ h2 .marcador{background:var(--lima);padding:0 8px;border-radius:8px}
 .toast.on{opacity:1}
 .carregando{text-align:center;padding:60px 0;font-family:var(--f-mao);font-size:26px;color:var(--cinza)}
 @media (max-width:520px){ .topo .wrap{align-items:flex-start} .logo{width:58px;height:58px} .coroa{display:none} }
+/* mood board */
+.mood{background:#fff;border:1.5px solid var(--linha);border-radius:22px;padding:18px;margin-bottom:22px}
+.mood h2{margin-top:6px}
+.mood h3{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cinza);margin:18px 0 8px}
+.paleta{display:flex;flex-wrap:wrap;gap:10px}
+.cor{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--cinza)}
+.cor span{width:54px;height:54px;border-radius:14px;border:1px solid rgba(0,0,0,.08)}
+.fotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.foto{margin:0}
+.foto img{width:100%;height:190px;object-fit:cover;border-radius:14px;display:block;background:var(--off)}
+.foto figcaption{font-size:12px;color:var(--cinza);margin-top:4px}
+.videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.video iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:14px;background:#000;display:block}
+.video iframe.vert{aspect-ratio:9/16;max-height:460px}
+.video p{font-size:14px;margin:6px 0 0}
+.video .link-print{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--off);border:1.5px solid var(--linha);border-radius:999px;padding:4px 12px;font-size:14px}
+.chip.ok{background:#E6F7A8;border-color:#E6F7A8}
+.cta-box{background:var(--lima);border-radius:16px;padding:12px 14px;font-weight:700}
+.regras{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.regra{background:var(--off);border-radius:14px;padding:10px 12px;font-size:14px;white-space:pre-wrap}
+.regra b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.pend{background:var(--manteiga);border-radius:14px;padding:10px 14px}
+.pend ul{margin:4px 0 0;padding-left:18px}
+.info-mood{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.barra-pdf{display:flex;justify-content:flex-end;margin:0 0 12px}
+@media (max-width:520px){ .regras{grid-template-columns:1fr} .foto img{height:150px} }
+@media print{
+  body{background:#fff}
+  .toast,.barra-pdf,.linha-btn,.comentar,.seu-nome,.instrucoes,#btn-aprovar,#nome-aprov,.aprovar p{display:none!important}
+  .topo{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cor span,.cta-box,.chip.ok,.pend,.selo{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .video iframe{display:none}.video .link-print{display:block;font-size:12px;word-break:break-all}
+  .parte,.mood,.foto{break-inside:avoid}
+}
 </style>
 </head>
 <body>
@@ -81,9 +117,9 @@ h2 .marcador{background:var(--lima);padding:0 8px;border-radius:8px}
 var API = 'https://script.google.com/macros/s/AKfycbzR_NER5y93lbFVpzffYVJJw0GdfYZBABK0PtN8-CYDG4sYSHKk7nOi41J1ExqptPN_XA/exec';
 
 var TXT = {
-  pt:{kicker:'Roteiro UGC',por:'por Elinairam Sandoval ✦',instrTit:'Como aprovar ✦',instr:'1. Escolha um dos dois ganchos. 2. Se quiser, comente qualquer parte. 3. No final, aprove o roteiro com o seu nome.',nome:'Seu nome',nomePh:'quem está revisando',ganchos:'Ganchos',ganchosNota:'escolha um',cenas:'Cenas',audio:'Áudio · o que eu falo',imagem:'Imagem · o que aparece',ref:'Referência',verRef:'Ver referência ↗',escolher:'Escolher este gancho',escolhido:'Gancho escolhido',comentar:'Comentar',enviar:'Enviar comentário',comPh:'Escreva seu comentário…',aprovarTit:'Aprovar roteiro',aprovarTxt:'Está tudo certo? Escreva o nome de quem aprovou e clique em aprovar.',aprovarBtn:'Aprovar roteiro ✓',aprovadoPor:'Roteiro aprovado por',em:'em',okGancho:'Gancho escolhido ✦',okCom:'Comentário enviado ✦',okAprov:'Roteiro aprovado! Obrigada ✦',faltaNome:'Escreva o nome de quem aprovou',faltaCom:'Escreva o comentário',erro:'Não consegui enviar agora. Tente de novo.',naoAchei:'Não encontrei esse roteiro. Confira o link.',enviando:'Enviando…'},
-  es:{kicker:'Guion UGC',por:'por Elinairam Sandoval ✦',instrTit:'Cómo aprobar ✦',instr:'1. Elige uno de los dos ganchos. 2. Si quieres, comenta cualquier parte. 3. Al final, aprueba el guion con tu nombre.',nome:'Tu nombre',nomePh:'quién está revisando',ganchos:'Ganchos',ganchosNota:'elige uno',cenas:'Escenas',audio:'Audio · lo que digo',imagem:'Imagen · lo que aparece',ref:'Referencia',verRef:'Ver referencia ↗',escolher:'Elegir este gancho',escolhido:'Gancho elegido',comentar:'Comentar',enviar:'Enviar comentario',comPh:'Escribe tu comentario…',aprovarTit:'Aprobar guion',aprovarTxt:'¿Todo bien? Escribe el nombre de quien aprueba y haz clic en aprobar.',aprovarBtn:'Aprobar guion ✓',aprovadoPor:'Guion aprobado por',em:'el',okGancho:'Gancho elegido ✦',okCom:'Comentario enviado ✦',okAprov:'¡Guion aprobado! Gracias ✦',faltaNome:'Escribe el nombre de quien aprueba',faltaCom:'Escribe el comentario',erro:'No pude enviarlo ahora. Inténtalo de nuevo.',naoAchei:'No encontré este guion. Revisa el enlace.',enviando:'Enviando…'},
-  en:{kicker:'UGC script',por:'by Elinairam Sandoval ✦',instrTit:'How to approve ✦',instr:'1. Pick one of the two hooks. 2. Comment on any part if you like. 3. At the end, approve the script with your name.',nome:'Your name',nomePh:'who is reviewing',ganchos:'Hooks',ganchosNota:'pick one',cenas:'Scenes',audio:'Audio · what I say',imagem:'Visual · what appears',ref:'Reference',verRef:'See reference ↗',escolher:'Pick this hook',escolhido:'Chosen hook',comentar:'Comment',enviar:'Send comment',comPh:'Write your comment…',aprovarTit:'Approve script',aprovarTxt:'All good? Write the name of who is approving and click approve.',aprovarBtn:'Approve script ✓',aprovadoPor:'Script approved by',em:'on',okGancho:'Hook chosen ✦',okCom:'Comment sent ✦',okAprov:'Script approved! Thank you ✦',faltaNome:'Write the name of who is approving',faltaCom:'Write your comment',erro:"I couldn't send it right now. Please try again.",naoAchei:"I couldn't find this script. Please check the link.",enviando:'Sending…'}
+  pt:{kicker:'Roteiro UGC',por:'por Elinairam Sandoval ✦',instrTit:'Como aprovar ✦',instr:'1. Escolha um dos ganchos. 2. Se quiser, comente qualquer parte. 3. No final, aprove o roteiro com o seu nome.',nome:'Seu nome',nomePh:'quem está revisando',ganchos:'Ganchos',ganchosNota:'escolha um',cenas:'Cenas',audio:'Áudio · o que eu falo',imagem:'Imagem · o que aparece',ref:'Referência',verRef:'Ver referência ↗',escolher:'Escolher este gancho',escolhido:'Gancho escolhido',comentar:'Comentar',enviar:'Enviar comentário',comPh:'Escreva seu comentário…',aprovarTit:'Aprovar roteiro',aprovarTxt:'Está tudo certo? Escreva o nome de quem aprovou e clique em aprovar.',aprovarBtn:'Aprovar roteiro ✓',mood:'Mood board',paleta:'Paleta',fotos:'Fotos',videos:'Referências',beneficios:'Benefícios e diferenciais',ctaT:'Chamada final',cupom:'Cupom',dos:'Pode / deve',donts:'Não pode',proib:'Termos proibidos',obrig:'Frases obrigatórias',pend:'Pendências (confirmar)',pdf:'Baixar PDF',regrasT:"Do's & don'ts",aprovadoPor:'Roteiro aprovado por',em:'em',okGancho:'Gancho escolhido ✦',okCom:'Comentário enviado ✦',okAprov:'Roteiro aprovado! Obrigada ✦',faltaNome:'Escreva o nome de quem aprovou',faltaCom:'Escreva o comentário',erro:'Não consegui enviar agora. Tente de novo.',naoAchei:'Não encontrei esse roteiro. Confira o link.',enviando:'Enviando…'},
+  es:{kicker:'Guion UGC',por:'por Elinairam Sandoval ✦',instrTit:'Cómo aprobar ✦',instr:'1. Elige uno de los ganchos. 2. Si quieres, comenta cualquier parte. 3. Al final, aprueba el guion con tu nombre.',nome:'Tu nombre',nomePh:'quién está revisando',ganchos:'Ganchos',ganchosNota:'elige uno',cenas:'Escenas',audio:'Audio · lo que digo',imagem:'Imagen · lo que aparece',ref:'Referencia',verRef:'Ver referencia ↗',escolher:'Elegir este gancho',escolhido:'Gancho elegido',comentar:'Comentar',enviar:'Enviar comentario',comPh:'Escribe tu comentario…',aprovarTit:'Aprobar guion',aprovarTxt:'¿Todo bien? Escribe el nombre de quien aprueba y haz clic en aprobar.',aprovarBtn:'Aprobar guion ✓',mood:'Mood board',paleta:'Paleta',fotos:'Fotos',videos:'Referencias',beneficios:'Beneficios y diferenciales',ctaT:'Llamado final',cupom:'Cupón',dos:'Sí / debe',donts:'No puede',proib:'Términos prohibidos',obrig:'Frases obligatorias',pend:'Pendientes (confirmar)',pdf:'Descargar PDF',regrasT:"Do's & don'ts",aprovadoPor:'Guion aprobado por',em:'el',okGancho:'Gancho elegido ✦',okCom:'Comentario enviado ✦',okAprov:'¡Guion aprobado! Gracias ✦',faltaNome:'Escribe el nombre de quien aprueba',faltaCom:'Escribe el comentario',erro:'No pude enviarlo ahora. Inténtalo de nuevo.',naoAchei:'No encontré este guion. Revisa el enlace.',enviando:'Enviando…'},
+  en:{kicker:'UGC script',por:'by Elinairam Sandoval ✦',instrTit:'How to approve ✦',instr:'1. Pick one of the hooks. 2. Comment on any part if you like. 3. At the end, approve the script with your name.',nome:'Your name',nomePh:'who is reviewing',ganchos:'Hooks',ganchosNota:'pick one',cenas:'Scenes',audio:'Audio · what I say',imagem:'Visual · what appears',ref:'Reference',verRef:'See reference ↗',escolher:'Pick this hook',escolhido:'Chosen hook',comentar:'Comment',enviar:'Send comment',comPh:'Write your comment…',aprovarTit:'Approve script',aprovarTxt:'All good? Write the name of who is approving and click approve.',aprovarBtn:'Approve script ✓',mood:'Mood board',paleta:'Palette',fotos:'Photos',videos:'References',beneficios:'Benefits & differentials',ctaT:'Call to action',cupom:'Coupon',dos:"Do's",donts:"Don'ts",proib:'Forbidden terms',obrig:'Mandatory phrases',pend:'Open items (to confirm)',pdf:'Download PDF',regrasT:"Do's & don'ts",aprovadoPor:'Script approved by',em:'on',okGancho:'Hook chosen ✦',okCom:'Comment sent ✦',okAprov:'Script approved! Thank you ✦',faltaNome:'Write the name of who is approving',faltaCom:'Write your comment',erro:"I couldn't send it right now. Please try again.",naoAchei:"I couldn't find this script. Please check the link.",enviando:'Sending…'}
 };
 var token = new URLSearchParams(location.search).get('r') || '';
 var R = null, T = TXT.pt;
@@ -128,6 +164,34 @@ function htmlParte(p){
   '</div>';
 }
 
+function embedVideo(u){
+  var m;
+  if((m = u.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{6,})/))) return { src:'https://www.youtube.com/embed/'+m[1], vertical:/shorts/.test(u) };
+  if((m = u.match(/tiktok\.com\/.*\/video\/(\d+)/))) return { src:'https://www.tiktok.com/embed/v2/'+m[1], vertical:true };
+  if((m = u.match(/instagram\.com\/(?:reel|reels|p|tv)\/([\w-]+)/))) return { src:'https://www.instagram.com/p/'+m[1]+'/embed', vertical:true };
+  if((m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/))) return { src:'https://drive.google.com/file/d/'+m[1]+'/preview', vertical:true };
+  return null;
+}
+function linhas(s){ return String(s||'').split('\n').map(function(x){ return x.trim(); }).filter(Boolean); }
+function htmlMood(M){
+  if(!M) return '';
+  var h = '';
+  var info = [M.info && M.info.formato, M.info && M.info.duracao, M.info && M.info.plataformas].filter(Boolean);
+  if(info.length) h += '<div class="info-mood">'+info.map(function(x){ return '<span class="chip">'+esc(x)+'</span>'; }).join('')+'</div>';
+  if(M.paleta && M.paleta.length) h += '<h3>'+T.paleta+'</h3><div class="paleta">'+M.paleta.map(function(c){ return '<div class="cor"><span style="background:'+esc(c)+'"></span>'+esc(c)+'</div>'; }).join('')+'</div>';
+  if(M.fotos && M.fotos.length) h += '<h3>'+T.fotos+'</h3><div class="fotos">'+M.fotos.map(function(f){ return '<figure class="foto"><img src="'+esc(f.url)+'" alt="'+esc(f.legenda||'')+'" loading="lazy">'+(f.legenda?'<figcaption>'+esc(f.legenda)+'</figcaption>':'')+'</figure>'; }).join('')+'</div>';
+  if(M.videos && M.videos.length) h += '<h3>'+T.videos+'</h3><div class="videos">'+M.videos.map(function(v){
+    var e = embedVideo(v.url);
+    return '<div class="video">'+(e?'<iframe src="'+esc(e.src)+'" class="'+(e.vertical?'vert':'')+'" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe><span class="link-print">'+esc(v.url)+'</span>':'<a class="btn" href="'+esc(v.url)+'" target="_blank" rel="noopener">'+T.verRef+'</a>')+(v.nota?'<p>'+esc(v.nota)+'</p>':'')+'</div>';
+  }).join('')+'</div>';
+  var ben = (M.beneficios||[]).concat(linhas(M.diferenciais));
+  if(ben.length) h += '<h3>'+T.beneficios+'</h3><div class="chips">'+ben.map(function(b){ return '<span class="chip ok">✓ '+esc(b)+'</span>'; }).join('')+'</div>';
+  if(M.cta && (M.cta.texto || M.cta.arroba || M.cta.cupom || M.cta.link)) h += '<h3>'+T.ctaT+'</h3><div class="cta-box">'+[M.cta.texto?esc(M.cta.texto):'', M.cta.arroba?esc(M.cta.arroba):'', M.cta.cupom?T.cupom+': '+esc(M.cta.cupom):'', M.cta.link?'<a href="'+esc(M.cta.link)+'" target="_blank" rel="noopener">'+esc(M.cta.link)+'</a>':''].filter(Boolean).join(' · ')+'</div>';
+  if(M.regras){ var rg = [['dos',T.dos],['donts',T.donts],['proibidos',T.proib],['obrigatorias',T.obrig]].filter(function(x){ return M.regras[x[0]]; });
+    if(rg.length) h += '<h3>'+T.regrasT+'</h3><div class="regras">'+rg.map(function(x){ return '<div class="regra"><b>'+x[1]+'</b>'+esc(M.regras[x[0]])+'</div>'; }).join('')+'</div>'; }
+  if(M.pendencias && M.pendencias.length) h += '<h3>'+T.pend+'</h3><div class="pend"><ul>'+M.pendencias.map(function(p){ return '<li>'+esc(p)+'</li>'; }).join('')+'</ul></div>';
+  return h ? '<section class="mood"><h2>'+T.mood+' <span class="marcador">'+esc(R.marca||'')+'</span></h2>'+h+'</section>' : '';
+}
 function desenhar(){
   var ganchos = (R.partes||[]).filter(function(p){return p.tipo==='gancho';});
   var cenas = (R.partes||[]).filter(function(p){return p.tipo!=='gancho';});
@@ -136,6 +200,8 @@ function desenhar(){
       '<div class="wrap"><div class="logo">'+(R.logo?'<img src="'+esc(R.logo)+'" alt="'+esc(R.marca)+'">':esc(String(R.marca||'?').slice(0,2).toUpperCase()))+'</div>'+
       '<div><p class="kicker">'+T.kicker+(R.marca?' · '+esc(R.marca):'')+'</p><h1>'+esc(R.titulo)+'</h1>'+(R.produto?'<p class="produto">'+esc(R.produto)+'</p>':'')+'<p class="por">'+T.por+'</p></div></div></header>'+
     '<main class="wrap">'+
+      '<div class="barra-pdf"><button class="btn" id="btn-pdf">⬇ '+T.pdf+'</button></div>'+
+      htmlMood(R.mood)+
       '<div class="instrucoes"><b>'+T.instrTit+'</b>'+T.instr+'</div>'+
       '<div class="seu-nome"><label for="nome">'+T.nome+'</label><input id="nome" placeholder="'+esc(T.nomePh)+'" value="'+esc(nomeSalvo())+'" maxlength="80"></div>'+
       (ganchos.length?'<h2>'+T.ganchos+' <span class="marcador">'+T.ganchosNota+'</span></h2>'+ganchos.map(htmlParte).join(''):'')+
@@ -153,6 +219,7 @@ function enviar(dados){
 }
 
 function ligar(){
+  var bp = document.getElementById('btn-pdf'); if(bp) bp.onclick = function(){ window.print(); };
   var nomeEl = document.getElementById('nome');
   nomeEl.addEventListener('change',function(){ guardarNome(nomeEl.value.trim()); });
   app.querySelectorAll('.parte').forEach(function(el){

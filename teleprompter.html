@@ -30,6 +30,12 @@ label input[type=range]{flex:1;accent-color:var(--lima)}
 ol{padding-left:18px;margin:6px 0 0;font-size:13px;color:#DCE3CF}ol li{margin-bottom:4px}
 canvas,video{display:none}
 .erro{background:#5a1a14;border-radius:14px;padding:12px;margin-bottom:14px}
+[hidden]{display:none!important}
+.ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.cb{border:0;border-radius:16px;background:#000;color:#fff;font:700 24px "DM Sans",sans-serif;padding:10px 0 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.cb small{font-size:11px;font-weight:700;color:var(--salvia)}
+.cb.lima{background:var(--lima);color:#000}.cb.lima small{color:#000}
+.arrastar input{height:34px}
 </style>
 </head>
 <body>
@@ -43,6 +49,17 @@ canvas,video{display:none}
     <div class="barra"><i id="prog"></i></div>
     <p class="status" id="st">deixe esta tela aberta enquanto prepara (leva o tempo do roteiro)</p>
     <button class="btn escuro" id="flutuar" disabled>2. 🪟 Abrir a janela flutuante</button>
+  </div>
+  <div class="caixa" id="controles" hidden>
+    <b>Controle das letras</b>
+    <div class="ctl">
+      <button class="cb" id="c-inicio" title="Voltar ao começo">⏮<small>início</small></button>
+      <button class="cb" id="c-menos" title="Voltar 5 segundos">⏪<small>5s</small></button>
+      <button class="cb lima" id="c-play" title="Pausar ou continuar">⏸<small>pausar</small></button>
+      <button class="cb" id="c-mais" title="Avançar 5 segundos">⏩<small>5s</small></button>
+    </div>
+    <label class="arrastar">arraste até onde quiser <input type="range" id="c-pos" min="0" max="1000" value="0"><span class="val" id="c-tempo">0s</span></label>
+    <p class="status">Na janela flutuante: <b>⏯</b> pausa ou continua · <b>⏮</b> volta 5s (toque 2 vezes rápido pra voltar ao começo) · <b>⏭</b> avança 5s.</p>
   </div>
   <div class="caixa"><b>Como usar</b><ol>
     <li>Escolha a velocidade e o tamanho da letra e toque em <b>Preparar</b>.</li>
@@ -109,6 +126,7 @@ document.getElementById('preparar').onclick = function(){
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(function(){
     var f = folha(), cv = document.getElementById('cv'), x = cv.getContext('2d'); cv.width = W; cv.height = H;
     var v = +vel.value, contagem = 3, rolar = Math.max(1, f.fim - Math.round(H*0.4)), total = contagem + rolar / v + 1;
+    duracaoConhecida = total;
     var tipo = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : (MediaRecorder.isTypeSupported('video/webm') ? 'video/webm' : 'video/mp4');
     var stream = cv.captureStream(30), rec = new MediaRecorder(stream, { mimeType: tipo, videoBitsPerSecond: 1500000 }), partes = [];
     rec.ondataavailable = function(e){ if(e.data.size) partes.push(e.data); };
@@ -138,9 +156,45 @@ document.getElementById('preparar').onclick = function(){
     rec.start(250); quadro();
   });
 };
+/* ---------- controles: pausar, voltar, avançar, arrastar ---------- */
+var vid = document.getElementById('vid'), INICIO_TEXTO = 2.6, ultimoVolta = 0, arrastando = false, duracaoConhecida = 0;
+function dur(){ return isFinite(vid.duration) && vid.duration > 0 ? vid.duration : duracaoConhecida; }
+function irPara(t){ if(!dur()) return; vid.currentTime = Math.max(0, Math.min(dur() - 0.1, t)); posicao(); }
+function voltarUmPouco(){ var agora = Date.now(); if(agora - ultimoVolta < 1500) irPara(INICIO_TEXTO); else irPara(vid.currentTime - 5); ultimoVolta = agora; }
+function alternar(){ if(vid.paused) vid.play().catch(function(){}); else vid.pause(); }
+function posicao(){
+  if(!dur()) return;
+  if(!arrastando) document.getElementById('c-pos').value = Math.round(vid.currentTime / dur() * 1000);
+  document.getElementById('c-tempo').textContent = Math.max(0, Math.round(vid.currentTime - 3))+'s';
+  try { if(navigator.mediaSession && navigator.mediaSession.setPositionState) navigator.mediaSession.setPositionState({ duration: dur(), playbackRate: 1, position: Math.min(vid.currentTime, dur()) }); } catch(e) {}
+}
+function botaoPlay(){ var b = document.getElementById('c-play'); b.innerHTML = vid.paused ? '▶<small>continuar</small>' : '⏸<small>pausar</small>'; }
+document.getElementById('c-inicio').onclick = function(){ irPara(INICIO_TEXTO); };
+document.getElementById('c-menos').onclick = function(){ irPara(vid.currentTime - 5); };
+document.getElementById('c-mais').onclick = function(){ irPara(vid.currentTime + 5); };
+document.getElementById('c-play').onclick = alternar;
+var pos = document.getElementById('c-pos');
+pos.oninput = function(){ arrastando = true; if(dur()) { vid.currentTime = pos.value / 1000 * dur(); document.getElementById('c-tempo').textContent = Math.max(0, Math.round(vid.currentTime - 3))+'s'; } };
+pos.onchange = function(){ arrastando = false; posicao(); };
+vid.addEventListener('timeupdate', posicao);
+vid.addEventListener('play', botaoPlay); vid.addEventListener('pause', botaoPlay);
+/* botões da janela flutuante e da notificação do Android */
+if('mediaSession' in navigator){
+  var ms = navigator.mediaSession, acao = function(nome, fn){ try { ms.setActionHandler(nome, fn); } catch(e) {} };
+  acao('play', function(){ vid.play().catch(function(){}); });
+  acao('pause', function(){ vid.pause(); });
+  acao('previoustrack', voltarUmPouco);
+  acao('nexttrack', function(){ irPara(vid.currentTime + 5); });
+  acao('seekbackward', function(d){ irPara(vid.currentTime - ((d && d.seekOffset) || 5)); });
+  acao('seekforward', function(d){ irPara(vid.currentTime + ((d && d.seekOffset) || 5)); });
+  acao('seekto', function(d){ if(d && d.seekTime != null) irPara(d.seekTime); });
+  try { ms.metadata = new MediaMetadata({ title: dados.t || 'Teleprompter', artist: 'Elinairam' }); } catch(e) {}
+}
+
 document.getElementById('flutuar').onclick = function(){
-  var vid = document.getElementById('vid'), st = document.getElementById('st');
+  var st = document.getElementById('st');
   vid.currentTime = 0;
+  document.getElementById('controles').hidden = false;
   vid.play().then(function(){
     if(document.pictureInPictureEnabled && vid.requestPictureInPicture) return vid.requestPictureInPicture().then(function(){ st.textContent = 'Janela aberta ✦ agora abra a câmera'; });
     st.textContent = 'Este aparelho não abre janela flutuante. Veja se o Chrome tem a permissão "Picture-in-picture" nas configurações do Android.';

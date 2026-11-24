@@ -393,7 +393,16 @@ section{position:relative;overflow:hidden}
 
 /* Player grande */
 .player{position:fixed;inset:0;z-index:100;background:rgba(15,16,21,.9);display:none;align-items:center;justify-content:center;padding:24px}
-.player.aberto{display:flex}
+.player.aberto{display:flex;gap:28px}
+.caso{background:var(--creme);color:var(--verde2);border-radius:20px;border:4px solid var(--lima);padding:24px;width:340px;max-height:88vh;overflow:auto}
+.caso h3{font-family:var(--f-titulo);font-weight:400;text-transform:uppercase;font-size:30px;line-height:1.1;margin:6px 0 10px}
+.caso-obj{display:inline-block;background:var(--verde2);color:var(--lima);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.caso-item{border-top:2px solid var(--salvia);padding:12px 0}
+.caso-item h4{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--musgo);margin-bottom:4px}
+.caso-item p{font-size:14px;line-height:1.55}
+.caso-res p{font-family:var(--f-titulo);text-transform:uppercase;font-size:20px;line-height:1.2;color:var(--verde)}
+.caso-cta{margin-top:10px;width:100%}
+.card .caso-link{margin:0 8px;font-size:12px;font-weight:700;color:var(--musgo);text-decoration:underline;text-decoration-color:var(--lima);text-decoration-thickness:2px;text-underline-offset:3px}
 .player video{max-height:88vh;max-width:100%;aspect-ratio:9/16;border-radius:18px;border:4px solid var(--lima);background:#000}
 .player iframe{height:88vh;max-height:88vh;aspect-ratio:9/16;max-width:100%;border:4px solid var(--lima);border-radius:18px;background:#000}
 .player [hidden]{display:none}
@@ -637,6 +646,7 @@ section{position:relative;overflow:hidden}
 <div class="player" id="player" role="dialog" aria-modal="true" aria-label="Vídeo">
   <button class="player-x" id="player-x" aria-label="Fechar vídeo">×</button>
   <video id="player-video" controls playsinline></video>
+  <aside class="caso" id="player-caso" hidden></aside>
   <iframe id="player-yt" title="Vídeo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen hidden></iframe>
 </div>
 
@@ -728,12 +738,13 @@ function cardVideo(v,i,opcoes){
   var tem = v.youtube || v.video;
   var nichoTxt = v.nicho||opcoes.nicho;
   var meta = tem ? '<span>'+esc(nichoTxt)+'</span>'+(v.formato?' · <span>'+esc(v.formato)+'</span>':'') : gi(nichoTxt,'nicho')+' · '+gi(v.formato,'formato');
-  return '<div class="card '+(opcoes.moldura||'')+(tem?' tem-video':'')+'"'+(tem?' role="button" tabindex="0"':'')+' data-video="'+esc(v.video||'')+'" data-youtube="'+esc(v.youtube||'')+'" data-titulo="'+esc(v.titulo||v.youtube||v.video||'')+'">'+
+  return '<div class="card '+(opcoes.moldura||'')+(tem?' tem-video':'')+'"'+(tem?' role="button" tabindex="0"':'')+' data-video="'+esc(v.video||'')+'" data-youtube="'+esc(v.youtube||'')+'" data-titulo="'+esc(v.titulo||v.youtube||v.video||'')+'"'+(v.caso&&opcoes.caso!==undefined?' data-caso="'+opcoes.caso+'"':'')+'>'+
     (v.res?'<span class="res">✦ <span>'+esc(v.res)+'</span></span>':'')+
     '<div class="tela">'+tela+'</div>'+
     (v.objetivo?'<p class="objetivo"><span>Objetivo</span>: <span>'+esc(v.objetivo)+'</span></p>':'')+
     '<p class="leg"><span>'+gi(v.titulo,'título curto do vídeo')+'</span> →</p>'+
-    '<p class="meta">'+meta+'</p></div>';
+    '<p class="meta">'+meta+'</p>'+
+    (v.caso&&opcoes.caso!==undefined?'<p class="caso-link">Vídeo + estudo de caso →</p>':'')+'</div>';
 }
 
 function montar(){
@@ -789,7 +800,7 @@ function montar(){
   if(temMouse) document.getElementById('dest-dica').textContent = 'Clique no vídeo pra assistir com som.';
   var molduras = ['moldura-0','moldura-1','moldura-2'];
   document.getElementById('dest-cards').innerHTML = D.destaques.slice(0,3).map(function(v,i){
-    return cardVideo(v,i,{primeiro:i===0,moldura:molduras[i],dica:'Os melhores na frente, não os mais recentes · midia/destaques/'+(i+1)+'.mp4'});
+    return cardVideo(v,i,{caso:i,primeiro:i===0,moldura:molduras[i],dica:'Os melhores na frente, não os mais recentes · midia/destaques/'+(i+1)+'.mp4'});
   }).join('');
 
   // 4. Nichos
@@ -1034,6 +1045,18 @@ function ligarPlayer(){
       player.classList.add('aberto');
       pv.muted = false; pv.play().catch(function(){});
     }
+    var ci = card.getAttribute('data-caso'), pc = document.getElementById('player-caso');
+    var d = ci !== null ? DADOS.destaques[+ci] : null;
+    if(d && d.caso){
+      pc.innerHTML = '<p class="kicker">Estudo de caso</p><h3>'+esc(d.titulo)+'</h3>'+
+        (d.objetivo?'<p class="caso-obj"><span>Objetivo</span>: <span>'+esc(d.objetivo)+'</span></p>':'')+
+        '<div class="caso-item"><h4>Desafio</h4><p>'+esc(d.caso.desafio)+'</p></div>'+
+        '<div class="caso-item"><h4>Estratégia</h4><p>'+esc(d.caso.estrategia)+'</p></div>'+
+        '<div class="caso-item caso-res"><h4>Resultado</h4><p>'+esc(d.caso.resultado)+'</p></div>'+
+        '<a class="btn btn-amarelo caso-cta" href="#contato">Quero um resultado assim →</a>';
+      pc.hidden = false;
+      pc.querySelector('.caso-cta').addEventListener('click', fechar);
+    } else { pc.hidden = true; pc.innerHTML = ''; }
     document.getElementById('player-x').focus();
     medirVideo(card.getAttribute('data-titulo'));
   }
@@ -1041,6 +1064,7 @@ function ligarPlayer(){
     if(!player.classList.contains('aberto')) return;
     pv.pause(); pv.removeAttribute('src'); pv.load();
     py.removeAttribute('src');
+    var pc = document.getElementById('player-caso'); pc.hidden = true; pc.innerHTML = '';
     player.classList.remove('aberto');
     if(ultimoFoco) ultimoFoco.focus();
   }
@@ -1200,7 +1224,7 @@ var DADOS = {
   // Texto do Sobre mim, um parágrafo por linha.
   // Pra colocar uma foto no meio do texto: { foto: "midia/arquivo.jpg", legenda: "texto curto" }
   sobreTexto: [
-    "Sou UGC creator bilíngue em São Paulo e gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade."
+    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade."
   ],
   // Seus 3 diferenciais (as 3 caixinhas do Sobre mim). Textos curtos!
   diferenciais: [
@@ -1221,12 +1245,22 @@ var DADOS = {
     { icone: "gestao",   titulo: "Gestão de campanha", texto: "Planejo e acompanho a campanha do briefing à entrega, pra você focar no resultado" }
   ],
   // Seus 3 MELHORES vídeos (não os mais recentes). O 1º é o mais forte.
+  // caso: estudo de caso que aparece ao lado do vídeo (desafio, estrategia, resultado). Só números reais!
   // objetivo: o objetivo da campanha (ex.: Vendas, Alcance) · titulo: nome curto · nicho · formato · res: resultado real (vazio = sem selo)
   // youtube: o código do Shorts (o que vem depois de /shorts/ no link) · ou video: "midia/arquivo.mp4"
   destaques: [
-    { objetivo: "Vendas",           titulo: "TikTok Shop",   nicho: "Beleza", formato: "Lo-fi",           youtube: "1bICvacskAA", res: "+4 vendas em 1 dia" },
-    { objetivo: "Alcance",          titulo: "Mercado Livre", nicho: "Tech",   formato: "Black Friday",    youtube: "Wlee00SHT3M", res: "+2 mi views · +15k interações" },
-    { objetivo: "Downloads do app", titulo: "Magalu",        nicho: "Tech",   formato: "Datas especiais", youtube: "78xJlFM2o_c", res: "+5 mi views" }
+    { objetivo: "Vendas",           titulo: "TikTok Shop",   nicho: "Beleza", formato: "Lo-fi",           youtube: "1bICvacskAA", res: "+4 vendas em 1 dia",
+      caso: { desafio: "A marca me enviou o produto e precisava gerar vendas direto pelo TikTok Shop.",
+              estrategia: "Destaquei os benefícios e a dor do cliente, esclareci os mitos sobre o produto e apresentei ele como a solução.",
+              resultado: "+4 vendas em 1 dia." } },
+    { objetivo: "Alcance",          titulo: "Mercado Livre", nicho: "Tech",   formato: "Black Friday",    youtube: "Wlee00SHT3M", res: "+2 mi views · +15k interações",
+      caso: { desafio: "A marca queria aparecer como parte da rotina e destacar os descontos da Black Friday.",
+              estrategia: "Apresentei o produto como parte do meu autocuidado, com o gancho: “Quando foi a última vez que você cuidou de você?”.",
+              resultado: "+2 milhões de views e +15 mil interações durante a Black Friday." } },
+    { objetivo: "Downloads do app", titulo: "Magalu",        nicho: "Tech",   formato: "Datas especiais", youtube: "78xJlFM2o_c", res: "+5 mi views",
+      caso: { desafio: "Campanha antecipada do Dia das Mães: mostrar, antes da data, que a marca é a melhor opção pra comprar os presentes.",
+              estrategia: "Gancho em formato de entrevista, como se eu perguntasse direto pra quem assiste, e depois apresentei as opções de presente.",
+              resultado: "+5 milhões de views." } }
   ],
   // Uma aba por nicho. titulo · formato · youtube: código do Shorts. descricao: frase opcional embaixo das abas
   // Link que abre direto num nicho: portfolio.elairum.com.br/?c=tech-app (ou ?c=beleza, ?c=haircare, ?c=casa, ?c=multicultural, ?c=autocuidado, ?c=carro-moto, ?c=clips, ?c=achadinhos)
@@ -1343,6 +1377,20 @@ var DADOS = {
    ========================================================= */
 var TRADUCOES = {
   es: {
+    "Vídeo + estudo de caso →": "Video + caso de estudio →",
+    "Estudo de caso": "Caso de estudio",
+    "Desafio": "Desafío",
+    "Resultado": "Resultado",
+    "Quero um resultado assim →": "Quiero un resultado así →",
+    "A marca me enviou o produto e precisava gerar vendas direto pelo TikTok Shop.": "La marca me envió el producto y necesitaba generar ventas directo por TikTok Shop.",
+    "Destaquei os benefícios e a dor do cliente, esclareci os mitos sobre o produto e apresentei ele como a solução.": "Destaqué los beneficios y el dolor del cliente, aclaré los mitos sobre el producto y lo presenté como la solución.",
+    "+4 vendas em 1 dia.": "+4 ventas en 1 día.",
+    "A marca queria aparecer como parte da rotina e destacar os descontos da Black Friday.": "La marca quería aparecer como parte de la rutina y destacar los descuentos del Black Friday.",
+    "Apresentei o produto como parte do meu autocuidado, com o gancho: “Quando foi a última vez que você cuidou de você?”.": "Presenté el producto como parte de mi autocuidado, con el gancho: “¿Cuándo fue la última vez que cuidaste de ti?”.",
+    "+2 milhões de views e +15 mil interações durante a Black Friday.": "+2 millones de views y +15 mil interacciones durante el Black Friday.",
+    "Campanha antecipada do Dia das Mães: mostrar, antes da data, que a marca é a melhor opção pra comprar os presentes.": "Campaña anticipada del Día de las Madres: mostrar, antes de la fecha, que la marca es la mejor opción para comprar los regalos.",
+    "Gancho em formato de entrevista, como se eu perguntasse direto pra quem assiste, e depois apresentei as opções de presente.": "Gancho en formato de entrevista, como si le preguntara directo a quien mira, y después presenté las opciones de regalo.",
+    "+5 milhões de views.": "+5 millones de views.",
     "Agende uma conversa →": "Agenda una conversación →",
     "Crio em 2 idiomas:": "Creo en 2 idiomas:",
     "Português": "Portugués",
@@ -1475,7 +1523,7 @@ var TRADUCOES = {
     "Espanhol e Português": "Español y Portugués",
     "SOBRE MIM": "SOBRE MÍ",
     "Oie, eu sou a Eli": "¡Hola, soy Eli!",
-    "Sou UGC creator bilíngue em São Paulo e gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "Soy UGC creator bilingüe en São Paulo y grabo en portugués y español: más de 100 videos para más de 50 marcas, con más de 5 millones de views. Tengo una comunidad educativa de creators, así que siempre estoy al día con las novedades del mercado y lo llevo a la comunicación de tu marca, con entregas rápidas y de calidad.",
+    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "Soy venezolana, vivo en São Paulo y Brasil se convirtió en mi segundo hogar. Como UGC creator bilingüe, grabo en portugués y español: más de 100 videos para más de 50 marcas, con más de 5 millones de views. Tengo una comunidad educativa de creators, así que siempre estoy al día con las novedades del mercado y lo llevo a la comunicación de tu marca, con entregas rápidas y de calidad.",
     "Estudo a dor do seu cliente": "Estudio el dolor de tu cliente",
     "Entendo o público e o que trava a compra.": "Entiendo al público y lo que frena la compra.",
     "Roteiro meu, aprovado por você": "Guion mío, aprobado por ti",
@@ -1623,6 +1671,20 @@ var TRADUCOES = {
     "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · portafolio UGC"
   },
   en: {
+    "Vídeo + estudo de caso →": "Video + case study →",
+    "Estudo de caso": "Case study",
+    "Desafio": "Challenge",
+    "Resultado": "Result",
+    "Quero um resultado assim →": "I want results like this →",
+    "A marca me enviou o produto e precisava gerar vendas direto pelo TikTok Shop.": "The brand sent me the product and needed to drive sales straight through TikTok Shop.",
+    "Destaquei os benefícios e a dor do cliente, esclareci os mitos sobre o produto e apresentei ele como a solução.": "I highlighted the benefits and the customer's pain point, cleared up myths about the product and presented it as the solution.",
+    "+4 vendas em 1 dia.": "+4 sales in 1 day.",
+    "A marca queria aparecer como parte da rotina e destacar os descontos da Black Friday.": "The brand wanted to show up as part of everyday routine and highlight its Black Friday discounts.",
+    "Apresentei o produto como parte do meu autocuidado, com o gancho: “Quando foi a última vez que você cuidou de você?”.": "I presented the product as part of my self-care, with the hook: “When was the last time you took care of yourself?”.",
+    "+2 milhões de views e +15 mil interações durante a Black Friday.": "2M+ views and 15K+ interactions during Black Friday.",
+    "Campanha antecipada do Dia das Mães: mostrar, antes da data, que a marca é a melhor opção pra comprar os presentes.": "Early Mother's Day campaign: show, ahead of the date, that the brand is the best place to buy gifts.",
+    "Gancho em formato de entrevista, como se eu perguntasse direto pra quem assiste, e depois apresentei as opções de presente.": "An interview-style hook, as if I were asking the viewer directly, and then I showed the gift options.",
+    "+5 milhões de views.": "5M+ views.",
     "Agende uma conversa →": "Book a call →",
     "Crio em 2 idiomas:": "I create in 2 languages:",
     "Português": "Portuguese",
@@ -1755,7 +1817,7 @@ var TRADUCOES = {
     "Espanhol e Português": "Spanish and Portuguese",
     "SOBRE MIM": "ABOUT ME",
     "Oie, eu sou a Eli": "Hi, I'm Eli",
-    "Sou UGC creator bilíngue em São Paulo e gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "I'm a bilingual UGC creator based in São Paulo, recording in Portuguese and Spanish: 100+ videos for 50+ brands, with 5M+ views. I run an educational community of creators, so I'm always on top of what's new in the market and bring that into your brand's communication, with fast, high-quality delivery.",
+    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "I'm Venezuelan, I live in São Paulo, and Brazil has become my second home. As a bilingual UGC creator, I record in Portuguese and Spanish: 100+ videos for 50+ brands, with 5M+ views. I run an educational community of creators, so I'm always on top of what's new in the market and bring that into your brand's communication, with fast, high-quality delivery.",
     "Estudo a dor do seu cliente": "I study your customer's pain",
     "Entendo o público e o que trava a compra.": "I understand the audience and what blocks the purchase.",
     "Roteiro meu, aprovado por você": "My script, approved by you",

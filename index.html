@@ -227,6 +227,7 @@ section{position:relative;overflow:hidden}
 .card .play svg{width:18px;height:18px;margin-left:3px}
 .card .play svg path{fill:#fff}
 .card .res{position:absolute;left:16px;top:16px;z-index:2;background:var(--lima);color:var(--verde);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;letter-spacing:.04em;box-shadow:0 4px 10px rgba(15,16,21,.25)}
+.card .objetivo{align-self:flex-start;margin:4px 0 0 8px;background:var(--verde2);color:var(--lima);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}
 .card .leg{font-family:var(--f-titulo);font-size:20px;letter-spacing:.02em;text-transform:uppercase;line-height:1.15;margin-top:4px}
 .card .meta{font-size:13px;color:var(--cinza);font-weight:500;margin-top:-2px}
 .card.tem-video{cursor:pointer}
@@ -517,7 +518,7 @@ section{position:relative;overflow:hidden}
       <p class="kicker">DESTAQUES</p>
       <h2 class="h2">Meus melhores <span class="lima">vídeos</span></h2>
       <svg class="brilhos" viewBox="0 0 80 60" aria-hidden="true"><path d="M24 6 C26 22 32 28 48 30 C32 32 26 38 24 54 C22 38 16 32 0 30 C16 28 22 22 24 6Z" fill="none" stroke="#CBFC00" stroke-width="2.5"/><path d="M62 4 C63 13 66 16 75 17 C66 18 63 21 62 30 C61 21 58 18 49 17 C58 16 61 13 62 4Z" fill="#CBFC00"/></svg>
-      <p class="slogan-dest">Conteúdos estratégicos pra diferentes objetivos</p>
+      <p class="slogan-dest">Resultados por objetivo de campanha</p>
       <p id="dest-dica">Toque no vídeo pra assistir com som.</p>
       <a href="#nichos" class="btn btn-amarelo">Ver por nicho →</a>
     </div>
@@ -720,6 +721,7 @@ function cardVideo(v,i,opcoes){
   return '<div class="card '+(opcoes.moldura||'')+(tem?' tem-video':'')+'"'+(tem?' role="button" tabindex="0"':'')+' data-video="'+esc(v.video||'')+'" data-youtube="'+esc(v.youtube||'')+'" data-titulo="'+esc(v.titulo||v.youtube||v.video||'')+'">'+
     (v.res?'<span class="res">✦ <span>'+esc(v.res)+'</span></span>':'')+
     '<div class="tela">'+tela+'</div>'+
+    (v.objetivo?'<p class="objetivo"><span>Objetivo</span>: <span>'+esc(v.objetivo)+'</span></p>':'')+
     '<p class="leg"><span>'+gi(v.titulo,'título curto do vídeo')+'</span> →</p>'+
     '<p class="meta">'+meta+'</p></div>';
 }
@@ -1210,12 +1212,12 @@ var DADOS = {
     { icone: "gestao",   titulo: "Gestão de campanha", texto: "Planejo e acompanho a campanha do briefing à entrega, pra você focar no resultado" }
   ],
   // Seus 3 MELHORES vídeos (não os mais recentes). O 1º é o mais forte.
-  // titulo: nome curto · nicho · formato · res: resultado real (vazio = sem selo)
+  // objetivo: o objetivo da campanha (ex.: Vendas, Alcance) · titulo: nome curto · nicho · formato · res: resultado real (vazio = sem selo)
   // youtube: o código do Shorts (o que vem depois de /shorts/ no link) · ou video: "midia/arquivo.mp4"
   destaques: [
-    { titulo: "TikTok Shop",   nicho: "Beleza", formato: "Lo-fi",           youtube: "1bICvacskAA", res: "+4 vendas em 1 dia" },
-    { titulo: "Mercado Livre", nicho: "Tech",   formato: "Black Friday",    youtube: "Wlee00SHT3M", res: "+2 mi views · +15k interações" },
-    { titulo: "Magalu",        nicho: "Tech",   formato: "Datas especiais", youtube: "78xJlFM2o_c", res: "+5 mi views" }
+    { objetivo: "Vendas",           titulo: "TikTok Shop",   nicho: "Beleza", formato: "Lo-fi",           youtube: "1bICvacskAA", res: "+4 vendas em 1 dia" },
+    { objetivo: "Alcance",          titulo: "Mercado Livre", nicho: "Tech",   formato: "Black Friday",    youtube: "Wlee00SHT3M", res: "+2 mi views · +15k interações" },
+    { objetivo: "Downloads do app", titulo: "Magalu",        nicho: "Tech",   formato: "Datas especiais", youtube: "78xJlFM2o_c", res: "+5 mi views" }
   ],
   // Uma aba por nicho. titulo · formato · youtube: código do Shorts. descricao: frase opcional embaixo das abas
   // Link que abre direto num nicho: portfolio.elairum.com.br/?c=tech-app (ou ?c=beleza, ?c=haircare, ?c=casa, ?c=multicultural, ?c=autocuidado, ?c=carro-moto, ?c=clips, ?c=achadinhos)
@@ -1332,6 +1334,10 @@ var DADOS = {
    ========================================================= */
 var TRADUCOES = {
   es: {
+    "Objetivo": "Objetivo",
+    "Alcance": "Alcance",
+    "Downloads do app": "Descargas de la app",
+    "Resultados por objetivo de campanha": "Resultados por objetivo de campaña",
     "CRIADORA UGC · ESTRATEGISTA MULTICULTURAL": "CREADORA UGC · ESTRATEGA MULTICULTURAL",
     "Vídeos que": "Videos que",
     "vendem": "venden",
@@ -1604,6 +1610,10 @@ var TRADUCOES = {
     "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · portafolio UGC"
   },
   en: {
+    "Objetivo": "Goal",
+    "Alcance": "Reach",
+    "Downloads do app": "App downloads",
+    "Resultados por objetivo de campanha": "Results by campaign goal",
     "CRIADORA UGC · ESTRATEGISTA MULTICULTURAL": "UGC CREATOR · MULTICULTURAL STRATEGIST",
     "Vídeos que": "Videos that",
     "vendem": "sell",

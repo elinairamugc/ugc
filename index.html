@@ -95,6 +95,11 @@ section{position:relative;overflow:hidden}
 .nome span:nth-child(2){font-family:var(--f-script);font-weight:600;color:var(--verde2);font-size:.56em;line-height:1;margin:-.05em 0 0 .9em;width:fit-content;padding:0 .2em;background:linear-gradient(transparent 58%,var(--lima) 58%,var(--lima) 92%,transparent 92%);transform:rotate(-4deg);transform-origin:left}
 .valor{font-family:var(--f-titulo);text-transform:uppercase;font-size:30px;line-height:1.1;color:var(--verde);margin:22px 0 0;letter-spacing:.02em}
 .valor .marca-texto{padding:0 .16em}
+.bilingue{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:16px 0 2px}
+.bilingue svg{width:26px;height:26px;color:var(--verde2)}
+.bil-txt{font-size:14px;font-weight:700;color:var(--verde)}
+.idioma-pill{display:inline-flex;align-items:center;gap:7px;background:#fff;border:2px solid var(--verde2);border-radius:999px;padding:4px 12px 4px 4px;font-size:13px;font-weight:600;color:var(--verde2)}
+.idioma-pill b{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--lima);color:var(--verde);font-size:11px;letter-spacing:.04em}
 .linha-nichos{display:flex;gap:8px;font-size:14px;font-weight:600;letter-spacing:.02em;margin:16px 0 8px;color:var(--verde);max-width:52ch}
 .linha-nichos::before{content:"✦";color:var(--musgo)}
 .frase{font-size:15px;color:var(--cinza);max-width:46ch;margin-bottom:26px}
@@ -437,6 +442,12 @@ section{position:relative;overflow:hidden}
           <svg class="coroa-nome" viewBox="0 0 110 64" aria-hidden="true"><path d="M10 56 L16 16 L36 40 L54 8 L72 40 L94 16 L100 56 Z" fill="#CBFC00" stroke="#182C08" stroke-width="4" stroke-linejoin="round"/></svg>
           <h1 class="nome" id="capa-nome"></h1>
           <p class="valor"><span>Vídeos que</span> <span class="marca-texto">vendem</span></p>
+          <div class="bilingue" aria-label="Conteúdo bilíngue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h9v7H8l-4 3z"/><path d="M11 15h5l4 3v-9h-4"/></svg>
+            <span class="bil-txt">Crio em 2 idiomas:</span>
+            <span class="idioma-pill"><b>PT</b><span>Português</span></span>
+            <span class="idioma-pill"><b>ES</b><span>Español</span></span>
+          </div>
           <p class="linha-nichos" id="capa-nichos"></p>
           <p class="frase" id="capa-frase"></p>
           <ul class="provas" id="capa-provas"></ul>
@@ -690,13 +701,13 @@ function linkServico(servico){
 }
 function linkContato(){
   var nome = DADOS.nome.split(' ')[0];
-  var msg = IDIOMA==='es' ? '¡Hola, '+nome+'! Vi tu portafolio y quiero hablar sobre videos para mi marca.'
-          : IDIOMA==='en' ? 'Hi, '+nome+'! I saw your portfolio and I would like to talk about videos for my brand.'
-          : 'Oi, '+nome+'! Vi seu portfólio e quero conversar sobre vídeos pra minha marca.';
+  var msg = IDIOMA==='es' ? '¡Hola, '+nome+'! Vi tu portafolio y me gustaría agendar una conversación sobre una campaña para mi marca.'
+          : IDIOMA==='en' ? 'Hi, '+nome+'! I saw your portfolio and I would like to book a call about a campaign for my brand.'
+          : 'Oi, '+nome+'! Vi seu portfólio e quero agendar uma conversa sobre uma campanha pra minha marca.';
   var zap = String(DADOS.whatsapp||'').replace(/\D/g,'');
   if(zap){
     if(zap.length<=11) zap='55'+zap; // coloca o código do Brasil se faltar
-    return {href:'https://wa.me/'+zap+'?text='+encodeURIComponent(msg), rotulo:'Chamar no WhatsApp →'};
+    return {href:'https://wa.me/'+zap+'?text='+encodeURIComponent(msg), rotulo:'Agende uma conversa →'};
   }
   return {href:'mailto:'+DADOS.email+'?subject='+encodeURIComponent('Vídeos UGC pra minha marca')+'&body='+encodeURIComponent(msg), rotulo:'Mandar e-mail →'};
 }
@@ -1334,6 +1345,10 @@ var DADOS = {
    ========================================================= */
 var TRADUCOES = {
   es: {
+    "Agende uma conversa →": "Agenda una conversación →",
+    "Crio em 2 idiomas:": "Creo en 2 idiomas:",
+    "Português": "Portugués",
+    "Español": "Español",
     "Objetivo": "Objetivo",
     "Alcance": "Alcance",
     "Downloads do app": "Descargas de la app",
@@ -1610,6 +1625,10 @@ var TRADUCOES = {
     "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · portafolio UGC"
   },
   en: {
+    "Agende uma conversa →": "Book a call →",
+    "Crio em 2 idiomas:": "I create in 2 languages:",
+    "Português": "Portuguese",
+    "Español": "Spanish",
     "Objetivo": "Goal",
     "Alcance": "Reach",
     "Downloads do app": "App downloads",

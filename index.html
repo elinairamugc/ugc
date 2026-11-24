@@ -449,7 +449,6 @@ section{position:relative;overflow:hidden}
             <span class="idioma-pill"><b>ES</b><span>Español</span></span>
           </div>
           <p class="linha-nichos" id="capa-nichos"></p>
-          <p class="frase" id="capa-frase"></p>
           <ul class="provas" id="capa-provas"></ul>
           <div class="botoes">
             <a href="#destaques" class="btn btn-amarelo">Descubra meus melhores vídeos →</a>
@@ -752,7 +751,6 @@ function montar(){
   // 1. Capa
   document.getElementById('capa-nome').innerHTML = D.nome.split(/\s+/).map(function(p){return '<span>'+esc(p)+'</span>';}).join('');
   document.getElementById('capa-nichos').textContent = D.nichosResumo;
-  document.getElementById('capa-frase').textContent = D.frase;
   document.getElementById('capa-provas').innerHTML = D.provas.map(function(p){return '<li><b>'+esc(p.numero)+'</b><span>'+esc(p.texto)+'</span></li>';}).join('');
   document.getElementById('capa-foto').innerHTML = foto(D.fotoCapa,'Retrato com rosto, luz natural e ambiente real. Sem selfie: a capa mostra o seu nível · midia/capa.jpg','Foto de '+D.nome);
 

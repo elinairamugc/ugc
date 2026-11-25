@@ -463,7 +463,8 @@ section{position:relative;overflow:hidden}
 .nome{font-size:min(156px,calc(var(--tela) * 0.21));line-height:.9}
 .nome{white-space:nowrap}
 .nome span{display:inline-block}
-.nome span:nth-child(2){font-size:.37em;margin:0 0 0 .3em;vertical-align:baseline;transform:rotate(-5deg)}
+.nome{position:relative;width:fit-content;padding-bottom:.36em}
+.nome span:nth-child(2){font-size:.37em;margin:0;position:absolute;left:58%;top:auto;bottom:-.05em;transform:rotate(-5deg);z-index:2}
 .valor{font-size:28px;margin-top:10px}
 .bilingue{margin:10px 0 0}
 .linha-nichos{margin:10px 0 12px;font-size:15px}

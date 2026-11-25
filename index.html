@@ -111,7 +111,7 @@ section{position:relative;overflow:hidden}
 .slogan{font-family:var(--f-mao);font-size:24px;color:var(--lima);transform:rotate(-6deg);margin:26px 0 0 8px;display:inline-block}
 .capa-foto{position:relative;max-width:440px;justify-self:end;width:100%}
 .foto-moldura{position:relative;z-index:1;aspect-ratio:4/5;border-radius:26px;overflow:hidden;background:var(--verde2);border:6px solid #fff;box-shadow:0 20px 40px rgba(24,44,8,.18)}
-.foto-moldura img{width:100%;height:100%;object-fit:cover;object-position:40% 50%}
+.foto-moldura img{width:100%;height:100%;object-fit:cover;object-position:0% 50%}
 .foto-moldura .gap{border:0}
 .chip{position:absolute;z-index:3;display:flex;align-items:flex-start;gap:8px;background:#fff;color:var(--verde2);border-radius:14px;padding:10px 14px;font-size:13px;font-weight:600;line-height:1.35;box-shadow:0 10px 24px rgba(15,16,21,.25);max-width:220px}
 .chip i{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:var(--lima);color:var(--verde);font-style:normal;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -415,6 +415,71 @@ section{position:relative;overflow:hidden}
   .faixa-trilho .faixa-grupo[aria-hidden]{display:none}
   .faixa-grupo{flex-wrap:wrap;justify-content:center;padding:0 16px}
 }
+
+
+/* vitrine de vídeos (destaques e nichos): o do centro em foco, os dos lados atrás e transparentes */
+.destaques{padding:40px 0}
+.dest-grid{grid-template-columns:300px 1fr;gap:40px}
+.dest-intro .brilhos{width:56px;margin:12px 0 4px}
+.vitrine{display:block!important;position:relative;height:min(580px,82vh);overflow:visible!important;margin:0!important;padding:0!important}
+.nicho-cards.vitrine{height:min(620px,88vh)}
+.vitrine::before{content:"";position:absolute;left:50%;top:50%;width:min(470px,66vh);height:min(470px,66vh);border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(203,252,0,.55) 0,rgba(203,252,0,.22) 45%,rgba(203,252,0,0) 70%);z-index:0;pointer-events:none}
+.nichos .vitrine::before{background:radial-gradient(circle,rgba(203,252,0,.45) 0,rgba(203,252,0,.16) 45%,rgba(203,252,0,0) 70%)}
+#dest-cards.vitrine::after{content:"✦";position:absolute;left:calc(50% + min(150px,21vh));top:6%;font-size:46px;color:var(--lima);z-index:4;pointer-events:none}
+.vitrine .card{position:absolute;top:50%;left:50%;width:min(300px,45vh);background:none;padding:0;border-radius:20px;transition:transform .45s ease,opacity .45s ease,filter .45s ease;cursor:pointer;flex:none}
+.nicho-cards.vitrine .card{width:min(315px,49vh)}
+.vitrine .card .tela{border-width:0;border-radius:20px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.vitrine .pos-centro{transform:translate(-50%,-50%) scale(1);z-index:3;opacity:1}
+.vitrine .pos-centro .tela{box-shadow:0 0 0 4px var(--lima),0 0 40px rgba(203,252,0,.45),0 24px 50px rgba(0,0,0,.45)}
+.vitrine .pos-esq{transform:translate(calc(-50% - 62%),-50%) scale(.84);z-index:1;opacity:.45;filter:saturate(.6)}
+.vitrine .pos-dir{transform:translate(calc(-50% + 62%),-50%) scale(.84);z-index:1;opacity:.45;filter:saturate(.6)}
+.vitrine .pos-oculto{transform:translate(-50%,-50%) scale(.7);z-index:0;opacity:0;pointer-events:none}
+.vitrine .pos-esq:hover,.vitrine .pos-dir:hover{opacity:.7}
+.vitrine .card .res{font-size:11px;padding:4px 10px;left:12px;top:12px;z-index:4}
+.info-dest{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:40px 14px 14px;background:rgba(15,16,21,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34px);mask-image:linear-gradient(to bottom,transparent 0,#000 34px);display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:left}
+.info-dest .objetivo{margin:0;font-size:11px;padding:3px 10px}
+.info-dest .leg{margin:0;padding:0;color:#fff;font-size:20px;font-family:var(--f-titulo);text-transform:uppercase;letter-spacing:.02em;text-align:left}
+.info-dest .meta{margin:0;padding:0;color:#DCE3CF;font-size:12px;text-align:left}
+.info-dest .meta .gi,.info-dest .leg .gi{color:#DCE3CF}
+.info-dest .caso-link{margin:0;color:var(--lima);font-size:12px;white-space:nowrap}
+.pos-esq .info-dest,.pos-dir .info-dest,.pos-oculto .info-dest{background:none;padding:12px;-webkit-backdrop-filter:none;backdrop-filter:none;-webkit-mask-image:none;mask-image:none}
+.pos-esq .info-dest > *:not(.leg),.pos-dir .info-dest > *:not(.leg){display:none}
+.pos-esq .info-dest .leg,.pos-dir .info-dest .leg{background:rgba(15,16,21,.75);border-radius:999px;padding:4px 12px;font-size:14px}
+.vitrine .card .prev{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2;pointer-events:none}
+.vitrine .pos-centro .play{display:none}
+.som-off{position:absolute;right:12px;top:12px;z-index:4;width:34px;height:34px;border-radius:50%;background:rgba(15,16,21,.6);color:#fff;display:none;align-items:center;justify-content:center;font-size:15px;pointer-events:none}
+.pos-centro .som-off{display:flex}
+.vitrine-setas{position:absolute;left:50%;top:50%;width:calc(min(315px,49vh) * 2.3);transform:translate(-50%,-50%);display:flex;justify-content:space-between;pointer-events:none;z-index:5}
+.vitrine-setas .seta{pointer-events:auto}
+.nicho-carrossel .nicho-setas{display:none}
+/* capa inteira numa tela, nome grande, foto horizontal inteira e centralizada */
+.capa{padding:62px 0 48px;height:min(100vh,800px);min-height:600px;display:flex;align-items:center}
+.capa > .wrap{width:100%}
+.capa-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
+.capa-texto{margin-top:22px}
+.capa-texto{padding-top:22px}
+.coroa-nome{width:56px;margin:8px 0 -10px 8px}
+.nome{font-size:min(156px,21vh);line-height:.9}
+.nome{white-space:nowrap}
+.nome span{display:inline-block}
+.nome span:nth-child(2){font-size:.37em;margin:0 0 0 .3em;vertical-align:baseline;transform:rotate(-5deg)}
+.valor{font-size:28px;margin-top:10px}
+.bilingue{margin:10px 0 0}
+.linha-nichos{margin:10px 0 12px;font-size:15px}
+.provas{margin:14px 0 16px}
+.provas b{font-size:34px}
+.botoes{flex-wrap:nowrap}
+.botoes .btn{padding:11px 17px;font-size:13px;white-space:nowrap}
+.capa-foto{max-width:none;width:160%;justify-self:start;margin-left:-48%;margin-top:14px;align-self:start;display:block;position:relative;z-index:1}
+.foto-moldura{aspect-ratio:1671/941;width:100%;height:auto;border:0;border-radius:0;box-shadow:none;background:transparent}
+.foto-moldura img{transform:scaleX(-1);object-fit:cover;object-position:50% 50%;-webkit-mask-image:linear-gradient(to left,transparent 0,#000 40%,#000 88%,transparent 100%),linear-gradient(to bottom,#000 0,#000 93%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to left,transparent 0,#000 40%,#000 88%,transparent 100%),linear-gradient(to bottom,#000 0,#000 93%,transparent 100%);mask-composite:intersect}
+.selo-brilho{right:-4px;top:14px;width:104px;height:104px}
+.chip-1{left:auto;right:30%;bottom:-10px}
+.chip-2{left:64%;right:auto;top:68%;transform:rotate(-3deg);padding:7px 12px;font-size:12px;max-width:180px;gap:7px}
+.chip-2 i{width:18px;height:18px}
+.chip-2 i{font-size:9px;padding-left:1px}
+.chip-num{font-family:var(--f-nome);font-weight:400;font-size:17px;line-height:1;color:var(--verde)}
+.brilhos-capa{display:none}
 </style>
 </head>
 <body>
@@ -467,7 +532,7 @@ section{position:relative;overflow:hidden}
 
         <div class="capa-foto">
           <div class="foto-moldura" id="capa-foto"></div>
-          <div class="chip chip-1"><i>✓</i><span>Conteúdo bilíngue<br>PT · ES</span></div>
+          <div class="chip chip-2"><i>▶</i><span><b class="chip-num">+5 milhões</b><br>de views nos meus conteúdos</span></div>
           <!-- Selo redondo que gira: Creator multicultural -->
           <svg class="selo-brilho" viewBox="0 0 100 100" role="img" aria-label="Creator multicultural">
             <circle cx="50" cy="50" r="49" fill="#CBFC00"/>
@@ -1965,6 +2030,79 @@ var TRADUCOES = {
     "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · UGC portfolio"
   }
 };
+
+/* deixa os botões da capa na mesma altura da etiqueta "Conteúdo bilíngue" */
+function alinharBotoesCapa(){
+  // os blocos entre o nome e os botões ficam com o mesmo espaço entre si,
+  // e os botões terminam na mesma altura da etiqueta "Conteúdo bilíngue"
+  var c=document.querySelector(".capa"), b=document.querySelector(".capa .botoes"); if(!b||!c) return;
+  var blocos=[".valor",".bilingue",".linha-nichos",".provas",".capa .botoes"].map(function(s){return document.querySelector(s);}).filter(Boolean);
+  blocos.forEach(function(el){ el.style.marginTop="12px"; el.style.marginBottom="0"; });
+  var g=12;
+  for(var i=0;i<6;i++){
+    var rb=b.getBoundingClientRect(), rc=c.getBoundingClientRect();
+    var d=(rc.bottom-40)-rb.bottom;
+    if(Math.abs(d)<1) break;
+    g=Math.max(8,g+d/blocos.length);
+    blocos.forEach(function(el){ el.style.marginTop=g+"px"; });
+  }
+}
+window.addEventListener("load",alinharBotoesCapa);
+window.addEventListener("resize",alinharBotoesCapa);
+if(document.fonts) document.fonts.ready.then(alinharBotoesCapa);
+
+/* vitrine de vídeos (destaques e nichos) */
+function aplicarVitrine(box, comSetas){
+  if(!box||box.dataset.vitrine) return; box.dataset.vitrine="1"; box.classList.add("vitrine");
+  var cards=[].slice.call(box.children).filter(function(c){return c.classList&&c.classList.contains("card");}); if(!cards.length) return;
+  cards.forEach(function(c){
+    var tela=c.querySelector(".tela"), info=document.createElement("div"); info.className="info-dest";
+    [".objetivo",".leg",".meta",".caso-link"].forEach(function(s){ var e=c.querySelector(s); if(e) info.appendChild(e); });
+    tela.appendChild(info);
+    var som=document.createElement("span"); som.className="som-off"; som.setAttribute("aria-hidden","true"); som.textContent="🔇"; tela.appendChild(som);
+  });
+  var ativo=0, visivel=false, n=cards.length;
+  function posicionar(){
+    cards.forEach(function(c,i){
+      var rel=(i-ativo+n)%n, cls="pos-oculto";
+      if(rel===0) cls="pos-centro"; else if(rel===1) cls="pos-dir"; else if(rel===n-1) cls="pos-esq";
+      c.classList.remove("pos-centro","pos-esq","pos-dir","pos-oculto"); c.classList.add(cls);
+      var p=c.querySelector(".prev"); if(p) p.remove();
+    });
+    var c=cards[ativo], id=c.getAttribute("data-youtube");
+    if(id && visivel && !reduzMov){
+      var fr=document.createElement("iframe"); fr.className="prev"; fr.title="Prévia do vídeo"; fr.setAttribute("allow","autoplay; encrypted-media");
+      fr.src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&mute=1&loop=1&playlist="+id+"&controls=0&modestbranding=1&playsinline=1&rel=0";
+      var tela=c.querySelector(".tela"); tela.insertBefore(fr, tela.firstChild.nextSibling);
+    }
+  }
+  function ir(dir){ ativo=(ativo+dir+n)%n; posicionar(); }
+  // clicar num vídeo do lado traz ele pro centro; clicar no do centro abre o player com som
+  box.addEventListener("click",function(e){
+    var s=e.target.closest(".vitrine-setas .seta"); if(s){ e.stopPropagation(); ir(+s.getAttribute("data-v")); return; }
+    var c=e.target.closest(".card"); if(!c) return;
+    var i=cards.indexOf(c);
+    if(i!==ativo){ e.stopPropagation(); e.preventDefault(); ativo=i; posicionar(); }
+  },true);
+  if(comSetas && n>1){
+    var st=document.createElement("div"); st.className="vitrine-setas";
+    st.innerHTML='<button class="seta" type="button" data-v="-1" aria-label="Vídeo anterior">←</button><button class="seta" type="button" data-v="1" aria-label="Próximo vídeo">→</button>';
+    box.appendChild(st);
+  }
+  // a prévia só toca quando a vitrine está na tela
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){ var v=es.some(function(x){return x.isIntersecting;}); if(v!==visivel){ visivel=v; posicionar(); } },{threshold:.3}).observe(box);
+  } else { visivel=true; }
+  posicionar();
+}
+function ligarVitrines(){
+  aplicarVitrine(document.getElementById("dest-cards"), false);
+  var painel=document.getElementById("nicho-painel");
+  function nichoAtual(){ aplicarVitrine(painel.querySelector(".nicho-cards"), true); }
+  nichoAtual();
+  new MutationObserver(function(){ nichoAtual(); }).observe(painel,{childList:true});
+}
+window.addEventListener("load",ligarVitrines);
 </script>
 </body>
 </html>

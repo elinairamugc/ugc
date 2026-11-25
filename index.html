@@ -185,6 +185,10 @@ section{position:relative;overflow:hidden}
 .criar-trilho:focus-visible{outline:3px solid var(--lima);outline-offset:4px}
 .servico{position:relative;flex:0 0 190px;scroll-snap-align:start;min-height:210px;background:var(--salvia);border-radius:18px;padding:22px 14px 16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:0;color:var(--verde2);box-shadow:0 14px 30px rgba(15,16,21,.2);transition:background .2s ease,color .2s ease,transform .2s ease}
 .servico:hover,.servico:focus-within{background:var(--verde2);color:var(--creme);transform:translateY(-6px)}
+/* o primeiro card (UGCs) fica sempre em destaque, verde */
+.servico:first-child{background:var(--verde2);color:var(--creme);box-shadow:0 0 0 3px var(--lima),0 14px 30px rgba(15,16,21,.25)}
+.servico:first-child svg{color:var(--lima)}
+.servico:first-child p{color:var(--verde2)}
 .servico:hover svg,.servico:focus-within svg{color:var(--lima)}
 .servico:hover p,.servico:focus-within p{color:var(--verde2)}
 .servico:hover .destaque-novo,.servico:focus-within .destaque-novo{background:var(--lima);color:var(--verde)}

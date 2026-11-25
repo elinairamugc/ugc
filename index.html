@@ -472,9 +472,9 @@ section{position:relative;overflow:hidden}
 .provas b{font-size:34px}
 .botoes{flex-wrap:nowrap}
 .botoes .btn{padding:11px 17px;font-size:13px;white-space:nowrap}
-.capa-foto{max-width:none;width:160%;justify-self:start;margin-left:-48%;margin-top:14px;align-self:start;display:block;position:relative;z-index:1}
-.foto-moldura{aspect-ratio:1671/941;width:100%;height:auto;border:0;border-radius:0;box-shadow:none;background:transparent}
-.foto-moldura img{transform:scaleX(-1);object-fit:cover;object-position:50% 50%;-webkit-mask-image:linear-gradient(to left,transparent 0,#000 40%,#000 88%,transparent 100%),linear-gradient(to bottom,#000 0,#000 93%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to left,transparent 0,#000 40%,#000 88%,transparent 100%),linear-gradient(to bottom,#000 0,#000 93%,transparent 100%);mask-composite:intersect}
+.capa-foto{max-width:none;width:160%;justify-self:start;margin-left:-48%;margin-top:44px;align-self:stretch;display:block;position:relative;z-index:1}
+.foto-moldura{aspect-ratio:auto;width:100%;height:100%;border:0;border-radius:0;box-shadow:none;background:transparent}
+.foto-moldura img{position:absolute;inset:0;transform:scaleX(-1);object-fit:cover;object-position:50% 50%;-webkit-mask-image:linear-gradient(to left,transparent 0,#000 40%,#000 88%,transparent 100%),linear-gradient(to bottom,#000 0,#000 93%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to left,transparent 0,#000 40%,#000 88%,transparent 100%),linear-gradient(to bottom,#000 0,#000 93%,transparent 100%);mask-composite:intersect}
 .selo-brilho{right:-4px;top:14px;width:104px;height:104px}
 .chip-1{left:auto;right:30%;bottom:-10px}
 .chip-2{left:64%;right:auto;top:68%;transform:rotate(-3deg);padding:7px 12px;font-size:12px;max-width:180px;gap:7px}
@@ -2079,8 +2079,16 @@ function aplicarVitrine(box, comSetas){
     }
   }
   function ir(dir){ ativo=(ativo+dir+n)%n; posicionar(); }
+  // arrastar com o dedo pro lado troca o vídeo
+  var x0=null, y0=null, arrastou=false;
+  box.addEventListener("touchstart",function(e){ var p=e.touches[0]; x0=p.clientX; y0=p.clientY; },{passive:true});
+  box.addEventListener("touchend",function(e){
+    if(x0===null) return; var p=e.changedTouches[0], dx=p.clientX-x0, dy=p.clientY-y0; x0=null;
+    if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ arrastou=true; setTimeout(function(){arrastou=false;},400); ir(dx<0?1:-1); }
+  },{passive:true});
   // clicar num vídeo do lado traz ele pro centro; clicar no do centro abre o player com som
   box.addEventListener("click",function(e){
+    if(arrastou){ e.stopPropagation(); e.preventDefault(); return; }
     var s=e.target.closest(".vitrine-setas .seta"); if(s){ e.stopPropagation(); ir(+s.getAttribute("data-v")); return; }
     var c=e.target.closest(".card"); if(!c) return;
     var i=cards.indexOf(c);

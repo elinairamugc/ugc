@@ -486,9 +486,40 @@ section{position:relative;overflow:hidden}
 .chip-2 i{font-size:9px;padding-left:1px}
 .chip-num{font-family:var(--f-nome);font-weight:400;font-size:17px;line-height:1;color:var(--verde)}
 .brilhos-capa{display:none}
+/* FAIXA DE NATAL (some sozinha depois do Natal) */
+.faixa-natal{position:relative;z-index:60;background:#182C08;color:#fff;overflow:hidden;padding:12px 0 10px;font-family:var(--f-texto)}
+.faixa-natal .fn-luzes{position:absolute;left:0;right:0;top:0;height:12px;display:flex;justify-content:space-around;pointer-events:none}
+.faixa-natal .fn-luzes::before{content:"";position:absolute;left:0;right:0;top:2px;height:2px;background:rgba(255,255,255,.18)}
+.faixa-natal .fn-luzes i{width:7px;height:9px;border-radius:50%/40% 40% 60% 60%;margin-top:3px;animation:fnPisca 1.6s infinite}
+.faixa-natal .fn-luzes i:nth-child(3n){background:#B3261E;box-shadow:0 0 8px #B3261E}
+.faixa-natal .fn-luzes i:nth-child(3n+1){background:#CBFC00;box-shadow:0 0 8px #CBFC00;animation-delay:.5s}
+.faixa-natal .fn-luzes i:nth-child(3n+2){background:#E8C46A;box-shadow:0 0 8px #E8C46A;animation-delay:1s}
+@keyframes fnPisca{0%,100%{opacity:1}50%{opacity:.35}}
+.faixa-natal .fn-in{display:flex;align-items:center;justify-content:center;gap:18px;font-size:14px;position:relative}
+.faixa-natal .fn-arvore{font-size:20px}
+.faixa-natal .fn-txt b{color:#CBFC00}
+.faixa-natal .fn-prazo{font-size:13px;font-weight:600;opacity:.85}
+.faixa-natal .fn-cont{display:flex;gap:6px;font-variant-numeric:tabular-nums}
+.faixa-natal .fn-cont span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:2px 8px;font-weight:700;font-size:13px}
+.faixa-natal .fn-cont small{font-weight:500;opacity:.7;margin-left:2px}
+.faixa-natal .fn-ver{background:#CBFC00;color:#182C08;border-radius:999px;padding:6px 16px;font-weight:700;font-size:13px;text-decoration:none}
+.faixa-natal .fn-floco{position:absolute;color:rgba(255,255,255,.22);font-size:14px;top:14px}
 </style>
 </head>
 <body>
+
+<!-- Faixa da campanha de Natal: leva para a página natal.html e some sozinha depois do Natal -->
+<div class="faixa-natal" id="faixa-natal" role="region" aria-label="Campanha de Natal">
+  <div class="fn-luzes" aria-hidden="true"></div>
+  <span class="fn-floco" style="left:3%">❄</span><span class="fn-floco" style="left:22%;top:20px">✦</span><span class="fn-floco" style="right:20%">❄</span><span class="fn-floco" style="right:3%;top:18px">✦</span>
+  <div class="fn-in">
+    <span class="fn-arvore" aria-hidden="true">🎄</span>
+    <span class="fn-txt"><b>Campanha de Natal</b> <span>para marcas de casa e decoração</span></span>
+    <span class="fn-prazo" id="fn-prazo">envio do produto até 12/12:</span>
+    <span class="fn-cont"><span><b id="fn-d">0</b><small>d</small></span><span><b id="fn-h">00</b><small>h</small></span><span><b id="fn-m">00</b><small>m</small></span><span><b id="fn-s">00</b><small>s</small></span></span>
+    <a class="fn-ver" href="natal.html">Ver proposta →</a>
+  </div>
+</div>
 
 <header class="topo">
   <div class="wrap">
@@ -1285,7 +1316,7 @@ var DADOS = {
   // Os 3 números da capa
   provas: [
     { numero: "100+",   texto: "vídeos gravados" },
-    { numero: "50",     texto: "marcas atendidas" },
+    { numero: "80+",    texto: "marcas atendidas" },
     { numero: "7 dias", texto: "prazo de entrega" }
   ],
   // Suas fotos (coloque os arquivos na pasta midia)
@@ -1295,7 +1326,7 @@ var DADOS = {
   // Texto do Sobre mim, um parágrafo por linha.
   // Pra colocar uma foto no meio do texto: { foto: "midia/arquivo.jpg", legenda: "texto curto" }
   sobreTexto: [
-    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade."
+    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +80 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade."
   ],
   // Seus 3 diferenciais (as 3 caixinhas do Sobre mim). Textos curtos!
   diferenciais: [
@@ -1451,6 +1482,11 @@ var DADOS = {
    ========================================================= */
 var TRADUCOES = {
   es: {
+    "Campanha de Natal": "Campaña de Navidad",
+    "para marcas de casa e decoração": "para marcas de hogar y decoración",
+    "envio do produto até 12/12:": "envío del producto hasta el 12/12:",
+    "faltam para o Natal:": "faltan para Navidad:",
+    "Ver proposta →": "Ver propuesta →",
     "Sabão em pó": "Jabón en polvo",
     "Copo": "Vaso",
     "Microfone sem fio": "Micrófono inalámbrico",
@@ -1600,7 +1636,7 @@ var TRADUCOES = {
     "Espanhol e Português": "Español y Portugués",
     "SOBRE MIM": "SOBRE MÍ",
     "Oie, eu sou a Eli": "¡Hola, soy Eli!",
-    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "Soy venezolana, vivo en São Paulo y Brasil se convirtió en mi segundo hogar. Como UGC creator bilingüe, grabo en portugués y español: más de 100 videos para más de 50 marcas, con más de 5 millones de views. Tengo una comunidad educativa de creators, así que siempre estoy al día con las novedades del mercado y lo llevo a la comunicación de tu marca, con entregas rápidas y de calidad.",
+    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +80 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "Soy venezolana, vivo en São Paulo y Brasil se convirtió en mi segundo hogar. Como UGC creator bilingüe, grabo en portugués y español: más de 100 videos para más de 80 marcas, con más de 5 millones de views. Tengo una comunidad educativa de creators, así que siempre estoy al día con las novedades del mercado y lo llevo a la comunicación de tu marca, con entregas rápidas y de calidad.",
     "Estudo a dor do seu cliente": "Estudio el dolor de tu cliente",
     "Entendo o público e o que trava a compra.": "Entiendo al público y lo que frena la compra.",
     "Roteiro meu, aprovado por você": "Guion mío, aprobado por ti",
@@ -1748,6 +1784,11 @@ var TRADUCOES = {
     "Elinairam Sandoval · portfólio UGC": "Elinairam Sandoval · portafolio UGC"
   },
   en: {
+    "Campanha de Natal": "Christmas campaign",
+    "para marcas de casa e decoração": "for home & decor brands",
+    "envio do produto até 12/12:": "send your product by Dec 12:",
+    "faltam para o Natal:": "until Christmas:",
+    "Ver proposta →": "See proposal →",
     "Sabão em pó": "Laundry powder",
     "Copo": "Glass",
     "Microfone sem fio": "Wireless mic",
@@ -1897,7 +1938,7 @@ var TRADUCOES = {
     "Espanhol e Português": "Spanish and Portuguese",
     "SOBRE MIM": "ABOUT ME",
     "Oie, eu sou a Eli": "Hi, I'm Eli",
-    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +50 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "I'm Venezuelan, I live in São Paulo, and Brazil has become my second home. As a bilingual UGC creator, I record in Portuguese and Spanish: 100+ videos for 50+ brands, with 5M+ views. I run an educational community of creators, so I'm always on top of what's new in the market and bring that into your brand's communication, with fast, high-quality delivery.",
+    "Sou venezuelana, vivo em São Paulo e o Brasil virou meu segundo lar. Como UGC creator bilíngue, gravo em português e espanhol: são +100 vídeos para +80 marcas, com +5 milhões de views. Mantenho uma comunidade educacional de creators, então vivo por dentro das novidades do mercado e levo isso pra comunicação da sua marca, com entregas rápidas e de qualidade.": "I'm Venezuelan, I live in São Paulo, and Brazil has become my second home. As a bilingual UGC creator, I record in Portuguese and Spanish: 100+ videos for 80+ brands, with 5M+ views. I run an educational community of creators, so I'm always on top of what's new in the market and bring that into your brand's communication, with fast, high-quality delivery.",
     "Estudo a dor do seu cliente": "I study your customer's pain",
     "Entendo o público e o que trava a compra.": "I understand the audience and what blocks the purchase.",
     "Roteiro meu, aprovado por você": "My script, approved by you",
@@ -2126,6 +2167,25 @@ function ligarVitrines(){
   new MutationObserver(function(){ nichoAtual(); }).observe(painel,{childList:true});
 }
 window.addEventListener("load",ligarVitrines);
+
+/* Faixa de Natal: contagem até o envio (12/12), depois até o Natal; some depois do dia 25 */
+(function(){
+  var f=document.getElementById("faixa-natal"); if(!f) return;
+  var ENVIO=new Date(2026,11,13,0,0,0), NATAL=new Date(2026,11,25,0,0,0);
+  if(new Date()>=NATAL){ f.remove(); return; }
+  var l=f.querySelector(".fn-luzes"); for(var i=0;i<46;i++) l.appendChild(document.createElement("i"));
+  function d2(n){ return (n<10?"0":"")+n; }
+  var ultimo="";
+  function tic(){
+    var a=new Date(); if(a>=NATAL){ f.remove(); return; }
+    var alvo=a<ENVIO?ENVIO:NATAL, s=Math.floor(Math.max(0,alvo-a)/1000);
+    document.getElementById("fn-d").textContent=Math.floor(s/86400); document.getElementById("fn-h").textContent=d2(Math.floor(s%86400/3600));
+    document.getElementById("fn-m").textContent=d2(Math.floor(s%3600/60)); document.getElementById("fn-s").textContent=d2(s%60);
+    var rot=a<ENVIO?"envio do produto até 12/12:":"faltam para o Natal:";
+    if(rot!==ultimo){ ultimo=rot; var e=document.getElementById("fn-prazo"); var tx=rot; try{ if(typeof traduzir==="function" && TRADUCOES[IDIOMA]) tx=traduzir(rot); }catch(err){} e.textContent=tx; }
+  }
+  tic(); setInterval(tic,1000);
+})();
 </script>
 </body>
 </html>
